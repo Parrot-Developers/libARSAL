@@ -1,3 +1,9 @@
+commit 6cbc081cb4bfcb3d7dcc0ccaf9c9505ecc0f37e4
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Tue May 15 13:31:34 2012 +0200
+
+    Add Public include files.
+
 commit 25198f274b66d1c1651caeb065c77a47e07544f2
 Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
 Date:   Tue May 15 13:23:46 2012 +0200

@@ -1,3 +1,15 @@
+commit 6434a93f7695b58450e9b960ef62b1dc90aebc83
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Tue May 15 13:47:25 2012 +0200
+
+    Remove useless files.
+
+commit 5773dfa9674d96b91c5f89f0e16fa98a45c25772
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Tue May 15 13:46:22 2012 +0200
+
+    Rename libsal files.
+
 commit 6cbc081cb4bfcb3d7dcc0ccaf9c9505ecc0f37e4
 Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
 Date:   Tue May 15 13:31:34 2012 +0200

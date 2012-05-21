@@ -1,3 +1,15 @@
+commit 851aa64b8614e48ea6d5d93047e190f5c06e95ee
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Tue May 15 14:09:34 2012 +0200
+
+    Remove directory.
+
+commit ee0c13ec74b86928ca0fde0cb29ff153febdaa42
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Tue May 15 14:08:18 2012 +0200
+
+    New building
+
 commit 6434a93f7695b58450e9b960ef62b1dc90aebc83
 Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
 Date:   Tue May 15 13:47:25 2012 +0200

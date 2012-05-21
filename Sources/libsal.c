@@ -1,5 +1,5 @@
 #include <config.h>
-#include "libsal.h"
+#include <libSAL/libsal.h>
 
 void libSAL_function(void)
 {

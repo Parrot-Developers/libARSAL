@@ -35,6 +35,17 @@ fi
 CFLAGS="$CFLAGS -I../Includes"
 
 ##########################################################################
+# Check headers
+##########################################################################
+AC_CHECK_HEADERS([stdlib.h string.h sys/time.h time.h stdio.h unistd.h sys/types.h])
+
+# Checks for pthread.
+AC_CHECK_HEADERS([pthread.h], [
+    AC_CHECK_LIB(pthread, pthread_create,
+	LIBS="$LIBS -lpthread", AC_MSG_ERROR(The pthread library is required in order to build the library!))
+], AC_MSG_ERROR(The pthread header is required in order to build the library!))
+
+##########################################################################
 # Checks for programs.
 AC_PROG_RANLIB
 AC_PROG_CC

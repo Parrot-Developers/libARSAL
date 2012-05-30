@@ -105,7 +105,6 @@ int sal_cond_wait(sal_cond_t *cond, sal_mutex_t *mutex)
 int sal_cond_timedwait(sal_cond_t *cond, sal_mutex_t *mutex, int time_in_ms)
 {
 	int result = 0;
-
 	int tmp;
 	struct timespec ts;
 	struct timeval tv;

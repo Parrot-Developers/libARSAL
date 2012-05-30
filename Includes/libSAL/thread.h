@@ -8,9 +8,9 @@
 #ifndef _SAL_THREAD_H_
 #define _SAL_THREAD_H_
 
-/*typedef void* sal_thread_t;
+typedef void* sal_thread_t;
 typedef void* sal_thread_param_t;
 typedef void* (*sal_thread_routine) (sal_thread_param_t);
-*/
+
 #endif // _SAL_THREAD_H_
 

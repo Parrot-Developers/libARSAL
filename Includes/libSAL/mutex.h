@@ -4,8 +4,8 @@
  * @date 05/18/2012
  * @author frederic.dhaeyer@parrot.com
 */
-#ifndef _SAL_MUTEX_H_
-#define _SAL_MUTEX_H_
+#ifndef _MUTEX_H_
+#define _MUTEX_H_
 
 typedef void* sal_mutex_t;
 typedef void* sal_cond_t;
@@ -112,4 +112,4 @@ int sal_cond_signal(sal_cond_t *cond);
  */
 int sal_cond_broadcast(sal_cond_t *cond);
 
-#endif // _SAL_MUTEX_H_
+#endif // _MUTEX_H_

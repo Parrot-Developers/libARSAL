@@ -4,8 +4,8 @@
  * @date 05/18/2012
  * @author frederic.dhaeyer@parrot.com
 */
-#ifndef _SAL_TIME_H_
-#define _SAL_TIME_H_
+#ifndef _TIME_H_
+#define _TIME_H_
 #include <time.h>
 #include <sys/time.h>
 #include <unistd.h>
@@ -36,4 +36,4 @@
  */
 int gettimeofday(struct timeval *tv, struct timezone *tz);
 
-#endif // _SAL_TIME_H_
+#endif // _TIME_H_

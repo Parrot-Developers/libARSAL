@@ -1,3 +1,9 @@
+commit 9524d65736fc171bb817db42c82b9fa05be602d6
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Wed May 30 14:48:57 2012 +0200
+
+    Add mutex apis.
+
 commit 075aa0305a9cc9a7f70763af4c6ef871539fd629
 Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
 Date:   Wed May 30 10:19:44 2012 +0200

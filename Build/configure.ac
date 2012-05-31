@@ -56,15 +56,15 @@ if test -z "$DOXYGEN";
 else
 	AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 	m4_include(doxygen.ac)
-	DX_HTML_FEATURE(ON)
+	DX_HTML_FEATURE(OFF)
 	DX_CHM_FEATURE(OFF)
 	DX_CHI_FEATURE(OFF)
-	DX_MAN_FEATURE(ON)
+	DX_MAN_FEATURE(OFF)
 	DX_RTF_FEATURE(OFF)
 	DX_XML_FEATURE(OFF)
-	DX_PDF_FEATURE(OFF)
+	DX_PDF_FEATURE(ON)
 	DX_PS_FEATURE(OFF)
-	DX_INIT_DOXYGEN(libSAL, doxygen.cfg, ../Doc)
+	DX_INIT_DOXYGEN([libSAL], [doxygen.cfg], [../Doc])
 fi
 
 # Checks for libraries.

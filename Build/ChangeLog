@@ -1,3 +1,15 @@
+commit 61f06c40977eba00fb6c934a2d27f7c6c7520cb7
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Thu May 31 16:27:27 2012 +0200
+
+    Remove useless file.
+
+commit d3e9bf45cd5080b1342f0289f5bee275d475bdde
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Thu May 31 16:24:32 2012 +0200
+
+    Add cleanup cript to clean autotools temporary files.
+
 commit 66e7e27b8979afa913afdbe7dec649991b512de1
 Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
 Date:   Thu May 31 16:14:45 2012 +0200

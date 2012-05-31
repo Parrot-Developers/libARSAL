@@ -18,6 +18,6 @@ EXTRA_DIST = bootstrap
 
 # Doxygen support
 if HAVE_DOXYGEN
-	include doxygen.am
-	EXTRA_DIST += doxygen.ac doxygen.am Doxyfile ../Doc
+include doxygen.am
+EXTRA_DIST += doxygen.ac doxygen.am $(DX_CONFIG)
 endif

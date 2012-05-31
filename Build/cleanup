@@ -1,14 +1,5 @@
 #! /bin/sh
 
-# Copyright (C) 2004 Oren Ben-Kiki.
-# This library is distributed under a BSD-style license.
-# See the COPYING file for details.
-
-# Remove everything that can be re-generated.
-# Run 'bootstrap' to return to a state where
-# ./configure; make; make install
-# starts working again.
-
 if [ -e Makefile ] ; then
 	make clean
 fi
@@ -30,7 +21,6 @@ rm -f \
 rm -rf \
     doxygen-doc \
     autom4te.cache \
-    m4	\
     config \
     `find . -name '.deps'`	\
     `find . -name '*.*~'`

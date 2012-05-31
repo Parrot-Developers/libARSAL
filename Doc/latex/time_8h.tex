@@ -1,0 +1,67 @@
+\section{time.h File Reference}
+\label{time_8h}\index{time.h@{time.h}}
+
+
+This file contains headers about time abstraction layer.  
+
+
+{\ttfamily \#include $<$time.h$>$}\par
+{\ttfamily \#include $<$sys/time.h$>$}\par
+{\ttfamily \#include $<$unistd.h$>$}\par
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries TIMEVAL\_\-TO\_\-TIMESPEC}(tv, ts)
+\item 
+\#define {\bfseries TIMESPEC\_\-TO\_\-TIMEVAL}(ts, tv)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int {\bfseries gettimeofday} (struct timeval $\ast$tv, struct timezone $\ast$tz)\label{time_8h_aaf2d0a99430a6d5253b8c395c30ca7e3}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file contains headers about time abstraction layer. \begin{DoxyDate}{Date}
+05/18/2012 
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+{\tt frederic.dhaeyer@parrot.com} 
+\end{DoxyAuthor}
+
+
+\subsection{Define Documentation}
+\index{time.h@{time.h}!TIMESPEC\_\-TO\_\-TIMEVAL@{TIMESPEC\_\-TO\_\-TIMEVAL}}
+\index{TIMESPEC\_\-TO\_\-TIMEVAL@{TIMESPEC\_\-TO\_\-TIMEVAL}!time.h@{time.h}}
+\subsubsection[{TIMESPEC\_\-TO\_\-TIMEVAL}]{\setlength{\rightskip}{0pt plus 5cm}\#define TIMESPEC\_\-TO\_\-TIMEVAL(
+\begin{DoxyParamCaption}
+\item[{}]{ts, }
+\item[{}]{tv}
+\end{DoxyParamCaption}
+)}\label{time_8h_afc92eb02ef4fa20e3b1f1ecc1acc1349}
+{\bfseries Value:}
+\begin{DoxyCode}
+{                                                                                       \
+      
+        (tv)->tv_sec = (ts)->tv_sec;                    \
+    (tv)->tv_usec = (ts)->tv_nsec / 1000;       \
+}
+\end{DoxyCode}
+\index{time.h@{time.h}!TIMEVAL\_\-TO\_\-TIMESPEC@{TIMEVAL\_\-TO\_\-TIMESPEC}}
+\index{TIMEVAL\_\-TO\_\-TIMESPEC@{TIMEVAL\_\-TO\_\-TIMESPEC}!time.h@{time.h}}
+\subsubsection[{TIMEVAL\_\-TO\_\-TIMESPEC}]{\setlength{\rightskip}{0pt plus 5cm}\#define TIMEVAL\_\-TO\_\-TIMESPEC(
+\begin{DoxyParamCaption}
+\item[{}]{tv, }
+\item[{}]{ts}
+\end{DoxyParamCaption}
+)}\label{time_8h_a584277e2b3df9a5db0e93000b09df811}
+{\bfseries Value:}
+\begin{DoxyCode}
+{                                                                                       \
+      
+        (ts)->tv_sec = (tv)->tv_sec;                    \
+    (ts)->tv_nsec = (tv)->tv_usec * 1000;       \
+}
+\end{DoxyCode}

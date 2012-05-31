@@ -1,0 +1,207 @@
+\section{mutex.h File Reference}
+\label{mutex_8h}\index{mutex.h@{mutex.h}}
+
+
+This file contains headers about mutex abstraction layer.  
+
+
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void $\ast$ {\bfseries sal\_\-mutex\_\-t}\label{mutex_8h_ae44477e0b3650f16fc7a41f2949ee5b6}
+
+\item 
+typedef void $\ast$ {\bfseries sal\_\-cond\_\-t}\label{mutex_8h_a942754308e0a64488c07dafa7d7c7ff7}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int {\bf sal\_\-mutex\_\-init} (sal\_\-mutex\_\-t $\ast$mutex)
+\begin{DoxyCompactList}\small\item\em Initializes a mutex. \end{DoxyCompactList}\item 
+int {\bf sal\_\-mutex\_\-destroy} (sal\_\-mutex\_\-t $\ast$mutex)
+\begin{DoxyCompactList}\small\item\em Destroys a mutex. \end{DoxyCompactList}\item 
+int {\bf sal\_\-mutex\_\-lock} (sal\_\-mutex\_\-t $\ast$mutex)
+\begin{DoxyCompactList}\small\item\em Locks a mutex. \end{DoxyCompactList}\item 
+int {\bf sal\_\-mutex\_\-trylock} (sal\_\-mutex\_\-t $\ast$mutex)
+\begin{DoxyCompactList}\small\item\em Tries to lock a mutex. \end{DoxyCompactList}\item 
+int {\bf sal\_\-mutex\_\-unlock} (sal\_\-mutex\_\-t $\ast$mutex)
+\begin{DoxyCompactList}\small\item\em Unlocks a mutex. \end{DoxyCompactList}\item 
+int {\bfseries sal\_\-cond\_\-init} (sal\_\-cond\_\-t $\ast$cond)\label{mutex_8h_a1ee1a57854232391f226f17881018b17}
+
+\item 
+int {\bf sal\_\-cond\_\-destroy} (sal\_\-cond\_\-t $\ast$cond)
+\begin{DoxyCompactList}\small\item\em Destroy a condition. \end{DoxyCompactList}\item 
+int {\bf sal\_\-cond\_\-wait} (sal\_\-cond\_\-t $\ast$cond, sal\_\-mutex\_\-t $\ast$mutex)
+\begin{DoxyCompactList}\small\item\em Wait on a condition. \end{DoxyCompactList}\item 
+int {\bfseries sal\_\-cond\_\-timedwait} (sal\_\-cond\_\-t $\ast$cond, sal\_\-mutex\_\-t $\ast$mutex, int timeout)\label{mutex_8h_ad3ed8ddb4fd564c8a6d7323df5f1b674}
+
+\item 
+int {\bfseries sal\_\-cond\_\-signal} (sal\_\-cond\_\-t $\ast$cond)\label{mutex_8h_a52144244638615a92345e37d19fd12c5}
+
+\item 
+int {\bfseries sal\_\-cond\_\-broadcast} (sal\_\-cond\_\-t $\ast$cond)\label{mutex_8h_a902e26f808e30230155f65af9cacff1c}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file contains headers about mutex abstraction layer. \begin{DoxyDate}{Date}
+05/18/2012 
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+{\tt frederic.dhaeyer@parrot.com} 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\index{mutex.h@{mutex.h}!sal\_\-cond\_\-destroy@{sal\_\-cond\_\-destroy}}
+\index{sal\_\-cond\_\-destroy@{sal\_\-cond\_\-destroy}!mutex.h@{mutex.h}}
+\subsubsection[{sal\_\-cond\_\-destroy}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-cond\_\-destroy (
+\begin{DoxyParamCaption}
+\item[{sal\_\-cond\_\-t $\ast$}]{cond}
+\end{DoxyParamCaption}
+)}\label{mutex_8h_ac17031d0d2cffcd2dce9f9335e011ea4}
+
+
+Destroy a condition. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cond} & The condition to destroy \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, \doxyref{sal\_\-cond\_\-destroy()}{p.}{mutex_8h_ac17031d0d2cffcd2dce9f9335e011ea4} returns 0. Otherwise, it returns an error number (See errno.h) \\
+\hline
+\end{DoxyRetVals}
+\index{mutex.h@{mutex.h}!sal\_\-cond\_\-wait@{sal\_\-cond\_\-wait}}
+\index{sal\_\-cond\_\-wait@{sal\_\-cond\_\-wait}!mutex.h@{mutex.h}}
+\subsubsection[{sal\_\-cond\_\-wait}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-cond\_\-wait (
+\begin{DoxyParamCaption}
+\item[{sal\_\-cond\_\-t $\ast$}]{cond, }
+\item[{sal\_\-mutex\_\-t $\ast$}]{mutex}
+\end{DoxyParamCaption}
+)}\label{mutex_8h_a601882a498ec42519466e12e3fa06cdc}
+
+
+Wait on a condition. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cond} & The condition to wait \\
+\hline
+{\em mutex} & The mutex link to condition. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, \doxyref{sal\_\-cond\_\-wait()}{p.}{mutex_8h_a601882a498ec42519466e12e3fa06cdc} returns 0. Otherwise, it returns an error number (See errno.h) \\
+\hline
+\end{DoxyRetVals}
+\index{mutex.h@{mutex.h}!sal\_\-mutex\_\-destroy@{sal\_\-mutex\_\-destroy}}
+\index{sal\_\-mutex\_\-destroy@{sal\_\-mutex\_\-destroy}!mutex.h@{mutex.h}}
+\subsubsection[{sal\_\-mutex\_\-destroy}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-mutex\_\-destroy (
+\begin{DoxyParamCaption}
+\item[{sal\_\-mutex\_\-t $\ast$}]{mutex}
+\end{DoxyParamCaption}
+)}\label{mutex_8h_ab539850efe78dd90ceba327d9c13145a}
+
+
+Destroys a mutex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mutex} & The mutex to destroy \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, \doxyref{sal\_\-mutex\_\-init()}{p.}{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879} returns 0. Otherwise, it returns an error number (See errno.h) \\
+\hline
+\end{DoxyRetVals}
+\index{mutex.h@{mutex.h}!sal\_\-mutex\_\-init@{sal\_\-mutex\_\-init}}
+\index{sal\_\-mutex\_\-init@{sal\_\-mutex\_\-init}!mutex.h@{mutex.h}}
+\subsubsection[{sal\_\-mutex\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-mutex\_\-init (
+\begin{DoxyParamCaption}
+\item[{sal\_\-mutex\_\-t $\ast$}]{mutex}
+\end{DoxyParamCaption}
+)}\label{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879}
+
+
+Initializes a mutex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mutex} & The mutex to initialize \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, \doxyref{sal\_\-mutex\_\-init()}{p.}{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879} returns 0. Otherwise, it returns an error number (See errno.h) \\
+\hline
+\end{DoxyRetVals}
+\index{mutex.h@{mutex.h}!sal\_\-mutex\_\-lock@{sal\_\-mutex\_\-lock}}
+\index{sal\_\-mutex\_\-lock@{sal\_\-mutex\_\-lock}!mutex.h@{mutex.h}}
+\subsubsection[{sal\_\-mutex\_\-lock}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-mutex\_\-lock (
+\begin{DoxyParamCaption}
+\item[{sal\_\-mutex\_\-t $\ast$}]{mutex}
+\end{DoxyParamCaption}
+)}\label{mutex_8h_ad5acc2c9f6cced0765f3ecc2b18add5a}
+
+
+Locks a mutex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mutex} & The mutex to lock \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, \doxyref{sal\_\-mutex\_\-init()}{p.}{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879} returns 0. Otherwise, it returns an error number (See errno.h) \\
+\hline
+\end{DoxyRetVals}
+\index{mutex.h@{mutex.h}!sal\_\-mutex\_\-trylock@{sal\_\-mutex\_\-trylock}}
+\index{sal\_\-mutex\_\-trylock@{sal\_\-mutex\_\-trylock}!mutex.h@{mutex.h}}
+\subsubsection[{sal\_\-mutex\_\-trylock}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-mutex\_\-trylock (
+\begin{DoxyParamCaption}
+\item[{sal\_\-mutex\_\-t $\ast$}]{mutex}
+\end{DoxyParamCaption}
+)}\label{mutex_8h_adfcc3cbc6241355584b456416c22d7d7}
+
+
+Tries to lock a mutex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mutex} & The mutex to lock \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, \doxyref{sal\_\-mutex\_\-init()}{p.}{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879} returns 0. Otherwise, it returns an error number (See errno.h) \\
+\hline
+\end{DoxyRetVals}
+\index{mutex.h@{mutex.h}!sal\_\-mutex\_\-unlock@{sal\_\-mutex\_\-unlock}}
+\index{sal\_\-mutex\_\-unlock@{sal\_\-mutex\_\-unlock}!mutex.h@{mutex.h}}
+\subsubsection[{sal\_\-mutex\_\-unlock}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-mutex\_\-unlock (
+\begin{DoxyParamCaption}
+\item[{sal\_\-mutex\_\-t $\ast$}]{mutex}
+\end{DoxyParamCaption}
+)}\label{mutex_8h_a6ffe1fc49588225708a0f1a37e83c83f}
+
+
+Unlocks a mutex. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mutex} & The mutex to unlock \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, \doxyref{sal\_\-mutex\_\-init()}{p.}{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879} returns 0. Otherwise, it returns an error number (See errno.h) \\
+\hline
+\end{DoxyRetVals}

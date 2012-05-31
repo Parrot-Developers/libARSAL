@@ -1,3 +1,15 @@
+commit 2303cda0bc770b847a7542b8c55c83027fb99dc6
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Thu May 31 17:16:32 2012 +0200
+
+    Add instruction to compile and to generate documentation.
+
+commit d87087f3da3ee15b5a30c0d3ca49342110cf3bf2
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Thu May 31 17:11:33 2012 +0200
+
+    Doxygen support added and bug fix.
+
 commit 61f06c40977eba00fb6c934a2d27f7c6c7520cb7
 Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
 Date:   Thu May 31 16:27:27 2012 +0200

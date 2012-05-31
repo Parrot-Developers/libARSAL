@@ -14,7 +14,7 @@ libsal_a_HEADERS = ../Includes/libSAL/time.h ../Includes/libSAL/thread.h ../Incl
 libsal_a_SOURCES = $(libsal_a_HEADERS) ../Sources/time.c ../Sources/thread.c ../Sources/mutex.c  
 
 # ensure the distribution of the doxygen configuration file
-EXTRA_DIST = autogen.sh
+EXTRA_DIST = bootstrap
 
 # Doxygen support
 if HAVE_DOXYGEN

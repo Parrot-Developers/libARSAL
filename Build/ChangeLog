@@ -1,3 +1,9 @@
+commit 72a4e918ef7648f8c5f5865a693af4113d2b8716
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Thu May 31 17:33:19 2012 +0200
+
+    Add doxygen documentation.
+
 commit 2303cda0bc770b847a7542b8c55c83027fb99dc6
 Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
 Date:   Thu May 31 17:16:32 2012 +0200

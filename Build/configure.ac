@@ -49,9 +49,26 @@ AC_CHECK_HEADERS([pthread.h], [
 # Checks for programs.
 AC_PROG_RANLIB
 AC_PROG_CC
-AC_PROG_INSTALL
+AC_CHECK_PROGS([DOXYGEN], [doxygen])
+
+if test -z "$DOXYGEN";
+   then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
+else
+	AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
+	m4_include(doxygen.ac)
+	DX_HTML_FEATURE(ON)
+	DX_CHM_FEATURE(OFF)
+	DX_CHI_FEATURE(OFF)
+	DX_MAN_FEATURE(ON)
+	DX_RTF_FEATURE(OFF)
+	DX_XML_FEATURE(OFF)
+	DX_PDF_FEATURE(OFF)
+	DX_PS_FEATURE(OFF)
+	DX_INIT_DOXYGEN(libSAL, doxygen.cfg, ../Doc)
+fi
 
 # Checks for libraries.
+AC_FUNC_MALLOC
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -66,7 +83,16 @@ AC_SUBST([LDFLAGS])
 
 # Checks for library functions.
 
+
 # Generates Makefile
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
 
+echo "
+  ($PACKAGE_NAME) version $PACKAGE_VERSION
+  Prefix.........: $prefix
+  Debug Build....: $debug
+  C Compiler.....: $CXX $CFLAGS
+  Linker.........: $LD $LDFLAGS $LIBS
+  Doxygen........: ${DOXYGEN:-NONE}
+"

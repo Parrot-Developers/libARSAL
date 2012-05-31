@@ -4,6 +4,7 @@
  * @date 05/18/2012
  * @author frederic.dhaeyer@parrot.com
 */
+#include <stdlib.h>
 #include <config.h>
 #include <libSAL/mutex.h>
 #include <libSAL/time.h>

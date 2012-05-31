@@ -1,3 +1,22 @@
+commit 66e7e27b8979afa913afdbe7dec649991b512de1
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Thu May 31 16:14:45 2012 +0200
+
+    Some changes.
+
+commit f9439fb297768b418fd23cbf31b245cf5ea194cc
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Thu May 31 16:14:01 2012 +0200
+
+    Remove autogen.sh
+
+commit 8c0c119cf644fcb003b562fbb5b0eaec110b4d36
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Thu May 31 16:13:19 2012 +0200
+
+    Add doxygen management.
+    Chnage autogen.sh to bootstrap.
+
 commit d975528a3cf07766d680e00b1641fca7b31ede71
 Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
 Date:   Thu May 31 09:34:53 2012 +0200

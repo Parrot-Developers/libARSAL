@@ -1,0 +1,12 @@
+First draft of README file
+==========================
+
+To compile library :
+$cd Build
+$./bootstrap
+$./configure --prefix <path to install>
+$make
+$make install (if you want tro install library)
+
+To generate doxygen documentation :
+$make doxygen-doc

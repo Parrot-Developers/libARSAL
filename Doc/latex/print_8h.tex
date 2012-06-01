@@ -5,17 +5,34 @@
 This file contains headers about debug print abstraction layer.  
 
 
+{\ttfamily \#include $<$time.h$>$}\par
 \subsection*{Defines}
 \begin{DoxyCompactItemize}
 \item 
-\#define {\bfseries SAL\_\-PRINT}(...)~sal\_\-printf(\char`\"{}\%s:\%d -\/ \%s$\backslash$n\char`\"{}, \_\-\_\-FUNCTION\_\-\_\-, \_\-\_\-LINE\_\-\_\-, \_\-\_\-VA\_\-ARGS\_\-\_\-)\label{print_8h_ab5e5d99c66dfec321328e2b315c88cad}
+\#define {\bfseries SAL\_\-PRINT}(level,...)~sal\_\-print(level, \char`\"{}\%s \%d:\%s:\%d -\/ \%s$\backslash$n\char`\"{}, sal\_\-prefix\_\-table[level], time(NULL), \_\-\_\-FUNCTION\_\-\_\-, \_\-\_\-LINE\_\-\_\-, \_\-\_\-VA\_\-ARGS\_\-\_\-)\label{print_8h_abcc51dff3995c40fa6b7d53d385f9a62}
 
 \end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bf ePRINT\_\-LEVEL} \{ {\bf PRINT\_\-ERROR}, 
+{\bf PRINT\_\-WARNING}, 
+{\bf PRINT\_\-DEBUG}, 
+{\bf PRINT\_\-MAX}
+ \}
+\begin{DoxyCompactList}\small\item\em Output level. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int {\bf sal\_\-printf} (const char $\ast$format,...)
-\begin{DoxyCompactList}\small\item\em Convert a formatted output. \end{DoxyCompactList}\end{DoxyCompactItemize}
+int {\bfseries sal\_\-print} ({\bf ePRINT\_\-LEVEL} level, const char $\ast$format,...)\label{print_8h_af40aeac8b51d7a37f1578496051e03f6}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ {\bfseries sal\_\-prefix\_\-table} [$\,$]\label{print_8h_ac25f7c37b7cbbeeecab54734dc680d62}
+
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -27,26 +44,25 @@ This file contains headers about debug print abstraction layer. \begin{DoxyDate}
 \end{DoxyAuthor}
 
 
-\subsection{Function Documentation}
-\index{print.h@{print.h}!sal\_\-printf@{sal\_\-printf}}
-\index{sal\_\-printf@{sal\_\-printf}!print.h@{print.h}}
-\subsubsection[{sal\_\-printf}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-printf (
-\begin{DoxyParamCaption}
-\item[{const char $\ast$}]{format, }
-\item[{}]{...}
-\end{DoxyParamCaption}
-)}\label{print_8h_a1953fed94bc2ae57af9d46b0d080bc3c}
+\subsection{Enumeration Type Documentation}
+\index{print.h@{print.h}!ePRINT\_\-LEVEL@{ePRINT\_\-LEVEL}}
+\index{ePRINT\_\-LEVEL@{ePRINT\_\-LEVEL}!print.h@{print.h}}
+\subsubsection[{ePRINT\_\-LEVEL}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf ePRINT\_\-LEVEL}}\label{print_8h_acddc3b5b66b0c2a55c86dbab6cdc54a8}
 
 
-Convert a formatted output. 
+Output level. 
 
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{PRINT\_\-ERROR@{PRINT\_\-ERROR}!print.h@{print.h}}\index{print.h@{print.h}!PRINT\_\-ERROR@{PRINT\_\-ERROR}}\item[{\em 
+PRINT\_\-ERROR\label{print_8h_acddc3b5b66b0c2a55c86dbab6cdc54a8a3a1660cf56c26b930ad198eff12898ce}
+}]The error level, print on release and debug mode \index{PRINT\_\-WARNING@{PRINT\_\-WARNING}!print.h@{print.h}}\index{print.h@{print.h}!PRINT\_\-WARNING@{PRINT\_\-WARNING}}\item[{\em 
+PRINT\_\-WARNING\label{print_8h_acddc3b5b66b0c2a55c86dbab6cdc54a8abee3929de920502d92788a8576c641e2}
+}]The error level, print on release and debug mode \index{PRINT\_\-DEBUG@{PRINT\_\-DEBUG}!print.h@{print.h}}\index{print.h@{print.h}!PRINT\_\-DEBUG@{PRINT\_\-DEBUG}}\item[{\em 
+PRINT\_\-DEBUG\label{print_8h_acddc3b5b66b0c2a55c86dbab6cdc54a8aebc36e0d821ffb32ac8e3ce47624954a}
+}]The error level, print on debug mode only \index{PRINT\_\-MAX@{PRINT\_\-MAX}!print.h@{print.h}}\index{print.h@{print.h}!PRINT\_\-MAX@{PRINT\_\-MAX}}\item[{\em 
+PRINT\_\-MAX\label{print_8h_acddc3b5b66b0c2a55c86dbab6cdc54a8abcfd86e7b5398894417c085111d030a3}
+}]The maximum of enum, do not use ! \end{description}
+\end{Desc}
 
-\begin{DoxyParams}{Parameters}
-{\em format} & output format \\
-\hline
-\end{DoxyParams}
-
-\begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-printf()}{p.}{print_8h_a1953fed94bc2ae57af9d46b0d080bc3c} returns the number of characters printed. Otherwise, it returns a negative value. \\
-\hline
-\end{DoxyRetVals}

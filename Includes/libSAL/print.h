@@ -7,8 +7,27 @@
 //------------------------------
 #ifndef _PRINT_H_
 #define _PRINT_H_
+#include <time.h>
 
-#define SAL_PRINT(...)	sal_printf("%s:%d - %s\n", __FUNCTION__, __LINE__, __VA_ARGS__)
+/**
+ * @enum ePRINT_LEVEL
+ * @brief Output level
+*/
+typedef enum
+{
+	PRINT_ERROR, 	/**< The error level, print on release and debug mode */
+	PRINT_WARNING,	/**< The error level, print on release and debug mode */
+	PRINT_DEBUG,	/**< The error level, print on debug mode only */
+	PRINT_MAX,		/**< The maximum of enum, do not use !*/
+} ePRINT_LEVEL;
+
+extern const char *sal_prefix_table[];
+
+/**
+ * @fn SAL_PRINT(...)
+ * @brief print a specific output (i.e. "[ERR] 121545444:main:10 - My debug log")
+*/
+#define SAL_PRINT(level, ...) sal_print(level, "%s %d:%s:%d - %s\n", sal_prefix_table[level], time(NULL), __FUNCTION__, __LINE__, __VA_ARGS__)
 
 /**
  * @fn int sal_printf(const char *format, ...)
@@ -17,6 +36,6 @@
  * @param format output format
  * @retval On success, sal_printf() returns the number of characters printed. Otherwise, it returns a negative value.
  */
-int sal_printf(const char *format, ...);
+int sal_print(ePRINT_LEVEL level, const char *format, ...);
 
 #endif // _PRINT_H_

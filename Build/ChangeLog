@@ -1,3 +1,15 @@
+commit f656c1a986fa17a97c7d1039b9db0dd984ad5a99
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Fri Jun 1 13:55:41 2012 +0200
+
+    Add debug print layer.
+
+commit f5c1a830a5726796965bb2ca42fc87d23b4d166c
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Fri Jun 1 13:55:07 2012 +0200
+
+    Add debug print layer.
+
 commit cefdb4e14626c75adec178519653e114bb504ead
 Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
 Date:   Fri Jun 1 13:12:53 2012 +0200

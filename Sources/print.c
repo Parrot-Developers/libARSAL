@@ -9,13 +9,34 @@
 #include <stdarg.h>
 #include <libSAL/print.h>
 
-int sal_printf(const char *format, ...)
+const char* sal_prefix_table[PRINT_MAX] =
+{
+	[PRINT_ERROR] 	= "[ERR]",
+	[PRINT_WARNING] = "[WNG]",
+	[PRINT_DEBUG] 	= "[DBG]"
+};
+
+int sal_print(ePRINT_LEVEL level, const char *format, ...)
 {
 	int result = -1;
+
 	va_list va;
 	va_start(va, format);
-	result = vprintf(format, va);
-	va_end(va);
 
+	switch(level)
+	{
+		case PRINT_ERROR:
+		case PRINT_WARNING:
+#if defined(DEBUG)
+		case PRINT_DEBUG:
+#endif
+			result = vprintf(format, va);
+			break;
+
+		default:
+			break;
+	}
+
+	va_end(va);
 	return result;
 }

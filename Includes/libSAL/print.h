@@ -27,7 +27,7 @@ extern const char *sal_prefix_table[];
  * @fn SAL_PRINT(...)
  * @brief print a specific output (i.e. "[ERR] 121545444:main:10 - My debug log")
 */
-#define SAL_PRINT(level, ...) sal_print(level, "%s %d:%s:%d - %s\n", sal_prefix_table[level], time(NULL), __FUNCTION__, __LINE__, __VA_ARGS__)
+#define SAL_PRINT(level, format, ...) 	sal_print(level, "%s %d:%s:%d - " format, sal_prefix_table[level], time(NULL), __FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 /**
  * @fn int sal_printf(const char *format, ...)

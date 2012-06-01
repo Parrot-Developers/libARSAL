@@ -72,8 +72,8 @@ $(document).ready(initResizable);
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="define-members"></a>
 Defines</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abcc51dff3995c40fa6b7d53d385f9a62"></a><!-- doxytag: member="print.h::SAL_PRINT" ref="abcc51dff3995c40fa6b7d53d385f9a62" args="(level,...)" -->
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SAL_PRINT</b>(level,...)&#160;&#160;&#160;sal_print(level, &quot;%s %d:%s:%d - %s\n&quot;, sal_prefix_table[level], time(NULL), __FUNCTION__, __LINE__, __VA_ARGS__)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3d9093cccdef7b8de0404541d56c8c0"></a><!-- doxytag: member="print.h::SAL_PRINT" ref="ab3d9093cccdef7b8de0404541d56c8c0" args="(level, format,...)" -->
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>SAL_PRINT</b>(level, format,...)&#160;&#160;&#160;sal_print(level, &quot;%s %d:%s:%d - &quot; format, sal_prefix_table[level], time(NULL), __FUNCTION__, __LINE__, ##__VA_ARGS__)</td></tr>
 <tr><td colspan="2"><h2><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8">ePRINT_LEVEL</a> { <a class="el" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8a3a1660cf56c26b930ad198eff12898ce">PRINT_ERROR</a>, 
@@ -132,7 +132,7 @@ const char *&#160;</td><td class="memItemRight" valign="bottom"><b>sal_prefix_ta
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="print_8h.html">print.h</a>      </li>
-      <li class="footer">Generated on Fri Jun 1 2012 15:42:35 for libSAL by&#160;
+      <li class="footer">Generated on Fri Jun 1 2012 17:30:07 for libSAL by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

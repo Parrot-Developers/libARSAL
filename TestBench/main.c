@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <libSAL/mutex.h>
 #include <libSAL/thread.h>
+#include <libSAL/print.h>
 
 sal_mutex_t mutex;
 sal_cond_t cond;
@@ -9,13 +10,13 @@ int variable = 0;
 void *routine(void *arg)
 {
 	int i = 0;
-	printf("Routine started\n");
-	printf("mutex lock\n");
+	SAL_PRINT("Routine started\n");
+	SAL_PRINT("mutex lock\n");
 	sal_mutex_lock(&mutex);
 	variable = 1;
-	printf("mutex signal\n");
+	SAL_PRINT("mutex signal\n");
 	sal_cond_signal(&cond);
-	printf("mutex unlock\n");
+	SAL_PRINT("mutex unlock\n");
 	sal_mutex_unlock(&mutex);
 
 	while(i++ < 3)
@@ -28,37 +29,36 @@ int main(int argc, char **argv)
 {
 	sal_thread_t thread;
 
-	printf("mutex init\n");
+	SAL_PRINT("mutex init\n");
 	sal_mutex_init(&mutex);
 
-	printf("condition init\n");
+	SAL_PRINT("condition init\n");
 	sal_cond_init(&cond);
 
-	printf("thread create\n");
+	SAL_PRINT("thread create\n");
 	sal_thread_create(&thread, routine, NULL);
 
-	printf("Variable : %d\n", variable);
+	SAL_PRINT("Variable : %d\n", variable);
 
 	sal_thread_join(thread, NULL);
 
-	printf("mutex lock\n");
+	SAL_PRINT("mutex lock\n");
 	sal_mutex_lock(&mutex);
-	printf("mutex wait\n");
+	SAL_PRINT("mutex wait\n");
 	sal_cond_timedwait(&cond, &mutex, 1000);
 	//sal_cond_wait(&cond, &mutex);
-	printf("mutex unlock\n");
+	SAL_PRINT("mutex unlock\n");
 	sal_mutex_unlock(&mutex);
 
-	printf("Variable : %d\n", variable);
+	SAL_PRINT("Variable : %d\n", variable);
 
-	printf("condition destroy\n");
+	SAL_PRINT("condition destroy\n");
 	sal_cond_destroy(&cond);
 
-	printf("mutex destroy\n");
+	SAL_PRINT("mutex destroy\n");
 	sal_mutex_destroy(&mutex);
 
-	printf("thread destroy\n");
+	SAL_PRINT("thread destroy\n");
 	sal_thread_destroy(&thread);
 	return 0;
 }
-

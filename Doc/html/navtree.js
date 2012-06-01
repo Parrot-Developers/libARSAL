@@ -3,6 +3,7 @@ var NAVTREE =
   [ "libSAL", "index.html", [
     [ "File List", "files.html", [
       [ "mutex.h", "mutex_8h.html", null ],
+      [ "print.h", "print_8h.html", null ],
       [ "thread.h", "thread_8h.html", null ],
       [ "time.h", "time_8h.html", null ]
     ] ],

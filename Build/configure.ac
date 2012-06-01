@@ -37,12 +37,12 @@ CFLAGS="$CFLAGS -I../Includes"
 ##########################################################################
 # Check headers
 ##########################################################################
-AC_CHECK_HEADERS([stdlib.h string.h sys/time.h time.h stdio.h unistd.h sys/types.h])
+AC_CHECK_HEADERS([sys/time.h time.h stdio.h stdarg.h])
 
 # Checks for pthread.
 AC_CHECK_HEADERS([pthread.h], [
     AC_CHECK_LIB(pthread, pthread_create,
-	LIBS="$LIBS -lpthread", AC_MSG_ERROR(The pthread library is required in order to build the library!))
+	LIBS="$LIBS -pthread", AC_MSG_ERROR(The pthread library is required in order to build the library!))
 ], AC_MSG_ERROR(The pthread header is required in order to build the library!))
 
 ##########################################################################
@@ -91,7 +91,7 @@ AC_OUTPUT
 echo "
   ($PACKAGE_NAME) version $PACKAGE_VERSION
   Prefix.........: $prefix
-  Debug Build....: $debug
+  Debug Build....: $debugit
   C Compiler.....: $CXX $CFLAGS
   Linker.........: $LD $LDFLAGS $LIBS
   Doxygen........: ${DOXYGEN:-NONE}

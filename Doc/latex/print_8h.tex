@@ -1,0 +1,52 @@
+\section{print.h File Reference}
+\label{print_8h}\index{print.h@{print.h}}
+
+
+This file contains headers about debug print abstraction layer.  
+
+
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries SAL\_\-PRINT}(...)~sal\_\-printf(\char`\"{}\%s:\%d -\/ \%s$\backslash$n\char`\"{}, \_\-\_\-FUNCTION\_\-\_\-, \_\-\_\-LINE\_\-\_\-, \_\-\_\-VA\_\-ARGS\_\-\_\-)\label{print_8h_ab5e5d99c66dfec321328e2b315c88cad}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int {\bf sal\_\-printf} (const char $\ast$format,...)
+\begin{DoxyCompactList}\small\item\em Convert a formatted output. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file contains headers about debug print abstraction layer. \begin{DoxyDate}{Date}
+06/01/2012 
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+{\tt frederic.dhaeyer@parrot.com} 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\index{print.h@{print.h}!sal\_\-printf@{sal\_\-printf}}
+\index{sal\_\-printf@{sal\_\-printf}!print.h@{print.h}}
+\subsubsection[{sal\_\-printf}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-printf (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{format, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}\label{print_8h_a1953fed94bc2ae57af9d46b0d080bc3c}
+
+
+Convert a formatted output. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em format} & output format \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, \doxyref{sal\_\-printf()}{p.}{print_8h_a1953fed94bc2ae57af9d46b0d080bc3c} returns the number of characters printed. Otherwise, it returns a negative value. \\
+\hline
+\end{DoxyRetVals}

@@ -1,3 +1,9 @@
+commit 8dea3632d4306c4c65f90210657c162df124249e
+Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
+Date:   Thu May 31 18:35:50 2012 +0200
+
+    Add thread management.
+
 commit 72a4e918ef7648f8c5f5865a693af4113d2b8716
 Author: Frédéric D'HAEYER <frederic.dhaeyer@parrot.com>
 Date:   Thu May 31 17:33:19 2012 +0200

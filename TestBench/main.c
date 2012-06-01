@@ -18,7 +18,7 @@ void *routine(void *arg)
 	printf("mutex unlock\n");
 	sal_mutex_unlock(&mutex);
 
-	while(i++ < 10)
+	while(i++ < 3)
 		sleep(1);
 
 	return NULL;
@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 	printf("thread create\n");
 	sal_thread_create(&thread, routine, NULL);
 
-	printf("Thread : %p, variable : %d\n", thread, variable);
+	printf("Variable : %d\n", variable);
 
 	sal_thread_join(thread, NULL);
 
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 	printf("mutex unlock\n");
 	sal_mutex_unlock(&mutex);
 
-	printf("Thread : %p, variable : %d\n", thread, variable);
+	printf("Variable : %d\n", variable);
 
 	printf("condition destroy\n");
 	sal_cond_destroy(&cond);

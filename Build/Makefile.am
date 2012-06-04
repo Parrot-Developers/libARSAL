@@ -15,7 +15,7 @@ libsal_a_HEADERS = 	../Includes/libSAL/time.h 	\
 
 # the sources to add to the library and to add to the source distribution
 libsal_a_SOURCES = 	$(libsal_a_HEADERS) \
-					../Sources/time.c	\ 
+					../Sources/time.c	\
 					../Sources/thread.c \
 					../Sources/mutex.c  \
 					../Sources/print.c

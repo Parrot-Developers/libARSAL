@@ -2,6 +2,6 @@
 
 mkdir -p config 
 
-git log -v > ChangeLog
+# git log -v > ChangeLog
 
 autoreconf --force --install -I config 

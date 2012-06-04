@@ -5,7 +5,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR(config)
 
 # automake initialisation and check for minimal automake API version 1.9
-AM_INIT_AUTOMAKE([-Wall no-define])
+AM_INIT_AUTOMAKE([foreign -Wall -Werror])
 
 # use the C compiler for the following checks
 AC_LANG([C])
@@ -23,9 +23,11 @@ AC_MSG_RESULT([$debugit])
 
 if test x"$debugit" = x"yes"; then
     AC_DEFINE([DEBUG],[],[Debug Mode])
+    TARGET_DIR="Debug"
     CFLAGS="$CFLAGS -g -Wall -Werror -Wno-uninitialized -O0"
 else
     AC_DEFINE([NDEBUG],[],[No-debug Mode])
+    TARGET_DIR="Release"
     CFLAGS="$CFLAGS -O3"
 fi
 
@@ -91,8 +93,8 @@ AC_OUTPUT
 echo "
   ($PACKAGE_NAME) version $PACKAGE_VERSION
   Prefix.........: $prefix
-  Debug Build....: $debugit
-  C Compiler.....: $CXX $CFLAGS
+  Debug Build....: $TARGET_DIR
+  C Compiler.....: $CC $CFLAGS
   Linker.........: $LD $LDFLAGS $LIBS
   Doxygen........: ${DOXYGEN:-NONE}
 "

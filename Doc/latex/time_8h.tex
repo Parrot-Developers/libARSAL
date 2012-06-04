@@ -43,11 +43,13 @@ This file contains headers about time abstraction layer. \begin{DoxyDate}{Date}
 )}\label{time_8h_afc92eb02ef4fa20e3b1f1ecc1acc1349}
 {\bfseries Value:}
 \begin{DoxyCode}
+do                                                                                      \
+      
 {                                                                                       \
       
         (tv)->tv_sec = (ts)->tv_sec;                    \
     (tv)->tv_usec = (ts)->tv_nsec / 1000;       \
-}
+} while(0)
 \end{DoxyCode}
 \index{time.h@{time.h}!TIMEVAL\_\-TO\_\-TIMESPEC@{TIMEVAL\_\-TO\_\-TIMESPEC}}
 \index{TIMEVAL\_\-TO\_\-TIMESPEC@{TIMEVAL\_\-TO\_\-TIMESPEC}!time.h@{time.h}}
@@ -59,9 +61,11 @@ This file contains headers about time abstraction layer. \begin{DoxyDate}{Date}
 )}\label{time_8h_a584277e2b3df9a5db0e93000b09df811}
 {\bfseries Value:}
 \begin{DoxyCode}
+do                                                                                      \
+      
 {                                                                                       \
       
         (ts)->tv_sec = (tv)->tv_sec;                    \
     (ts)->tv_nsec = (tv)->tv_usec * 1000;       \
-}
+} while(0)
 \end{DoxyCode}

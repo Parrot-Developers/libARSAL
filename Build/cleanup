@@ -23,6 +23,7 @@ rm -rf \
     autom4te.cache \
     Debug \
     Release \
+    ../Library \
     config \
     `find . -name '.deps'`	\
     `find . -name '*.*~'`

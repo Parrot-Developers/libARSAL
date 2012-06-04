@@ -23,13 +23,12 @@ AC_MSG_RESULT([$debugit])
 
 if test x"$debugit" = x"yes"; then
     AC_DEFINE([DEBUG],[],[Debug Mode])
-    TARGET_DIR="Debug"
     CFLAGS="$CFLAGS -g -Wall -Werror -Wno-uninitialized -O0"
 else
     AC_DEFINE([NDEBUG],[],[No-debug Mode])
-    TARGET_DIR="Release"
     CFLAGS="$CFLAGS -O3"
 fi
+AM_CONDITIONAL([DEBUG_MODE], [test "$debugit" = "yes"])
 
 ##########################################################################
 # Define includes directories
@@ -93,7 +92,7 @@ AC_OUTPUT
 echo "
   ($PACKAGE_NAME) version $PACKAGE_VERSION
   Prefix.........: $prefix
-  Debug Build....: $TARGET_DIR
+  Debug Build....: $DEBUG_MODE
   C Compiler.....: $CC $CFLAGS
   Linker.........: $LD $LDFLAGS $LIBS
   Doxygen........: ${DOXYGEN:-NONE}

@@ -21,6 +21,8 @@ rm -f \
 rm -rf \
     doxygen-doc \
     autom4te.cache \
+    Debug \
+    Release \
     config \
     `find . -name '.deps'`	\
     `find . -name '*.*~'`

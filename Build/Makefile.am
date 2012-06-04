@@ -16,15 +16,15 @@ SOURCE_FILES 	= 	$(HEADER_FILES)		\
 
 # the library names to build (note we are building static libs only)
 if DEBUG_MODE
-lib_LIBRARIES 			= libsal_dbg.a
-libsal_dbg_adir 		= $(includedir)/libsal
-libsal_dbg_a_HEADERS 	= $(HEADER_FILES)
-libsal_dbg_a_SOURCES 	= $(SOURCE_FILES)
+lib_LIBRARIES 			= Debug/libsal.a
+Debug_libsal_adir 		= $(includedir)/libsal
+Debug_libsal_a_HEADERS 	= $(HEADER_FILES)
+Debug_libsal_a_SOURCES 	= $(SOURCE_FILES)
 else
-lib_LIBRARIES 		= libsal.a
-libsal_adir 		= $(includedir)/libsal
-libsal_a_HEADERS 	= $(HEADER_FILES)
-libsal_a_SOURCES 	= $(SOURCE_FILES)
+lib_LIBRARIES 				= Release/libsal.a
+Release_libsal_adir 		= $(includedir)/libsal
+Release_libsal_a_HEADERS 	= $(HEADER_FILES)
+Release_libsal_a_SOURCES 	= $(SOURCE_FILES)
 endif
 
 # ensure the distribution of the doxygen configuration file
@@ -35,3 +35,7 @@ if HAVE_DOXYGEN
 include doxygen.am
 EXTRA_DIST += doxygen.ac doxygen.am $(DX_CONFIG)
 endif
+
+display:
+	@echo TARGET_DIR=$(TARGET_DIR)
+	

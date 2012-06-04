@@ -1,8 +1,6 @@
 ###############################################################################
 # THE LIBRARIES TO BUILD
 ###############################################################################
-builddir=@builddir@
-
 # the list of header files that belong to the library (to be installed later)
 HEADER_FILES	=	../Includes/libSAL/time.h 	\
 					../Includes/libSAL/thread.h \
@@ -37,7 +35,4 @@ if HAVE_DOXYGEN
 include doxygen.am
 EXTRA_DIST += doxygen.ac doxygen.am $(DX_CONFIG)
 endif
-
-display:
-	@echo builddir=$(builddir)
 	

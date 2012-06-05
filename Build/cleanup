@@ -26,4 +26,5 @@ rm -rf \
     ../Library \
     config \
     `find . -name '.deps'`	\
+    `find . -name '.dirstamp'`	\    
     `find . -name '*.*~'`

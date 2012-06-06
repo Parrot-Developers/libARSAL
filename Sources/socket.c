@@ -5,6 +5,7 @@
  * @author frederic.dhaeyer@parrot.com
 */
 #include <config.h>
+#include <stdlib.h>
 #include <libSAL/socket.h>
 
 #if defined(HAVE_SYS_SOCKET_H)
@@ -89,6 +90,11 @@ int sal_sendto(int sockfd, const void *buf, int buflen, int flags, const struct 
 	return result;
 }
 
+int sal_send(int sockfd, const void *buf, int buflen, int flags)
+{
+	return sal_sendto(sockfd, buf, buflen, flags, NULL, 0);
+}
+
 int sal_recvfrom(int sockfd, void *buf, int buflen, int flags, struct sockaddr *src_addr, int *addrlen)
 {
 	int result = -1;
@@ -98,6 +104,11 @@ int sal_recvfrom(int sockfd, void *buf, int buflen, int flags, struct sockaddr *
 #endif
 
 	return result;
+}
+
+int sal_recv(int sockfd, void *buf, int buflen, int flags)
+{
+	return sal_recvfrom(sockfd, buf, buflen, flags, NULL, 0);
 }
 
 int sal_close(int sockfd)

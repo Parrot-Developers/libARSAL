@@ -28,7 +28,11 @@ int {\bf sal\_\-connect} (int sockfd, const struct sockaddr $\ast$addr, int addr
 \begin{DoxyCompactList}\small\item\em Initiate a connection on a socket, If the socket sock is of type SOCK\_\-TYPE\_\-DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SAL\_\-SOCK\_\-TYPE\_\-STREAM, this call attempts to make a connection to the socket that is bound to the address specified by addr. \end{DoxyCompactList}\item 
 int {\bf sal\_\-sendto} (int sockfd, const void $\ast$buf, int buflen, int flags, const struct sockaddr $\ast$dest\_\-addr, int addrlen)
 \begin{DoxyCompactList}\small\item\em Transmit a message on a socket If \doxyref{sal\_\-sendto()}{p.}{socket_8h_a9adfca23c7ccdacc311b94faa9218a1b} is used on a connection-\/mode (SAL\_\-SOCK\_\-TYPE\_\-STREAM) socket, the arguments dest\_\-addr and addrlen are ignored (and the error EISCONN may be returned when they are not NULL and 0) Otherwise, the target address is given by dest\_\-addr with addrlen specifying its size. \end{DoxyCompactList}\item 
+int {\bf sal\_\-send} (int sockfd, const void $\ast$buf, int buflen, int flags)
+\begin{DoxyCompactList}\small\item\em Transmit a message on a socket. \end{DoxyCompactList}\item 
 int {\bf sal\_\-recvfrom} (int sockfd, void $\ast$buf, int buflen, int flags, struct sockaddr $\ast$src\_\-addr, int $\ast$addrlen)
+\begin{DoxyCompactList}\small\item\em Receive a message on a socket. \end{DoxyCompactList}\item 
+int {\bf sal\_\-recv} (int sockfd, void $\ast$buf, int buflen, int flags)
 \begin{DoxyCompactList}\small\item\em Receive a message on a socket. \end{DoxyCompactList}\item 
 int {\bf sal\_\-close} (int sockfd)
 \begin{DoxyCompactList}\small\item\em Close a socket. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -92,6 +96,36 @@ Initiate a connection on a socket, If the socket sock is of type SOCK\_\-TYPE\_\
 {\em On} & success, 0 is returned. Otherwise, -\/1 is returned and errno is set appropriately. (See errno.h) \\
 \hline
 \end{DoxyRetVals}
+\index{socket.h@{socket.h}!sal\_\-recv@{sal\_\-recv}}
+\index{sal\_\-recv@{sal\_\-recv}!socket.h@{socket.h}}
+\subsubsection[{sal\_\-recv}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-recv (
+\begin{DoxyParamCaption}
+\item[{int}]{sockfd, }
+\item[{void $\ast$}]{buf, }
+\item[{int}]{buflen, }
+\item[{int}]{flags}
+\end{DoxyParamCaption}
+)}\label{socket_8h_aa1ac9dd77966d1a23867e7c1c2c49c0b}
+
+
+Receive a message on a socket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sockfd} & The socket descriptor used to send \\
+\hline
+{\em buf} & The buffer to fill with data received \\
+\hline
+{\em buflen} & The buffer size \\
+\hline
+{\em flags} & The bitwise OR of zero or more of the flags SAL\_\-SOCK\_\-FLAGS\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, the number of bytes received is returned. 0 is returned when the peer has performed an orderly shutdow. Otherwise -\/1 is returned if an error occurred and errno is set appropriately. (See errno.h). \\
+\hline
+\end{DoxyRetVals}
 \index{socket.h@{socket.h}!sal\_\-recvfrom@{sal\_\-recvfrom}}
 \index{sal\_\-recvfrom@{sal\_\-recvfrom}!socket.h@{socket.h}}
 \subsubsection[{sal\_\-recvfrom}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-recvfrom (
@@ -126,6 +160,36 @@ Receive a message on a socket.
 
 \begin{DoxyRetVals}{Return values}
 {\em On} & success, the number of bytes received is returned. 0 is returned when the peer has performed an orderly shutdow. Otherwise -\/1 is returned if an error occurred and errno is set appropriately. (See errno.h). \\
+\hline
+\end{DoxyRetVals}
+\index{socket.h@{socket.h}!sal\_\-send@{sal\_\-send}}
+\index{sal\_\-send@{sal\_\-send}!socket.h@{socket.h}}
+\subsubsection[{sal\_\-send}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-send (
+\begin{DoxyParamCaption}
+\item[{int}]{sockfd, }
+\item[{const void $\ast$}]{buf, }
+\item[{int}]{buflen, }
+\item[{int}]{flags}
+\end{DoxyParamCaption}
+)}\label{socket_8h_a7d4446594c3ae4595f06a83cc9cfa8f0}
+
+
+Transmit a message on a socket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sockfd} & The socket descriptor used to send \\
+\hline
+{\em buf} & The buffer to send \\
+\hline
+{\em buflen} & The buffer size \\
+\hline
+{\em flags} & The bitwise OR of zero or more of the flags SAL\_\-SOCK\_\-FLAGS\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, 0 is returned. Otherwise, -\/1 is returned and errno is set appropriately. (See errno.h) \\
 \hline
 \end{DoxyRetVals}
 \index{socket.h@{socket.h}!sal\_\-sendto@{sal\_\-sendto}}

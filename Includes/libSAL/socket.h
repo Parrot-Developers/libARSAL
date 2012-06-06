@@ -77,6 +77,18 @@ int sal_connect(int sockfd, const struct sockaddr *addr, int addrlen);
 int sal_sendto(int sockfd, const void *buf, int buflen, int flags, const struct sockaddr *dest_addr, int addrlen);
 
 /**
+ * @brief Transmit a message on a socket
+ *
+ * @param sockfd The socket descriptor used to send
+ * @param buf The buffer to send
+ * @param buflen The buffer size
+ * @param flags The bitwise OR of zero or more of the flags SAL_SOCK_FLAGS
+ *
+ * @retval On success, 0 is returned. Otherwise, -1 is returned and errno is set appropriately. (See errno.h)
+ */
+int sal_send(int sockfd, const void *buf, int buflen, int flags);
+
+/**
  * @brief Receive a message on a socket
  *
  * @param sockfd The socket descriptor used to send
@@ -90,6 +102,19 @@ int sal_sendto(int sockfd, const void *buf, int buflen, int flags, const struct 
  * Otherwise -1 is returned if an error occurred and errno is set appropriately. (See errno.h).
  */
 int sal_recvfrom(int sockfd, void *buf, int buflen, int flags, struct sockaddr *src_addr, int *addrlen);
+
+/**
+ * @brief Receive a message on a socket
+ *
+ * @param sockfd The socket descriptor used to send
+ * @param buf The buffer to fill with data received
+ * @param buflen The buffer size
+ * @param flags The bitwise OR of zero or more of the flags SAL_SOCK_FLAGS
+ *
+ * @retval On success, the number of bytes received is returned. 0 is returned when the peer has performed an orderly shutdow.
+ * Otherwise -1 is returned if an error occurred and errno is set appropriately. (See errno.h).
+ */
+int sal_recv(int sockfd, void *buf, int buflen, int flags);
 
 /**
  * @brief Close a socket

@@ -63,21 +63,16 @@ AC_DISABLE_SHARED
 AC_PROG_LIBTOOL
 
 AC_CHECK_PROGS([DOXYGEN], [doxygen])
-
-if test -z "$DOXYGEN";
-   then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
-else
-	m4_include(doxygen.ac)
-	DX_HTML_FEATURE(ON)
-	DX_CHM_FEATURE(OFF)
-	DX_CHI_FEATURE(OFF)
-	DX_MAN_FEATURE(OFF)
-	DX_RTF_FEATURE(OFF)
-	DX_XML_FEATURE(OFF)
-	DX_PDF_FEATURE(OFF)
-	DX_PS_FEATURE(OFF)
-	DX_INIT_DOXYGEN([libSAL], [doxygen.cfg], [../Doc])
-fi
+m4_include(doxygen.ac)
+DX_HTML_FEATURE(ON)
+DX_CHM_FEATURE(OFF)
+DX_CHI_FEATURE(OFF)
+DX_MAN_FEATURE(OFF)
+DX_RTF_FEATURE(OFF)
+DX_XML_FEATURE(OFF)
+DX_PDF_FEATURE(OFF)
+DX_PS_FEATURE(OFF)
+DX_INIT_DOXYGEN([libSAL], [doxygen.cfg], [../Doc])
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 
 # Checks for libraries.

@@ -42,8 +42,10 @@ AC_CHECK_HEADERS([sys/time.h time.h stdio.h stdarg.h])
 
 # Checks for pthread.h
 AC_CHECK_HEADERS([pthread.h], [
-    AC_CHECK_LIB(pthread, pthread_create,
-	LIBS="$LIBS -pthread", AC_MSG_ERROR(The pthread library is required in order to build the library!))
+    AC_CHECK_FUNC(pthread_create, , [
+        AC_CHECK_LIB(pthread, pthread_create,
+        LIBS="$LIBS -pthread", AC_MSG_ERROR(The pthread library is required in order to build the library!))
+    ])
 ], AC_MSG_ERROR(The pthread header is required in order to build the library!))
 
 # Checks for socket.h

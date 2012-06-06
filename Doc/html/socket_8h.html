@@ -64,7 +64,8 @@ $(document).ready(initResizable);
 
 <p>This file contains headers about socket abstraction layer.  
 <a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &lt;sys/types.h&gt;</code><br/>
+</div>
 <p><a href="socket_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="enum-members"></a>
@@ -84,7 +85,7 @@ Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#ab0ae239fb4a26f93bbc592b9042b80a3">sal_socket</a> (<a class="el" href="socket_8h.html#a20f1988c7e24cceef9c27f006f06a266">eSAL_SOCK_DOMAIN</a> domain, <a class="el" href="socket_8h.html#a72560529b927cc6546ef157dd7a16573">eSAL_SOCK_TYPE</a> type, int protocol)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an endpoint for communication and returns a descriptor.  <a href="#ab0ae239fb4a26f93bbc592b9042b80a3"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a760a8164f27a4af45b4749b4fcde3ea2">sal_connect</a> (int sockfd, const struct sockaddr *addr, int addrlen)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiate a connection on a socket, If the socket sock is of type SOCK_DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SOCK_STREAM or SOCK_SEQPACKET, this call attempts to make a connection to the socket that is bound to the address specified by addr.  <a href="#a760a8164f27a4af45b4749b4fcde3ea2"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiate a connection on a socket, If the socket sock is of type SOCK_TYPE_DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SAL_SOCK_TYPE_STREAM, this call attempts to make a connection to the socket that is bound to the address specified by addr.  <a href="#a760a8164f27a4af45b4749b4fcde3ea2"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>This file contains headers about socket abstraction layer. </p>
@@ -122,10 +123,10 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Initiate a connection on a socket, If the socket sock is of type SOCK_DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SOCK_STREAM or SOCK_SEQPACKET, this call attempts to make a connection to the socket that is bound to the address specified by addr. </p>
+<p>Initiate a connection on a socket, If the socket sock is of type SOCK_TYPE_DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SAL_SOCK_TYPE_STREAM, this call attempts to make a connection to the socket that is bound to the address specified by addr. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">sock</td><td>The socket to connect </td></tr>
+    <tr><td class="paramname">sockfd</td><td>The socket to connect </td></tr>
     <tr><td class="paramname">addr</td><td>The address to connect. </td></tr>
     <tr><td class="paramname">addrlen</td><td>The size of the addr </td></tr>
   </table>
@@ -194,7 +195,7 @@ Functions</h2></td></tr>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="socket_8h.html">socket.h</a>      </li>
-      <li class="footer">Generated on Wed Jun 6 2012 10:48:37 for libSAL by&#160;
+      <li class="footer">Generated on Wed Jun 6 2012 11:11:56 for libSAL by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

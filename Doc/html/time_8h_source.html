@@ -66,32 +66,34 @@ $(document).ready(initResizable);
 <a name="l00011"></a>00011 <span class="preprocessor">#include &lt;unistd.h&gt;</span>
 <a name="l00012"></a>00012 
 <a name="l00013"></a>00013 <span class="preprocessor">#ifndef TIMEVAL_TO_TIMESPEC</span>
-<a name="l00014"></a>00014 <span class="preprocessor"></span><span class="preprocessor">#define TIMEVAL_TO_TIMESPEC(tv, ts)             \</span>
-<a name="l00015"></a>00015 <span class="preprocessor">do                                                                                      \</span>
-<a name="l00016"></a>00016 <span class="preprocessor">{                                                                                       \</span>
-<a name="l00017"></a>00017 <span class="preprocessor">        (ts)-&gt;tv_sec = (tv)-&gt;tv_sec;                    \</span>
-<a name="l00018"></a>00018 <span class="preprocessor">    (ts)-&gt;tv_nsec = (tv)-&gt;tv_usec * 1000;       \</span>
-<a name="l00019"></a>00019 <span class="preprocessor">} while(0)</span>
-<a name="l00020"></a>00020 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
-<a name="l00021"></a>00021 <span class="preprocessor"></span>
-<a name="l00022"></a>00022 <span class="preprocessor">#ifndef TIMESPEC_TO_TIMEVAL</span>
-<a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#define TIMESPEC_TO_TIMEVAL(ts, tv)             \</span>
-<a name="l00024"></a>00024 <span class="preprocessor">do                                                                                      \</span>
-<a name="l00025"></a>00025 <span class="preprocessor">{                                                                                       \</span>
-<a name="l00026"></a>00026 <span class="preprocessor">        (tv)-&gt;tv_sec = (ts)-&gt;tv_sec;                    \</span>
-<a name="l00027"></a>00027 <span class="preprocessor">    (tv)-&gt;tv_usec = (ts)-&gt;tv_nsec / 1000;       \</span>
-<a name="l00028"></a>00028 <span class="preprocessor">} while(0)</span>
-<a name="l00029"></a>00029 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
-<a name="l00030"></a>00030 <span class="preprocessor"></span>
-<a name="l00039"></a>00039 <span class="keywordtype">int</span> gettimeofday(<span class="keyword">struct</span> timeval *tv, <span class="keyword">struct</span> timezone *tz);
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041 <span class="preprocessor">#endif // _TIME_H_</span>
+<a name="l00014"></a>00014 <span class="preprocessor"></span>
+<a name="l00017"></a><a class="code" href="time_8h.html#a584277e2b3df9a5db0e93000b09df811">00017</a> <span class="preprocessor">#define TIMEVAL_TO_TIMESPEC(tv, ts)             \</span>
+<a name="l00018"></a>00018 <span class="preprocessor">do                                                                                      \</span>
+<a name="l00019"></a>00019 <span class="preprocessor">{                                                                                       \</span>
+<a name="l00020"></a>00020 <span class="preprocessor">        (ts)-&gt;tv_sec = (tv)-&gt;tv_sec;                    \</span>
+<a name="l00021"></a>00021 <span class="preprocessor">    (ts)-&gt;tv_nsec = (tv)-&gt;tv_usec * 1000;       \</span>
+<a name="l00022"></a>00022 <span class="preprocessor">} while(0)</span>
+<a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00024"></a>00024 <span class="preprocessor"></span>
+<a name="l00025"></a>00025 <span class="preprocessor">#ifndef TIMESPEC_TO_TIMEVAL</span>
+<a name="l00026"></a>00026 <span class="preprocessor"></span>
+<a name="l00029"></a><a class="code" href="time_8h.html#afc92eb02ef4fa20e3b1f1ecc1acc1349">00029</a> <span class="preprocessor">#define TIMESPEC_TO_TIMEVAL(ts, tv)             \</span>
+<a name="l00030"></a>00030 <span class="preprocessor">do                                                                                      \</span>
+<a name="l00031"></a>00031 <span class="preprocessor">{                                                                                       \</span>
+<a name="l00032"></a>00032 <span class="preprocessor">        (tv)-&gt;tv_sec = (ts)-&gt;tv_sec;                    \</span>
+<a name="l00033"></a>00033 <span class="preprocessor">    (tv)-&gt;tv_usec = (ts)-&gt;tv_nsec / 1000;       \</span>
+<a name="l00034"></a>00034 <span class="preprocessor">} while(0)</span>
+<a name="l00035"></a>00035 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00036"></a>00036 <span class="preprocessor"></span>
+<a name="l00044"></a>00044 <span class="keywordtype">int</span> <a class="code" href="time_8h.html#aaf2d0a99430a6d5253b8c395c30ca7e3" title="Get the time as well as a timezone.">gettimeofday</a>(<span class="keyword">struct</span> timeval *tv, <span class="keyword">struct</span> timezone *tz);
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046 <span class="preprocessor">#endif // _TIME_H_</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="time_8h.html">time.h</a>      </li>
-      <li class="footer">Generated on Wed Jun 6 2012 10:48:37 for libSAL by&#160;
+      <li class="footer">Generated on Wed Jun 6 2012 11:11:56 for libSAL by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

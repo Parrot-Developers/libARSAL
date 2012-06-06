@@ -8,10 +8,17 @@
 #define _SOCKET_H_
 #include <sys/types.h>
 
+/**
+ * @brief Structure used to store most addresses.
+ */
 struct sockaddr;
 
 /**
- * @enum eSAL_SOCK_DOMAIN
+ * @brief Socket address, internet style.
+ */
+struct sockaddr_in;
+
+/**
  * @brief Socket domains
 */
 typedef enum
@@ -22,7 +29,6 @@ typedef enum
 } eSAL_SOCK_DOMAIN;
 
 /**
- * @enum eSAL_SOCK_TYPE
  * @brief Socket types
 */
 typedef enum
@@ -33,7 +39,6 @@ typedef enum
 } eSAL_SOCK_TYPE;
 
 /**
- * @fn int sal_socket(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, int protocol)
  * @brief Creates an endpoint for communication and returns a descriptor.
  *
  * @param domain The communication domain
@@ -44,11 +49,10 @@ typedef enum
 int sal_socket(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, int protocol);
 
 /**
- * @fn int sal_connect(int sockfd, const struct sockaddr *addr, int addrlen)
  * @brief Initiate a connection on a socket,
- * If the socket sock is of type SOCK_DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received.
- * If the socket is of  type  SOCK_STREAM  or  SOCK_SEQPACKET, this call attempts to make a connection to the socket that is bound to the address specified by addr.
- * @param sock The socket to connect
+ * If the socket sock is of type SOCK_TYPE_DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received.
+ * If the socket is of type SAL_SOCK_TYPE_STREAM, this call attempts to make a connection to the socket that is bound to the address specified by addr.
+ * @param sockfd The socket to connect
  * @param addr The address to connect.
  * @param addrlen The size of the addr
  * @retval On success, 0 is returned. Otherwise, -1 is returned and errno is set appropriately. (See errno.h)

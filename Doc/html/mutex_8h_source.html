@@ -62,38 +62,39 @@ $(document).ready(initResizable);
 <a name="l00007"></a>00007 <span class="preprocessor">#ifndef _MUTEX_H_</span>
 <a name="l00008"></a>00008 <span class="preprocessor"></span><span class="preprocessor">#define _MUTEX_H_</span>
 <a name="l00009"></a>00009 <span class="preprocessor"></span>
-<a name="l00010"></a>00010 <span class="keyword">typedef</span> <span class="keywordtype">void</span>* sal_mutex_t;
-<a name="l00011"></a>00011 <span class="keyword">typedef</span> <span class="keywordtype">void</span>* sal_cond_t;
-<a name="l00012"></a>00012 
-<a name="l00020"></a>00020 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#a97c2c1e2caff058b6d5832c6cf9c7879" title="Initializes a mutex.">sal_mutex_init</a>(sal_mutex_t *mutex);
-<a name="l00021"></a>00021 
-<a name="l00029"></a>00029 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#ab539850efe78dd90ceba327d9c13145a" title="Destroys a mutex.">sal_mutex_destroy</a>(sal_mutex_t *mutex);
-<a name="l00030"></a>00030 
-<a name="l00038"></a>00038 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#ad5acc2c9f6cced0765f3ecc2b18add5a" title="Locks a mutex.">sal_mutex_lock</a>(sal_mutex_t *mutex);
-<a name="l00039"></a>00039 
-<a name="l00047"></a>00047 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#adfcc3cbc6241355584b456416c22d7d7" title="Tries to lock a mutex.">sal_mutex_trylock</a>(sal_mutex_t *mutex);
-<a name="l00048"></a>00048 
-<a name="l00056"></a>00056 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#a6ffe1fc49588225708a0f1a37e83c83f" title="Unlocks a mutex.">sal_mutex_unlock</a>(sal_mutex_t *mutex);
-<a name="l00057"></a>00057 
-<a name="l00065"></a>00065 <span class="keywordtype">int</span> sal_cond_init(sal_cond_t *cond);
-<a name="l00066"></a>00066 
-<a name="l00074"></a>00074 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#ac17031d0d2cffcd2dce9f9335e011ea4" title="Destroy a condition.">sal_cond_destroy</a>(sal_cond_t *cond);
+<a name="l00013"></a><a class="code" href="mutex_8h.html#ae44477e0b3650f16fc7a41f2949ee5b6">00013</a> <span class="keyword">typedef</span> <span class="keywordtype">void</span>* <a class="code" href="mutex_8h.html#ae44477e0b3650f16fc7a41f2949ee5b6" title="Define a mutex type.">sal_mutex_t</a>;
+<a name="l00014"></a>00014 
+<a name="l00018"></a><a class="code" href="mutex_8h.html#a942754308e0a64488c07dafa7d7c7ff7">00018</a> <span class="keyword">typedef</span> <span class="keywordtype">void</span>* <a class="code" href="mutex_8h.html#a942754308e0a64488c07dafa7d7c7ff7" title="Define a condition type.">sal_cond_t</a>;
+<a name="l00019"></a>00019 
+<a name="l00026"></a>00026 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#a97c2c1e2caff058b6d5832c6cf9c7879" title="Initializes a mutex.">sal_mutex_init</a>(<a class="code" href="mutex_8h.html#ae44477e0b3650f16fc7a41f2949ee5b6" title="Define a mutex type.">sal_mutex_t</a> *mutex);
+<a name="l00027"></a>00027 
+<a name="l00034"></a>00034 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#ab539850efe78dd90ceba327d9c13145a" title="Destroys a mutex.">sal_mutex_destroy</a>(<a class="code" href="mutex_8h.html#ae44477e0b3650f16fc7a41f2949ee5b6" title="Define a mutex type.">sal_mutex_t</a> *mutex);
+<a name="l00035"></a>00035 
+<a name="l00042"></a>00042 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#ad5acc2c9f6cced0765f3ecc2b18add5a" title="Locks a mutex.">sal_mutex_lock</a>(<a class="code" href="mutex_8h.html#ae44477e0b3650f16fc7a41f2949ee5b6" title="Define a mutex type.">sal_mutex_t</a> *mutex);
+<a name="l00043"></a>00043 
+<a name="l00050"></a>00050 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#adfcc3cbc6241355584b456416c22d7d7" title="Tries to lock a mutex.">sal_mutex_trylock</a>(<a class="code" href="mutex_8h.html#ae44477e0b3650f16fc7a41f2949ee5b6" title="Define a mutex type.">sal_mutex_t</a> *mutex);
+<a name="l00051"></a>00051 
+<a name="l00058"></a>00058 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#a6ffe1fc49588225708a0f1a37e83c83f" title="Unlocks a mutex.">sal_mutex_unlock</a>(<a class="code" href="mutex_8h.html#ae44477e0b3650f16fc7a41f2949ee5b6" title="Define a mutex type.">sal_mutex_t</a> *mutex);
+<a name="l00059"></a>00059 
+<a name="l00066"></a>00066 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#a1ee1a57854232391f226f17881018b17" title="Initializes a condition.">sal_cond_init</a>(<a class="code" href="mutex_8h.html#a942754308e0a64488c07dafa7d7c7ff7" title="Define a condition type.">sal_cond_t</a> *cond);
+<a name="l00067"></a>00067 
+<a name="l00074"></a>00074 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#ac17031d0d2cffcd2dce9f9335e011ea4" title="Destroy a condition.">sal_cond_destroy</a>(<a class="code" href="mutex_8h.html#a942754308e0a64488c07dafa7d7c7ff7" title="Define a condition type.">sal_cond_t</a> *cond);
 <a name="l00075"></a>00075 
-<a name="l00084"></a>00084 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#a601882a498ec42519466e12e3fa06cdc" title="Wait on a condition.">sal_cond_wait</a>(sal_cond_t *cond, sal_mutex_t *mutex);
-<a name="l00085"></a>00085 
-<a name="l00095"></a>00095 <span class="keywordtype">int</span> sal_cond_timedwait(sal_cond_t *cond, sal_mutex_t *mutex, <span class="keywordtype">int</span> timeout);
-<a name="l00096"></a>00096 
-<a name="l00104"></a>00104 <span class="keywordtype">int</span> sal_cond_signal(sal_cond_t *cond);
-<a name="l00105"></a>00105 
-<a name="l00113"></a>00113 <span class="keywordtype">int</span> sal_cond_broadcast(sal_cond_t *cond);
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115 <span class="preprocessor">#endif // _MUTEX_H_</span>
+<a name="l00083"></a>00083 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#a601882a498ec42519466e12e3fa06cdc" title="Wait on a condition.">sal_cond_wait</a>(<a class="code" href="mutex_8h.html#a942754308e0a64488c07dafa7d7c7ff7" title="Define a condition type.">sal_cond_t</a> *cond, <a class="code" href="mutex_8h.html#ae44477e0b3650f16fc7a41f2949ee5b6" title="Define a mutex type.">sal_mutex_t</a> *mutex);
+<a name="l00084"></a>00084 
+<a name="l00093"></a>00093 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#ad3ed8ddb4fd564c8a6d7323df5f1b674" title="Wait on a condition and returns error.">sal_cond_timedwait</a>(<a class="code" href="mutex_8h.html#a942754308e0a64488c07dafa7d7c7ff7" title="Define a condition type.">sal_cond_t</a> *cond, <a class="code" href="mutex_8h.html#ae44477e0b3650f16fc7a41f2949ee5b6" title="Define a mutex type.">sal_mutex_t</a> *mutex, <span class="keywordtype">int</span> timeout);
+<a name="l00094"></a>00094 
+<a name="l00101"></a>00101 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#a52144244638615a92345e37d19fd12c5" title="Signal a condition.">sal_cond_signal</a>(<a class="code" href="mutex_8h.html#a942754308e0a64488c07dafa7d7c7ff7" title="Define a condition type.">sal_cond_t</a> *cond);
+<a name="l00102"></a>00102 
+<a name="l00109"></a>00109 <span class="keywordtype">int</span> <a class="code" href="mutex_8h.html#a902e26f808e30230155f65af9cacff1c" title="Signal a condition.">sal_cond_broadcast</a>(<a class="code" href="mutex_8h.html#a942754308e0a64488c07dafa7d7c7ff7" title="Define a condition type.">sal_cond_t</a> *cond);
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111 <span class="preprocessor">#endif // _MUTEX_H_</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="mutex_8h.html">mutex.h</a>      </li>
-      <li class="footer">Generated on Wed Jun 6 2012 10:48:37 for libSAL by&#160;
+      <li class="footer">Generated on Wed Jun 6 2012 11:11:56 for libSAL by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

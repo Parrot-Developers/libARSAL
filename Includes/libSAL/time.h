@@ -11,6 +11,9 @@
 #include <unistd.h>
 
 #ifndef TIMEVAL_TO_TIMESPEC
+/**
+ * @brief Convert timeval structure to timespec structure
+*/
 #define TIMEVAL_TO_TIMESPEC(tv, ts) 		\
 do											\
 {											\
@@ -20,6 +23,9 @@ do											\
 #endif
 
 #ifndef TIMESPEC_TO_TIMEVAL
+/**
+ * @brief Convert timespec structure to timeval structure
+*/
 #define TIMESPEC_TO_TIMEVAL(ts, tv) 		\
 do											\
 {											\
@@ -29,7 +35,6 @@ do											\
 #endif
 
 /**
- * @fn int sal_gettimeofday(struct timeval *tv, struct timezone *tz)
  * @brief Get the time as well as a timezone.
  *
  * @param tv The timeval structure pointer

@@ -5,6 +5,7 @@
 This file contains headers about socket abstraction layer.  
 
 
+{\ttfamily \#include $<$sys/types.h$>$}\par
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
@@ -24,7 +25,7 @@ enum {\bf eSAL\_\-SOCK\_\-TYPE} \{ {\bfseries SAL\_\-SOCK\_\-TYPE\_\-STREAM},
 int {\bf sal\_\-socket} ({\bf eSAL\_\-SOCK\_\-DOMAIN} domain, {\bf eSAL\_\-SOCK\_\-TYPE} type, int protocol)
 \begin{DoxyCompactList}\small\item\em Creates an endpoint for communication and returns a descriptor. \end{DoxyCompactList}\item 
 int {\bf sal\_\-connect} (int sockfd, const struct sockaddr $\ast$addr, int addrlen)
-\begin{DoxyCompactList}\small\item\em Initiate a connection on a socket, If the socket sock is of type SOCK\_\-DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SOCK\_\-STREAM or SOCK\_\-SEQPACKET, this call attempts to make a connection to the socket that is bound to the address specified by addr. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Initiate a connection on a socket, If the socket sock is of type SOCK\_\-TYPE\_\-DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SAL\_\-SOCK\_\-TYPE\_\-STREAM, this call attempts to make a connection to the socket that is bound to the address specified by addr. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -48,11 +49,11 @@ This file contains headers about socket abstraction layer. \begin{DoxyDate}{Date
 )}\label{socket_8h_a760a8164f27a4af45b4749b4fcde3ea2}
 
 
-Initiate a connection on a socket, If the socket sock is of type SOCK\_\-DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SOCK\_\-STREAM or SOCK\_\-SEQPACKET, this call attempts to make a connection to the socket that is bound to the address specified by addr. 
+Initiate a connection on a socket, If the socket sock is of type SOCK\_\-TYPE\_\-DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SAL\_\-SOCK\_\-TYPE\_\-STREAM, this call attempts to make a connection to the socket that is bound to the address specified by addr. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em sock} & The socket to connect \\
+{\em sockfd} & The socket to connect \\
 \hline
 {\em addr} & The address to connect. \\
 \hline

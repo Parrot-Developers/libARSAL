@@ -72,12 +72,14 @@ $(document).ready(initResizable);
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="define-members"></a>
 Defines</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TIMEVAL_TO_TIMESPEC</b>(tv, ts)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TIMESPEC_TO_TIMEVAL</b>(ts, tv)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="time_8h.html#a584277e2b3df9a5db0e93000b09df811">TIMEVAL_TO_TIMESPEC</a>(tv, ts)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert timeval structure to timespec structure.  <a href="#a584277e2b3df9a5db0e93000b09df811"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="time_8h.html#afc92eb02ef4fa20e3b1f1ecc1acc1349">TIMESPEC_TO_TIMEVAL</a>(ts, tv)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert timespec structure to timeval structure.  <a href="#afc92eb02ef4fa20e3b1f1ecc1acc1349"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf2d0a99430a6d5253b8c395c30ca7e3"></a><!-- doxytag: member="time.h::gettimeofday" ref="aaf2d0a99430a6d5253b8c395c30ca7e3" args="(struct timeval *tv, struct timezone *tz)" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>gettimeofday</b> (struct timeval *tv, struct timezone *tz)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="time_8h.html#aaf2d0a99430a6d5253b8c395c30ca7e3">gettimeofday</a> (struct timeval *tv, struct timezone *tz)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the time as well as a timezone.  <a href="#aaf2d0a99430a6d5253b8c395c30ca7e3"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>This file contains headers about time abstraction layer. </p>
@@ -114,6 +116,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>gettimeofday</b> (stru
     (tv)-&gt;tv_usec = (ts)-&gt;tv_nsec / 1000;       \
 } <span class="keywordflow">while</span>(0)
 </pre></div>
+<p>Convert timespec structure to timeval structure. </p>
+
 </div>
 </div>
 <a class="anchor" id="a584277e2b3df9a5db0e93000b09df811"></a><!-- doxytag: member="time.h::TIMEVAL_TO_TIMESPEC" ref="a584277e2b3df9a5db0e93000b09df811" args="(tv, ts)" -->
@@ -146,6 +150,51 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>gettimeofday</b> (stru
     (ts)-&gt;tv_nsec = (tv)-&gt;tv_usec * 1000;       \
 } <span class="keywordflow">while</span>(0)
 </pre></div>
+<p>Convert timeval structure to timespec structure. </p>
+
+</div>
+</div>
+<hr/><h2>Function Documentation</h2>
+<a class="anchor" id="aaf2d0a99430a6d5253b8c395c30ca7e3"></a><!-- doxytag: member="time.h::gettimeofday" ref="aaf2d0a99430a6d5253b8c395c30ca7e3" args="(struct timeval *tv, struct timezone *tz)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int gettimeofday </td>
+          <td>(</td>
+          <td class="paramtype">struct timeval *&#160;</td>
+          <td class="paramname"><em>tv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">struct timezone *&#160;</td>
+          <td class="paramname"><em>tz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the time as well as a timezone. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tv</td><td>The timeval structure pointer </td></tr>
+    <tr><td class="paramname">tz</td><td>The timezone structure pointer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl><dt><b>Return values:</b></dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">On</td><td>success, sal_gettimeofday() returns 0. Otherwise returns -1 (in which case errno is set apprpriately). </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 </div>
@@ -153,7 +202,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>gettimeofday</b> (stru
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="time_8h.html">time.h</a>      </li>
-      <li class="footer">Generated on Wed Jun 6 2012 10:48:37 for libSAL by&#160;
+      <li class="footer">Generated on Wed Jun 6 2012 11:11:56 for libSAL by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

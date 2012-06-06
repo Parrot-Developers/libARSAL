@@ -8,11 +8,17 @@
 #ifndef _THREAD_H_
 #define _THREAD_H_
 
+/**
+ * @brief Define a thread type.
+ */
 typedef void* sal_thread_t;
+
+/**
+ * @brief Define a callback function type.
+ */
 typedef void* (*sal_thread_routine) (void *);
 
 /**
- * @fn int sal_thread_create(sal_thread_t *thread, sal_thread_routine *routine, void *arg)
  * @brief Create a new thread
  *
  * @param thread The thread to create
@@ -23,7 +29,6 @@ typedef void* (*sal_thread_routine) (void *);
 int sal_thread_create(sal_thread_t *thread, sal_thread_routine routine, void *arg);
 
 /**
- * @fn int sal_thread_join(sal_thread_t thread, void **retval)
  * @brief Join a thread
  *
  * @param thread The thread to join
@@ -33,7 +38,6 @@ int sal_thread_create(sal_thread_t *thread, sal_thread_routine routine, void *ar
 int sal_thread_join(sal_thread_t thread, void **retval);
 
 /**
- * @fn int sal_thread_destroy(sal_thread_t *thread)
  * @brief Destroy a thread
  *
  * @param thread The thread to destroy

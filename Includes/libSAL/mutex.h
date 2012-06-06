@@ -7,11 +7,17 @@
 #ifndef _MUTEX_H_
 #define _MUTEX_H_
 
+/**
+ * @brief Define a mutex type.
+ */
 typedef void* sal_mutex_t;
+
+/**
+ * @brief Define a condition type.
+ */
 typedef void* sal_cond_t;
 
 /**
- * @fn int sal_mutex_init(sal_mutex_t *mutex)
  * @brief Initializes a mutex.
  *
  * @param mutex The mutex to initialize
@@ -20,7 +26,6 @@ typedef void* sal_cond_t;
 int sal_mutex_init(sal_mutex_t *mutex);
 
 /**
- * @fn int sal_mutex_destroy(sal_mutex_t *mutex)
  * @brief Destroys a mutex
  *
  * @param mutex The mutex to destroy
@@ -29,7 +34,6 @@ int sal_mutex_init(sal_mutex_t *mutex);
 int sal_mutex_destroy(sal_mutex_t *mutex);
 
 /**
- * @fn int sal_mutex_lock(sal_mutex_t *mutex)
  * @brief Locks a mutex
  *
  * @param mutex The mutex to lock
@@ -38,7 +42,6 @@ int sal_mutex_destroy(sal_mutex_t *mutex);
 int sal_mutex_lock(sal_mutex_t *mutex);
 
 /**
- * @fn int sal_mutex_trylock(sal_mutex_t *mutex)
  * @brief Tries to lock a mutex
  *
  * @param mutex The mutex to lock
@@ -47,7 +50,6 @@ int sal_mutex_lock(sal_mutex_t *mutex);
 int sal_mutex_trylock(sal_mutex_t *mutex);
 
 /**
- * @fn int sal_mutex_unlock(sal_mutex_t *mutex)
  * @brief Unlocks a mutex
  *
  * @param mutex The mutex to unlock
@@ -56,7 +58,6 @@ int sal_mutex_trylock(sal_mutex_t *mutex);
 int sal_mutex_unlock(sal_mutex_t *mutex);
 
 /**
- * @fn int sal_cond_init(sal_thread_cond_t *cond)
  * @brief Initializes a condition
  *
  * @param cond The condition to initialize
@@ -65,7 +66,6 @@ int sal_mutex_unlock(sal_mutex_t *mutex);
 int sal_cond_init(sal_cond_t *cond);
 
 /**
- * @fn int sal_cond_destroy(sal_cond_t *cond)
  * @brief Destroy a condition
  *
  * @param cond The condition to destroy
@@ -74,7 +74,6 @@ int sal_cond_init(sal_cond_t *cond);
 int sal_cond_destroy(sal_cond_t *cond);
 
 /**
- * @fn int sal_cond_wait(sal_cond_t *cond, sal_mutex_t *mutex)
  * @brief Wait on a condition
  *
  * @param cond The condition to wait
@@ -84,7 +83,6 @@ int sal_cond_destroy(sal_cond_t *cond);
 int sal_cond_wait(sal_cond_t *cond, sal_mutex_t *mutex);
 
 /**
- * @fn int sal_cond_timedwait(sal_thread_cond_t *cond, sal_thread_mutex_t *mutex)
  * @brief Wait on a condition and returns error
  *
  * @param cond The condition to wait
@@ -95,7 +93,6 @@ int sal_cond_wait(sal_cond_t *cond, sal_mutex_t *mutex);
 int sal_cond_timedwait(sal_cond_t *cond, sal_mutex_t *mutex, int timeout);
 
 /**
- * @fn int sal_cond_signal(sal_thread_cond_t *cond)
  * @brief Signal a condition
  *
  * @param cond The condition to signal
@@ -104,7 +101,6 @@ int sal_cond_timedwait(sal_cond_t *cond, sal_mutex_t *mutex, int timeout);
 int sal_cond_signal(sal_cond_t *cond);
 
 /**
- * @fn int sal_cond_broadcast(sal_thread_cond_t *cond)
  * @brief Signal a condition
  *
  * @param cond The condition to broadcast

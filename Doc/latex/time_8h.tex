@@ -11,16 +11,15 @@ This file contains headers about time abstraction layer.
 \subsection*{Defines}
 \begin{DoxyCompactItemize}
 \item 
-\#define {\bfseries TIMEVAL\_\-TO\_\-TIMESPEC}(tv, ts)
-\item 
-\#define {\bfseries TIMESPEC\_\-TO\_\-TIMEVAL}(ts, tv)
-\end{DoxyCompactItemize}
+\#define {\bf TIMEVAL\_\-TO\_\-TIMESPEC}(tv, ts)
+\begin{DoxyCompactList}\small\item\em Convert timeval structure to timespec structure. \end{DoxyCompactList}\item 
+\#define {\bf TIMESPEC\_\-TO\_\-TIMEVAL}(ts, tv)
+\begin{DoxyCompactList}\small\item\em Convert timespec structure to timeval structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int {\bfseries gettimeofday} (struct timeval $\ast$tv, struct timezone $\ast$tz)\label{time_8h_aaf2d0a99430a6d5253b8c395c30ca7e3}
-
-\end{DoxyCompactItemize}
+int {\bf gettimeofday} (struct timeval $\ast$tv, struct timezone $\ast$tz)
+\begin{DoxyCompactList}\small\item\em Get the time as well as a timezone. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -51,6 +50,10 @@ do                                                                              
     (tv)->tv_usec = (ts)->tv_nsec / 1000;       \
 } while(0)
 \end{DoxyCode}
+
+
+Convert timespec structure to timeval structure. 
+
 \index{time.h@{time.h}!TIMEVAL\_\-TO\_\-TIMESPEC@{TIMEVAL\_\-TO\_\-TIMESPEC}}
 \index{TIMEVAL\_\-TO\_\-TIMESPEC@{TIMEVAL\_\-TO\_\-TIMESPEC}!time.h@{time.h}}
 \subsubsection[{TIMEVAL\_\-TO\_\-TIMESPEC}]{\setlength{\rightskip}{0pt plus 5cm}\#define TIMEVAL\_\-TO\_\-TIMESPEC(
@@ -69,3 +72,34 @@ do                                                                              
     (ts)->tv_nsec = (tv)->tv_usec * 1000;       \
 } while(0)
 \end{DoxyCode}
+
+
+Convert timeval structure to timespec structure. 
+
+
+
+\subsection{Function Documentation}
+\index{time.h@{time.h}!gettimeofday@{gettimeofday}}
+\index{gettimeofday@{gettimeofday}!time.h@{time.h}}
+\subsubsection[{gettimeofday}]{\setlength{\rightskip}{0pt plus 5cm}int gettimeofday (
+\begin{DoxyParamCaption}
+\item[{struct timeval $\ast$}]{tv, }
+\item[{struct timezone $\ast$}]{tz}
+\end{DoxyParamCaption}
+)}\label{time_8h_aaf2d0a99430a6d5253b8c395c30ca7e3}
+
+
+Get the time as well as a timezone. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tv} & The timeval structure pointer \\
+\hline
+{\em tz} & The timezone structure pointer \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, sal\_\-gettimeofday() returns 0. Otherwise returns -\/1 (in which case errno is set apprpriately). \\
+\hline
+\end{DoxyRetVals}

@@ -10,7 +10,6 @@
 #include <time.h>
 
 /**
- * @enum ePRINT_LEVEL
  * @brief Output level
 */
 typedef enum
@@ -21,20 +20,22 @@ typedef enum
 	PRINT_MAX,		/**< The maximum of enum, do not use !*/
 } ePRINT_LEVEL;
 
+/**
+ * @brief Table to display prefix about error, warning or debug messages.
+*/
 extern const char *sal_prefix_table[];
 
 /**
- * @fn SAL_PRINT(...)
  * @brief print a specific output (i.e. "[ERR] 121545444:main:10 - My debug log")
 */
 #define SAL_PRINT(level, format, ...) 	sal_print(level, "%s %d:%s:%d - " format, sal_prefix_table[level], time(NULL), __FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 /**
- * @fn int sal_printf(const char *format, ...)
  * @brief Convert a formatted output.
  *
+ * @param level The level of output format
  * @param format output format
- * @retval On success, sal_printf() returns the number of characters printed. Otherwise, it returns a negative value.
+ * @retval On success, sal_print() returns the number of characters printed. Otherwise, it returns a negative value.
  */
 int sal_print(ePRINT_LEVEL level, const char *format, ...);
 

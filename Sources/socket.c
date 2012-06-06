@@ -11,6 +11,10 @@
 #include <sys/socket.h>
 #endif
 
+#if defined(HAVE_NETINET_IN_H)
+#include <netinet/in.h>
+#endif
+
 int sal_socket(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, int protocol)
 {
 	int result = -1;

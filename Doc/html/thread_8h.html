@@ -70,16 +70,18 @@ $(document).ready(initResizable);
 <tr><td colspan="2"><h2><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e586c8fa470863d8cb2fc0796df3bd0"></a><!-- doxytag: member="thread.h::sal_thread_t" ref="a0e586c8fa470863d8cb2fc0796df3bd0" args="" -->
-typedef void *&#160;</td><td class="memItemRight" valign="bottom"><b>sal_thread_t</b></td></tr>
+typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#a0e586c8fa470863d8cb2fc0796df3bd0">sal_thread_t</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a thread type. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afbceb50e62eecc75c97989f3457d826f"></a><!-- doxytag: member="thread.h::sal_thread_routine" ref="afbceb50e62eecc75c97989f3457d826f" args=")(void *)" -->
-typedef void *(*&#160;</td><td class="memItemRight" valign="bottom"><b>sal_thread_routine</b> )(void *)</td></tr>
+typedef void *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#afbceb50e62eecc75c97989f3457d826f">sal_thread_routine</a> )(void *)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a callback function type. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a754f6b28e73a64799d117b3927588c27"></a><!-- doxytag: member="thread.h::sal_thread_create" ref="a754f6b28e73a64799d117b3927588c27" args="(sal_thread_t *thread, sal_thread_routine routine, void *arg)" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>sal_thread_create</b> (sal_thread_t *thread, sal_thread_routine routine, void *arg)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#ab6850b322b6b1109c176877346a32c45">sal_thread_join</a> (sal_thread_t thread, void **retval)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#a754f6b28e73a64799d117b3927588c27">sal_thread_create</a> (<a class="el" href="thread_8h.html#a0e586c8fa470863d8cb2fc0796df3bd0">sal_thread_t</a> *thread, <a class="el" href="thread_8h.html#afbceb50e62eecc75c97989f3457d826f">sal_thread_routine</a> routine, void *arg)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new thread.  <a href="#a754f6b28e73a64799d117b3927588c27"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#ab6850b322b6b1109c176877346a32c45">sal_thread_join</a> (<a class="el" href="thread_8h.html#a0e586c8fa470863d8cb2fc0796df3bd0">sal_thread_t</a> thread, void **retval)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Join a thread.  <a href="#ab6850b322b6b1109c176877346a32c45"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#a89021a847ab9a854a2b0377a08914de6">sal_thread_destroy</a> (sal_thread_t *thread)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#a89021a847ab9a854a2b0377a08914de6">sal_thread_destroy</a> (<a class="el" href="thread_8h.html#a0e586c8fa470863d8cb2fc0796df3bd0">sal_thread_t</a> *thread)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy a thread.  <a href="#a89021a847ab9a854a2b0377a08914de6"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
@@ -87,6 +89,55 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sal_thread_create</b> 
 <dl class="date"><dt><b>Date:</b></dt><dd>05/18/2012 </dd></dl>
 <dl class="author"><dt><b>Author:</b></dt><dd><a href="mailto:frederic.dhaeyer@parrot.com">frederic.dhaeyer@parrot.com</a> </dd></dl>
 </div><hr/><h2>Function Documentation</h2>
+<a class="anchor" id="a754f6b28e73a64799d117b3927588c27"></a><!-- doxytag: member="thread.h::sal_thread_create" ref="a754f6b28e73a64799d117b3927588c27" args="(sal_thread_t *thread, sal_thread_routine routine, void *arg)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int sal_thread_create </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="thread_8h.html#a0e586c8fa470863d8cb2fc0796df3bd0">sal_thread_t</a> *&#160;</td>
+          <td class="paramname"><em>thread</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="thread_8h.html#afbceb50e62eecc75c97989f3457d826f">sal_thread_routine</a>&#160;</td>
+          <td class="paramname"><em>routine</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>arg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Create a new thread. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">thread</td><td>The thread to create </td></tr>
+    <tr><td class="paramname">routine</td><td>The routine to invoke by thread </td></tr>
+    <tr><td class="paramname">arg</td><td>The argument passed to routine() </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl><dt><b>Return values:</b></dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">On</td><td>success, <a class="el" href="thread_8h.html#a754f6b28e73a64799d117b3927588c27" title="Create a new thread.">sal_thread_create()</a> returns 0. Otherwise, it returns an error number (See errno.h) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a89021a847ab9a854a2b0377a08914de6"></a><!-- doxytag: member="thread.h::sal_thread_destroy" ref="a89021a847ab9a854a2b0377a08914de6" args="(sal_thread_t *thread)" -->
 <div class="memitem">
 <div class="memproto">
@@ -94,7 +145,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sal_thread_create</b> 
         <tr>
           <td class="memname">int sal_thread_destroy </td>
           <td>(</td>
-          <td class="paramtype">sal_thread_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="thread_8h.html#a0e586c8fa470863d8cb2fc0796df3bd0">sal_thread_t</a> *&#160;</td>
           <td class="paramname"><em>thread</em></td><td>)</td>
           <td></td>
         </tr>
@@ -111,7 +162,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sal_thread_create</b> 
 </dl>
 <dl><dt><b>Return values:</b></dt><dd>
   <table class="retval">
-    <tr><td class="paramname">On</td><td>success, sal_thread_create() returns 0. Otherwise, it returns an error number (See errno.h) </td></tr>
+    <tr><td class="paramname">On</td><td>success, <a class="el" href="thread_8h.html#a754f6b28e73a64799d117b3927588c27" title="Create a new thread.">sal_thread_create()</a> returns 0. Otherwise, it returns an error number (See errno.h) </td></tr>
   </table>
   </dd>
 </dl>
@@ -125,7 +176,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sal_thread_create</b> 
         <tr>
           <td class="memname">int sal_thread_join </td>
           <td>(</td>
-          <td class="paramtype">sal_thread_t&#160;</td>
+          <td class="paramtype"><a class="el" href="thread_8h.html#a0e586c8fa470863d8cb2fc0796df3bd0">sal_thread_t</a>&#160;</td>
           <td class="paramname"><em>thread</em>, </td>
         </tr>
         <tr>
@@ -165,7 +216,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sal_thread_create</b> 
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="thread_8h.html">thread.h</a>      </li>
-      <li class="footer">Generated on Wed Jun 6 2012 10:48:37 for libSAL by&#160;
+      <li class="footer">Generated on Wed Jun 6 2012 11:11:56 for libSAL by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

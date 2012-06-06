@@ -64,27 +64,27 @@ $(document).ready(initResizable);
 <a name="l00009"></a>00009 <span class="preprocessor"></span><span class="preprocessor">#define _PRINT_H_</span>
 <a name="l00010"></a>00010 <span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="time_8h.html" title="This file contains headers about time abstraction layer.">time.h</a>&gt;</span>
 <a name="l00011"></a>00011 
-<a name="l00016"></a><a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8">00016</a> <span class="keyword">typedef</span> <span class="keyword">enum</span>
-<a name="l00017"></a>00017 {
-<a name="l00018"></a><a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8a3a1660cf56c26b930ad198eff12898ce">00018</a>         <a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8a3a1660cf56c26b930ad198eff12898ce">PRINT_ERROR</a>,    
-<a name="l00019"></a><a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8abee3929de920502d92788a8576c641e2">00019</a>         <a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8abee3929de920502d92788a8576c641e2">PRINT_WARNING</a>,  
-<a name="l00020"></a><a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8aebc36e0d821ffb32ac8e3ce47624954a">00020</a>         <a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8aebc36e0d821ffb32ac8e3ce47624954a">PRINT_DEBUG</a>,    
-<a name="l00021"></a><a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8abcfd86e7b5398894417c085111d030a3">00021</a>         <a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8abcfd86e7b5398894417c085111d030a3">PRINT_MAX</a>,              
-<a name="l00022"></a>00022 } <a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8" title="Output level.">ePRINT_LEVEL</a>;
-<a name="l00023"></a>00023 
-<a name="l00024"></a>00024 <span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *sal_prefix_table[];
-<a name="l00025"></a>00025 
-<a name="l00030"></a>00030 <span class="preprocessor">#define SAL_PRINT(level, format, ...)   sal_print(level, &quot;%s %d:%s:%d - &quot; format, sal_prefix_table[level], time(NULL), __FUNCTION__, __LINE__, ##__VA_ARGS__)</span>
-<a name="l00031"></a>00031 <span class="preprocessor"></span>
-<a name="l00039"></a>00039 <span class="keywordtype">int</span> sal_print(<a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8" title="Output level.">ePRINT_LEVEL</a> level, <span class="keyword">const</span> <span class="keywordtype">char</span> *format, ...);
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041 <span class="preprocessor">#endif // _PRINT_H_</span>
+<a name="l00015"></a><a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8">00015</a> <span class="keyword">typedef</span> <span class="keyword">enum</span>
+<a name="l00016"></a>00016 {
+<a name="l00017"></a><a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8a3a1660cf56c26b930ad198eff12898ce">00017</a>         <a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8a3a1660cf56c26b930ad198eff12898ce">PRINT_ERROR</a>,    
+<a name="l00018"></a><a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8abee3929de920502d92788a8576c641e2">00018</a>         <a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8abee3929de920502d92788a8576c641e2">PRINT_WARNING</a>,  
+<a name="l00019"></a><a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8aebc36e0d821ffb32ac8e3ce47624954a">00019</a>         <a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8aebc36e0d821ffb32ac8e3ce47624954a">PRINT_DEBUG</a>,    
+<a name="l00020"></a><a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8abcfd86e7b5398894417c085111d030a3">00020</a>         <a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8abcfd86e7b5398894417c085111d030a3">PRINT_MAX</a>,              
+<a name="l00021"></a>00021 } <a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8" title="Output level.">ePRINT_LEVEL</a>;
+<a name="l00022"></a>00022 
+<a name="l00026"></a>00026 <span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="print_8h.html#ac25f7c37b7cbbeeecab54734dc680d62" title="Table to display prefix about error, warning or debug messages.">sal_prefix_table</a>[];
+<a name="l00027"></a>00027 
+<a name="l00031"></a><a class="code" href="print_8h.html#ab3d9093cccdef7b8de0404541d56c8c0">00031</a> <span class="preprocessor">#define SAL_PRINT(level, format, ...)   sal_print(level, &quot;%s %d:%s:%d - &quot; format, sal_prefix_table[level], time(NULL), __FUNCTION__, __LINE__, ##__VA_ARGS__)</span>
+<a name="l00032"></a>00032 <span class="preprocessor"></span>
+<a name="l00040"></a>00040 <span class="keywordtype">int</span> <a class="code" href="print_8h.html#af40aeac8b51d7a37f1578496051e03f6" title="Convert a formatted output.">sal_print</a>(<a class="code" href="print_8h.html#acddc3b5b66b0c2a55c86dbab6cdc54a8" title="Output level.">ePRINT_LEVEL</a> level, <span class="keyword">const</span> <span class="keywordtype">char</span> *format, ...);
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042 <span class="preprocessor">#endif // _PRINT_H_</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="print_8h.html">print.h</a>      </li>
-      <li class="footer">Generated on Wed Jun 6 2012 10:48:37 for libSAL by&#160;
+      <li class="footer">Generated on Wed Jun 6 2012 11:11:56 for libSAL by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

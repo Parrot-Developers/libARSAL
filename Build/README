@@ -1,6 +1,7 @@
 First draft of README file
 ==========================
 
+On Linux platform :
 To compile library :
 $cd Build
 $./bootstrap
@@ -10,3 +11,4 @@ $make install (if you want tro install library)
 
 To generate doxygen documentation :
 $make doxygen-doc
+

@@ -18,7 +18,13 @@ enum {\bf eSAL\_\-SOCK\_\-TYPE} \{ {\bfseries SAL\_\-SOCK\_\-TYPE\_\-STREAM},
 {\bfseries SAL\_\-SOCK\_\-TYPE\_\-DGRAM}, 
 {\bfseries SAL\_\-SOCK\_\-TYPE\_\-MAX}
  \}
-\begin{DoxyCompactList}\small\item\em Socket types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Socket types. \end{DoxyCompactList}\item 
+enum {\bf eSAL\_\-SOCK\_\-FLAG} \{ {\bfseries SAL\_\-SOCK\_\-FLAG\_\-DONTWAIT} =  (1 $<$$<$ 0), 
+{\bfseries SAL\_\-SOCK\_\-FLAG\_\-WAITALL} =  (1 $<$$<$ 1), 
+{\bfseries SAL\_\-SOCK\_\-FLAG\_\-NOSIGNAL} =  (1 $<$$<$ 2), 
+{\bfseries SAL\_\-SOCK\_\-FLAG\_\-MAX}
+ \}
+\begin{DoxyCompactList}\small\item\em Socket flags. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 

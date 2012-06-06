@@ -39,6 +39,17 @@ typedef enum
 } eSAL_SOCK_TYPE;
 
 /**
+ * @brief Socket flags
+*/
+typedef enum
+{
+	SAL_SOCK_FLAG_DONTWAIT 	= (1 << 0),
+	SAL_SOCK_FLAG_WAITALL	= (1 << 1),
+	SAL_SOCK_FLAG_NOSIGNAL  = (1 << 2),
+	SAL_SOCK_FLAG_MAX
+} eSAL_SOCK_FLAG;
+
+/**
  * @brief Creates an endpoint for communication and returns a descriptor.
  *
  * @param domain The communication domain

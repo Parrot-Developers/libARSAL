@@ -16,41 +16,49 @@
 #include <netinet/in.h>
 #endif
 
-int sal_socket(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, int protocol)
+static int sal_convert_flags(int flags)
 {
-	int result = -1;
-	int _domain = (int)SAL_SOCK_DOMAIN_MAX;
-	int _type = (int)SAL_SOCK_TYPE_MAX;
+	int result = 0;
 
-	switch(domain)
+	if(flags & SAL_SOCK_FLAG_DONTWAIT)
 	{
-		case SAL_SOCK_DOMAIN_INET:
 #if defined(HAVE_SYS_SOCKET_H)
-			_domain = AF_INET;
+		result |= MSG_DONTWAIT;
 #endif
-			break;
-
-		case SAL_SOCK_DOMAIN_INET6:
-#if defined(HAVE_SYS_SOCKET_H)
-			_domain = AF_INET6;
-#endif
-			break;
-
-		default:
-			break;
 	}
+
+	if(flags & SAL_SOCK_FLAG_WAITALL)
+	{
+#if defined(HAVE_SYS_SOCKET_H)
+		result |= MSG_WAITALL;
+#endif
+	}
+
+	if(flags & SAL_SOCK_FLAG_NOSIGNAL)
+	{
+#if defined(HAVE_SYS_SOCKET_H)
+		result |= MSG_NOSIGNAL;
+#endif
+	}
+
+	return result;
+}
+
+static int sal_convert_types(eSAL_SOCK_TYPE type)
+{
+	int result = (int)SAL_SOCK_TYPE_MAX;
 
 	switch(type)
 	{
 		case SAL_SOCK_TYPE_STREAM:
 #if defined(HAVE_SYS_SOCKET_H)
-			_domain = SOCK_STREAM;
+			result = SOCK_STREAM;
 #endif
 			break;
 
 		case SAL_SOCK_TYPE_DGRAM:
 #if defined(HAVE_SYS_SOCKET_H)
-			_domain = SOCK_DGRAM;
+			result = SOCK_DGRAM;
 #endif
 			break;
 
@@ -58,7 +66,41 @@ int sal_socket(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, int protocol)
 			break;
 	}
 
-	if((_domain != SAL_SOCK_DOMAIN_MAX) && (_type != SAL_SOCK_TYPE_MAX))
+	return result;
+}
+
+static int sal_convert_domains(eSAL_SOCK_DOMAIN domain)
+{
+	int result =(int)SAL_SOCK_DOMAIN_MAX;
+
+	switch(domain)
+	{
+		case SAL_SOCK_DOMAIN_INET:
+#if defined(HAVE_SYS_SOCKET_H)
+			result = AF_INET;
+#endif
+			break;
+
+		case SAL_SOCK_DOMAIN_INET6:
+#if defined(HAVE_SYS_SOCKET_H)
+			result = AF_INET6;
+#endif
+			break;
+
+		default:
+			break;
+	}
+
+	return result;
+}
+
+int sal_socket(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, int protocol)
+{
+	int result = -1;
+	int _domain = sal_convert_domain(domain);
+	int _type = sal_convert_type(type);
+
+	if((_domain != (int)SAL_SOCK_DOMAIN_MAX) && (_type != (int)SAL_SOCK_TYPE_MAX))
 	{
 #if defined(HAVE_SYS_SOCKET_H)
 		result = socket(_domain, _type, protocol);
@@ -82,9 +124,10 @@ int sal_connect(int sockfd, const struct sockaddr *addr, int addrlen)
 int sal_sendto(int sockfd, const void *buf, int buflen, int flags, const struct sockaddr *dest_addr, int addrlen)
 {
 	int result = -1;
+	int _flags = sal_convert_flags(flags);
 
 #if defined(HAVE_SYS_SOCKET_H)
-	result = (int)sendto(sockfd, buf, (size_t)buflen, flags, dest_addr, (socklen_t)addrlen);
+	result = (int)sendto(sockfd, buf, (size_t)buflen, _flags, dest_addr, (socklen_t)addrlen);
 #endif
 
 	return result;
@@ -98,9 +141,10 @@ int sal_send(int sockfd, const void *buf, int buflen, int flags)
 int sal_recvfrom(int sockfd, void *buf, int buflen, int flags, struct sockaddr *src_addr, int *addrlen)
 {
 	int result = -1;
+	int _flags = sal_convert_flags(flags);
 
 #if defined(HAVE_SYS_SOCKET_H)
-	result = (int)recvfrom(sockfd, buf, (size_t)buflen, flags, src_addr, (socklen_t *)addrlen);
+	result = (int)recvfrom(sockfd, buf, (size_t)buflen, _flags, src_addr, (socklen_t *)addrlen);
 #endif
 
 	return result;

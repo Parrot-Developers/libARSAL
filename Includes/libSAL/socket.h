@@ -6,6 +6,7 @@
 */
 #ifndef _SOCKET_H_
 #define _SOCKET_H_
+#include <sys/types.h>
 
 struct sockaddr;
 

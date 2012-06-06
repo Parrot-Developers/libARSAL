@@ -38,6 +38,16 @@ ssize_t sal_recv(int sockfd, void *buf, size_t buflen, int flags)
 	return sal_recvfrom(sockfd, buf, buflen, flags, (struct sockaddr *)NULL, (socklen_t *)NULL);
 }
 
+int sal_bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen)
+{
+	return bind(sockfd, addr, addrlen);
+}
+
+int listen(int sockfd, int backlog)
+{
+	return listen(sockfd, backlog);
+}
+
 int sal_close(int sockfd)
 {
 	return close(sockfd);

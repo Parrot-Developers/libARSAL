@@ -23,6 +23,10 @@ ssize\_\-t {\bf sal\_\-recvfrom} (int sockfd, void $\ast$buf, size\_\-t buflen, 
 \begin{DoxyCompactList}\small\item\em Receive a message on a socket. \end{DoxyCompactList}\item 
 ssize\_\-t {\bf sal\_\-recv} (int sockfd, void $\ast$buf, size\_\-t buflen, int flags)
 \begin{DoxyCompactList}\small\item\em Receive a message on a socket. \end{DoxyCompactList}\item 
+int {\bf sal\_\-bind} (int sockfd, const struct sockaddr $\ast$addr, socklen\_\-t addrlen)
+\begin{DoxyCompactList}\small\item\em Bind a name to a socket. \end{DoxyCompactList}\item 
+int {\bf listen} (int sockfd, int backlog)
+\begin{DoxyCompactList}\small\item\em Listen for connections on a socket. \end{DoxyCompactList}\item 
 int {\bf sal\_\-close} (int sockfd)
 \begin{DoxyCompactList}\small\item\em Close a socket. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -37,6 +41,57 @@ This file contains headers about socket abstraction layer. \begin{DoxyDate}{Date
 
 
 \subsection{Function Documentation}
+\index{socket.h@{socket.h}!listen@{listen}}
+\index{listen@{listen}!socket.h@{socket.h}}
+\subsubsection[{listen}]{\setlength{\rightskip}{0pt plus 5cm}int listen (
+\begin{DoxyParamCaption}
+\item[{int}]{sockfd, }
+\item[{int}]{backlog}
+\end{DoxyParamCaption}
+)}\label{socket_8h_a5989c21d05cb17caba26cef496a7beea}
+
+
+Listen for connections on a socket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sockfd} & The socket descriptor used to send \\
+\hline
+{\em backlog} & The maximum length to which the queue of pending connections for sockfd may grow\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & succes, 0 is returned. Otherwise -\/1 is returned if an error occurred and errno is set appropriately. (See errno.h). \\
+\hline
+\end{DoxyRetVals}
+\index{socket.h@{socket.h}!sal\_\-bind@{sal\_\-bind}}
+\index{sal\_\-bind@{sal\_\-bind}!socket.h@{socket.h}}
+\subsubsection[{sal\_\-bind}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-bind (
+\begin{DoxyParamCaption}
+\item[{int}]{sockfd, }
+\item[{const struct sockaddr $\ast$}]{addr, }
+\item[{socklen\_\-t}]{addrlen}
+\end{DoxyParamCaption}
+)}\label{socket_8h_a50b0e4cf0b85ec3625044a872febfb5f}
+
+
+Bind a name to a socket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sockfd} & The socket descriptor used to send \\
+\hline
+{\em addr} & The address \\
+\hline
+{\em addrlen} & The size of the address\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & succes, 0 is returned. Otherwise -\/1 is returned if an error occurred and errno is set appropriately. (See errno.h). \\
+\hline
+\end{DoxyRetVals}
 \index{socket.h@{socket.h}!sal\_\-close@{sal\_\-close}}
 \index{sal\_\-close@{sal\_\-close}!socket.h@{socket.h}}
 \subsubsection[{sal\_\-close}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-close (

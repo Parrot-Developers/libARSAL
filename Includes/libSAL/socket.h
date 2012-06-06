@@ -88,6 +88,28 @@ ssize_t sal_recvfrom(int sockfd, void *buf, size_t buflen, int flags, struct soc
  */
 ssize_t sal_recv(int sockfd, void *buf, size_t buflen, int flags);
 
+
+/**
+ * @brief Bind a name to a socket
+ *
+ * @param sockfd The socket descriptor used to send
+ * @param addr The address
+ * @param addrlen The size of the address
+ *
+ * @retval On succes, 0 is returned. Otherwise -1 is returned if an error occurred and errno is set appropriately. (See errno.h).
+ */
+int sal_bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+
+/**
+ * @brief Listen for connections on a socket
+ *
+ * @param sockfd The socket descriptor used to send
+ * @param backlog The maximum length to which the queue of pending connections for sockfd may grow
+ *
+ * @retval On succes, 0 is returned. Otherwise -1 is returned if an error occurred and errno is set appropriately. (See errno.h).
+ */
+int listen(int sockfd, int backlog);
+
 /**
  * @brief Close a socket
  *

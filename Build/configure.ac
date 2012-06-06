@@ -40,11 +40,18 @@ CFLAGS="$CFLAGS -I../Includes"
 ##########################################################################
 AC_CHECK_HEADERS([sys/time.h time.h stdio.h stdarg.h])
 
-# Checks for pthread.
+# Checks for pthread.h
 AC_CHECK_HEADERS([pthread.h], [
     AC_CHECK_LIB(pthread, pthread_create,
 	LIBS="$LIBS -pthread", AC_MSG_ERROR(The pthread library is required in order to build the library!))
 ], AC_MSG_ERROR(The pthread header is required in order to build the library!))
+
+# Checks for socket.h
+AC_CHECK_HEADERS([sys/socket.h])
+
+# Checks for mach/mach_time.h
+# TO CHECK
+# AC_CHECK_HEADERS([mach/mach_time.h])
 
 ##########################################################################
 # Checks for programs.
@@ -96,4 +103,5 @@ echo "
   C Compiler.....: $CC $CFLAGS
   Linker.........: $LD $LDFLAGS $LIBS
   Doxygen........: ${DOXYGEN:-NONE}
+  ftw............: $HAVE_FTW_H
 "

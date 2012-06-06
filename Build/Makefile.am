@@ -5,6 +5,7 @@
 HEADER_FILES	=	../Includes/libSAL/time.h 	\
 					../Includes/libSAL/thread.h \
 					../Includes/libSAL/mutex.h 	\
+					../Includes/libSAL/socket.h \
 					../Includes/libSAL/print.h
 
 # The sources to add to the library and to add to the source distribution
@@ -12,6 +13,7 @@ SOURCE_FILES 	= 	$(HEADER_FILES)		\
 					../Sources/time.c	\
 					../Sources/thread.c \
 					../Sources/mutex.c  \
+					../Sources/socket.c \
 					../Sources/print.c
 
 # The library names to build (note we are building static libs only)

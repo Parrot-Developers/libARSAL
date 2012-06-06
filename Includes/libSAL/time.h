@@ -41,6 +41,6 @@ do											\
  * @param tz The timezone structure pointer
  * @retval On success, sal_gettimeofday() returns 0. Otherwise returns -1 (in which case errno is set apprpriately).
  */
-int gettimeofday(struct timeval *tv, struct timezone *tz);
+extern int gettimeofday(struct timeval *tv, struct timezone *tz);
 
 #endif // _TIME_H_

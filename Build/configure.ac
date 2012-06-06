@@ -50,7 +50,7 @@ AC_CHECK_HEADERS([pthread.h], [
 ], AC_MSG_ERROR(The pthread header is required in order to build the library!))
 
 # Checks for socket.h
-AC_CHECK_HEADERS([sys/socket.h netinet/in.h])
+AC_CHECK_HEADERS([sys/socket.h netinet/in.h], , AC_MSG_ERROR(The socket header is required in order to build the library!))
 
 # Checks for mach/mach_time.h
 # TO CHECK

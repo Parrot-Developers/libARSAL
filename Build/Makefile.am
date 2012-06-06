@@ -20,7 +20,6 @@ SOURCE_FILES 	= 	$(HEADER_FILES)		\
 
 # The library names to build (note we are building static and shared libs)
 if DEBUG_MODE
-#lib_LIBRARIES 					= ../Library/libsal_dbg.a
 lib_LTLIBRARIES 					= ../Library/libsal_dbg.la
 ___Library_libsal_dbg_ladir 		= $(includedir)/libsal
 ___Library_libsal_dbg_la_HEADERS 	= $(HEADER_FILES)

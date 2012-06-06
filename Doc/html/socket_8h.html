@@ -55,7 +55,6 @@ $(document).ready(initResizable);
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">socket.h File Reference</div>  </div>
@@ -65,46 +64,25 @@ $(document).ready(initResizable);
 <p>This file contains headers about socket abstraction layer.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;sys/types.h&gt;</code><br/>
+<code>#include &lt;sys/socket.h&gt;</code><br/>
+<code>#include &lt;netinet/in.h&gt;</code><br/>
 </div>
 <p><a href="socket_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr><td colspan="2"><h2><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a20f1988c7e24cceef9c27f006f06a266">eSAL_SOCK_DOMAIN</a> { <b>SAL_SOCK_DOMAIN_INET</b>, 
-<b>SAL_SOCK_DOMAIN_INET6</b>, 
-<b>SAL_SOCK_DOMAIN_MAX</b>
- }</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Socket domains. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a72560529b927cc6546ef157dd7a16573">eSAL_SOCK_TYPE</a> { <b>SAL_SOCK_TYPE_STREAM</b>, 
-<b>SAL_SOCK_TYPE_DGRAM</b>, 
-<b>SAL_SOCK_TYPE_MAX</b>
- }</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Socket types. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#ac54723f60f26860554239b9ccfc4605e">eSAL_SOCK_PROTOCOL</a> { <b>SAL_SOCK_PROTO_TCP</b>, 
-<b>SAL_SOCK_PROTO_UDP</b>, 
-<b>SAL_SOCK_PROTO_MAX</b>
- }</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Socket protocol. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#aa5e79108b15fafa60ead4abc3102e52c">eSAL_SOCK_FLAG</a> { <b>SAL_SOCK_FLAG_DONTWAIT</b> =  (1 &lt;&lt; 0), 
-<b>SAL_SOCK_FLAG_WAITALL</b> =  (1 &lt;&lt; 1), 
-<b>SAL_SOCK_FLAG_NOSIGNAL</b> =  (1 &lt;&lt; 2), 
-<b>SAL_SOCK_FLAG_MAX</b>
- }</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Socket flags. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#af15ea7a9d8022472e3da4e844c6cbebd">sal_socket</a> (<a class="el" href="socket_8h.html#a20f1988c7e24cceef9c27f006f06a266">eSAL_SOCK_DOMAIN</a> domain, <a class="el" href="socket_8h.html#a72560529b927cc6546ef157dd7a16573">eSAL_SOCK_TYPE</a> type, <a class="el" href="socket_8h.html#ac54723f60f26860554239b9ccfc4605e">eSAL_SOCK_PROTOCOL</a> protocol)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an endpoint for communication and returns a descriptor.  <a href="#af15ea7a9d8022472e3da4e844c6cbebd"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a760a8164f27a4af45b4749b4fcde3ea2">sal_connect</a> (int sockfd, const struct sockaddr *addr, int addrlen)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiate a connection on a socket, If the socket sock is of type SOCK_TYPE_DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SAL_SOCK_TYPE_STREAM, this call attempts to make a connection to the socket that is bound to the address specified by addr.  <a href="#a760a8164f27a4af45b4749b4fcde3ea2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a9adfca23c7ccdacc311b94faa9218a1b">sal_sendto</a> (int sockfd, const void *buf, int buflen, int flags, const struct sockaddr *dest_addr, int addrlen)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit a message on a socket If <a class="el" href="socket_8h.html#a9adfca23c7ccdacc311b94faa9218a1b" title="Transmit a message on a socket If sal_sendto() is used on a connection-mode (SAL_SOCK_TYPE_STREAM) so...">sal_sendto()</a> is used on a connection-mode (SAL_SOCK_TYPE_STREAM) socket, the arguments dest_addr and addrlen are ignored (and the error EISCONN may be returned when they are not NULL and 0) Otherwise, the target address is given by dest_addr with addrlen specifying its size.  <a href="#a9adfca23c7ccdacc311b94faa9218a1b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a7d4446594c3ae4595f06a83cc9cfa8f0">sal_send</a> (int sockfd, const void *buf, int buflen, int flags)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit a message on a socket.  <a href="#a7d4446594c3ae4595f06a83cc9cfa8f0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a57e1922e17c7a21504eae9cc1f4071b3">sal_recvfrom</a> (int sockfd, void *buf, int buflen, int flags, struct sockaddr *src_addr, int *addrlen)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a message on a socket.  <a href="#a57e1922e17c7a21504eae9cc1f4071b3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#aa1ac9dd77966d1a23867e7c1c2c49c0b">sal_recv</a> (int sockfd, void *buf, int buflen, int flags)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a message on a socket.  <a href="#aa1ac9dd77966d1a23867e7c1c2c49c0b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a48ce90489212958808b0fb6e7bef35b6">sal_socket</a> (int domain, int type, int protocol)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an endpoint for communication and returns a descriptor.  <a href="#a48ce90489212958808b0fb6e7bef35b6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a4f60b984d7e940cdab8bca018fa1388f">sal_connect</a> (int sockfd, const struct sockaddr *addr, socklen_t addrlen)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiate a connection on a socket, If the socket sock is of type SOCK_DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SAL_SOCK_STREAM, this call attempts to make a connection to the socket that is bound to the address specified by addr.  <a href="#a4f60b984d7e940cdab8bca018fa1388f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a56d35fd8e06c7dba32265e2d01eeef84">sal_sendto</a> (int sockfd, const void *buf, size_t buflen, int flags, const struct sockaddr *dest_addr, socklen_t addrlen)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit a message on a socket If <a class="el" href="socket_8h.html#a56d35fd8e06c7dba32265e2d01eeef84" title="Transmit a message on a socket If sal_sendto() is used on a connection-mode (SOCK_STREAM) socket...">sal_sendto()</a> is used on a connection-mode (SOCK_STREAM) socket, the arguments dest_addr and addrlen are ignored (and the error EISCONN may be returned when they are not NULL and 0) Otherwise, the target address is given by dest_addr with addrlen specifying its size.  <a href="#a56d35fd8e06c7dba32265e2d01eeef84"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a0d9de1134f473d5899125dc9a74ed864">sal_send</a> (int sockfd, const void *buf, size_t buflen, int flags)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit a message on a socket.  <a href="#a0d9de1134f473d5899125dc9a74ed864"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a15e3b6821dede8cdade3a9882b35f7d6">sal_recvfrom</a> (int sockfd, void *buf, size_t buflen, int flags, struct sockaddr *src_addr, socklen_t *addrlen)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a message on a socket.  <a href="#a15e3b6821dede8cdade3a9882b35f7d6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a0e5e18d7d3aba8b864b42926e5c3763d">sal_recv</a> (int sockfd, void *buf, size_t buflen, int flags)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a message on a socket.  <a href="#a0e5e18d7d3aba8b864b42926e5c3763d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#aa10d9c466317150ebefc2de4f1dde140">sal_close</a> (int sockfd)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close a socket.  <a href="#aa10d9c466317150ebefc2de4f1dde140"></a><br/></td></tr>
 </table>
@@ -144,7 +122,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a760a8164f27a4af45b4749b4fcde3ea2"></a><!-- doxytag: member="socket.h::sal_connect" ref="a760a8164f27a4af45b4749b4fcde3ea2" args="(int sockfd, const struct sockaddr *addr, int addrlen)" -->
+<a class="anchor" id="a4f60b984d7e940cdab8bca018fa1388f"></a><!-- doxytag: member="socket.h::sal_connect" ref="a4f60b984d7e940cdab8bca018fa1388f" args="(int sockfd, const struct sockaddr *addr, socklen_t addrlen)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -163,7 +141,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">socklen_t&#160;</td>
           <td class="paramname"><em>addrlen</em>&#160;</td>
         </tr>
         <tr>
@@ -175,7 +153,7 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Initiate a connection on a socket, If the socket sock is of type SOCK_TYPE_DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SAL_SOCK_TYPE_STREAM, this call attempts to make a connection to the socket that is bound to the address specified by addr. </p>
+<p>Initiate a connection on a socket, If the socket sock is of type SOCK_DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SAL_SOCK_STREAM, this call attempts to make a connection to the socket that is bound to the address specified by addr. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">sockfd</td><td>The socket descriptor used to connect </td></tr>
@@ -193,12 +171,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa1ac9dd77966d1a23867e7c1c2c49c0b"></a><!-- doxytag: member="socket.h::sal_recv" ref="aa1ac9dd77966d1a23867e7c1c2c49c0b" args="(int sockfd, void *buf, int buflen, int flags)" -->
+<a class="anchor" id="a0e5e18d7d3aba8b864b42926e5c3763d"></a><!-- doxytag: member="socket.h::sal_recv" ref="a0e5e18d7d3aba8b864b42926e5c3763d" args="(int sockfd, void *buf, size_t buflen, int flags)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int sal_recv </td>
+          <td class="memname">ssize_t sal_recv </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>sockfd</em>, </td>
@@ -212,7 +190,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">size_t&#160;</td>
           <td class="paramname"><em>buflen</em>, </td>
         </tr>
         <tr>
@@ -236,7 +214,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">sockfd</td><td>The socket descriptor used to send </td></tr>
     <tr><td class="paramname">buf</td><td>The buffer to fill with data received </td></tr>
     <tr><td class="paramname">buflen</td><td>The buffer size </td></tr>
-    <tr><td class="paramname">flags</td><td>The bitwise OR of zero or more of the flags SAL_SOCK_FLAGS</td></tr>
+    <tr><td class="paramname">flags</td><td>The bitwise OR of zero or more of the socket flags</td></tr>
   </table>
   </dd>
 </dl>
@@ -249,12 +227,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a57e1922e17c7a21504eae9cc1f4071b3"></a><!-- doxytag: member="socket.h::sal_recvfrom" ref="a57e1922e17c7a21504eae9cc1f4071b3" args="(int sockfd, void *buf, int buflen, int flags, struct sockaddr *src_addr, int *addrlen)" -->
+<a class="anchor" id="a15e3b6821dede8cdade3a9882b35f7d6"></a><!-- doxytag: member="socket.h::sal_recvfrom" ref="a15e3b6821dede8cdade3a9882b35f7d6" args="(int sockfd, void *buf, size_t buflen, int flags, struct sockaddr *src_addr, socklen_t *addrlen)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int sal_recvfrom </td>
+          <td class="memname">ssize_t sal_recvfrom </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>sockfd</em>, </td>
@@ -268,7 +246,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">size_t&#160;</td>
           <td class="paramname"><em>buflen</em>, </td>
         </tr>
         <tr>
@@ -286,7 +264,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int *&#160;</td>
+          <td class="paramtype">socklen_t *&#160;</td>
           <td class="paramname"><em>addrlen</em>&#160;</td>
         </tr>
         <tr>
@@ -304,7 +282,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">sockfd</td><td>The socket descriptor used to send </td></tr>
     <tr><td class="paramname">buf</td><td>The buffer to fill with data received </td></tr>
     <tr><td class="paramname">buflen</td><td>The buffer size </td></tr>
-    <tr><td class="paramname">flags</td><td>The bitwise OR of zero or more of the flags SAL_SOCK_FLAGS </td></tr>
+    <tr><td class="paramname">flags</td><td>The bitwise OR of zero or more of the socket flags </td></tr>
     <tr><td class="paramname">src_addr</td><td>The source address </td></tr>
     <tr><td class="paramname">addrlen</td><td>The size of the source address</td></tr>
   </table>
@@ -319,12 +297,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7d4446594c3ae4595f06a83cc9cfa8f0"></a><!-- doxytag: member="socket.h::sal_send" ref="a7d4446594c3ae4595f06a83cc9cfa8f0" args="(int sockfd, const void *buf, int buflen, int flags)" -->
+<a class="anchor" id="a0d9de1134f473d5899125dc9a74ed864"></a><!-- doxytag: member="socket.h::sal_send" ref="a0d9de1134f473d5899125dc9a74ed864" args="(int sockfd, const void *buf, size_t buflen, int flags)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int sal_send </td>
+          <td class="memname">ssize_t sal_send </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>sockfd</em>, </td>
@@ -338,7 +316,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">size_t&#160;</td>
           <td class="paramname"><em>buflen</em>, </td>
         </tr>
         <tr>
@@ -362,7 +340,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">sockfd</td><td>The socket descriptor used to send </td></tr>
     <tr><td class="paramname">buf</td><td>The buffer to send </td></tr>
     <tr><td class="paramname">buflen</td><td>The buffer size </td></tr>
-    <tr><td class="paramname">flags</td><td>The bitwise OR of zero or more of the flags SAL_SOCK_FLAGS</td></tr>
+    <tr><td class="paramname">flags</td><td>The bitwise OR of zero or more of the socket flags</td></tr>
   </table>
   </dd>
 </dl>
@@ -375,12 +353,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9adfca23c7ccdacc311b94faa9218a1b"></a><!-- doxytag: member="socket.h::sal_sendto" ref="a9adfca23c7ccdacc311b94faa9218a1b" args="(int sockfd, const void *buf, int buflen, int flags, const struct sockaddr *dest_addr, int addrlen)" -->
+<a class="anchor" id="a56d35fd8e06c7dba32265e2d01eeef84"></a><!-- doxytag: member="socket.h::sal_sendto" ref="a56d35fd8e06c7dba32265e2d01eeef84" args="(int sockfd, const void *buf, size_t buflen, int flags, const struct sockaddr *dest_addr, socklen_t addrlen)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int sal_sendto </td>
+          <td class="memname">ssize_t sal_sendto </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>sockfd</em>, </td>
@@ -394,7 +372,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">size_t&#160;</td>
           <td class="paramname"><em>buflen</em>, </td>
         </tr>
         <tr>
@@ -412,7 +390,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">socklen_t&#160;</td>
           <td class="paramname"><em>addrlen</em>&#160;</td>
         </tr>
         <tr>
@@ -424,13 +402,13 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Transmit a message on a socket If <a class="el" href="socket_8h.html#a9adfca23c7ccdacc311b94faa9218a1b" title="Transmit a message on a socket If sal_sendto() is used on a connection-mode (SAL_SOCK_TYPE_STREAM) so...">sal_sendto()</a> is used on a connection-mode (SAL_SOCK_TYPE_STREAM) socket, the arguments dest_addr and addrlen are ignored (and the error EISCONN may be returned when they are not NULL and 0) Otherwise, the target address is given by dest_addr with addrlen specifying its size. </p>
+<p>Transmit a message on a socket If <a class="el" href="socket_8h.html#a56d35fd8e06c7dba32265e2d01eeef84" title="Transmit a message on a socket If sal_sendto() is used on a connection-mode (SOCK_STREAM) socket...">sal_sendto()</a> is used on a connection-mode (SOCK_STREAM) socket, the arguments dest_addr and addrlen are ignored (and the error EISCONN may be returned when they are not NULL and 0) Otherwise, the target address is given by dest_addr with addrlen specifying its size. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">sockfd</td><td>The socket descriptor used to send </td></tr>
     <tr><td class="paramname">buf</td><td>The buffer to send </td></tr>
     <tr><td class="paramname">buflen</td><td>The buffer size </td></tr>
-    <tr><td class="paramname">flags</td><td>The bitwise OR of zero or more of the flags SAL_SOCK_FLAGS </td></tr>
+    <tr><td class="paramname">flags</td><td>The bitwise OR of zero or more of the socket flags. </td></tr>
     <tr><td class="paramname">dest_addr</td><td>The target address </td></tr>
     <tr><td class="paramname">addrlen</td><td>The size of the target address</td></tr>
   </table>
@@ -445,26 +423,26 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af15ea7a9d8022472e3da4e844c6cbebd"></a><!-- doxytag: member="socket.h::sal_socket" ref="af15ea7a9d8022472e3da4e844c6cbebd" args="(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, eSAL_SOCK_PROTOCOL protocol)" -->
+<a class="anchor" id="a48ce90489212958808b0fb6e7bef35b6"></a><!-- doxytag: member="socket.h::sal_socket" ref="a48ce90489212958808b0fb6e7bef35b6" args="(int domain, int type, int protocol)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int sal_socket </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="socket_8h.html#a20f1988c7e24cceef9c27f006f06a266">eSAL_SOCK_DOMAIN</a>&#160;</td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>domain</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="socket_8h.html#a72560529b927cc6546ef157dd7a16573">eSAL_SOCK_TYPE</a>&#160;</td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>type</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="socket_8h.html#ac54723f60f26860554239b9ccfc4605e">eSAL_SOCK_PROTOCOL</a>&#160;</td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>protocol</em>&#160;</td>
         </tr>
         <tr>
@@ -499,7 +477,7 @@ Functions</h2></td></tr>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="socket_8h.html">socket.h</a>      </li>
-      <li class="footer">Generated on Wed Jun 6 2012 13:55:53 for libSAL by&#160;
+      <li class="footer">Generated on Wed Jun 6 2012 16:40:32 for libSAL by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

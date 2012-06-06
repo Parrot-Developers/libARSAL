@@ -94,16 +94,44 @@ static int sal_convert_domains(eSAL_SOCK_DOMAIN domain)
 	return result;
 }
 
-int sal_socket(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, int protocol)
+static int sal_convert_protocols(eSAL_SOCK_PROTOCOL protocol)
+{
+	int result =(int)SAL_SOCK_PROTO_MAX;
+
+	switch(protocol)
+	{
+		case SAL_SOCK_PROTO_TCP:
+#if defined(HAVE_SYS_SOCKET_H)
+			result = IPPROTO_TCP;
+#endif
+			break;
+
+		case SAL_SOCK_PROTO_UDP:
+#if defined(HAVE_SYS_SOCKET_H)
+			result = IPPROTO_UDP;
+#endif
+			break;
+
+		default:
+			break;
+	}
+
+	return result;
+}
+
+int sal_socket(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, eSAL_SOCK_PROTOCOL protocol)
 {
 	int result = -1;
 	int _domain = sal_convert_domain(domain);
 	int _type = sal_convert_type(type);
+	int _protocol = sal_convert_protocols(protocol);
 
-	if((_domain != (int)SAL_SOCK_DOMAIN_MAX) && (_type != (int)SAL_SOCK_TYPE_MAX))
+	if( (_domain != (int)SAL_SOCK_DOMAIN_MAX) &&
+		(_type != (int)SAL_SOCK_TYPE_MAX) &&
+		(_protocol != (int)SAL_SOCK_PROTO_MAX))
 	{
 #if defined(HAVE_SYS_SOCKET_H)
-		result = socket(_domain, _type, protocol);
+		result = socket(_domain, _type, _protocol);
 #endif
 	}
 

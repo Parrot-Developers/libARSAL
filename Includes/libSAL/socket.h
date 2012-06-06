@@ -39,6 +39,16 @@ typedef enum
 } eSAL_SOCK_TYPE;
 
 /**
+ * @brief Socket protocol
+*/
+typedef enum
+{
+	SAL_SOCK_PROTO_TCP,
+	SAL_SOCK_PROTO_UDP,
+	SAL_SOCK_PROTO_MAX
+} eSAL_SOCK_PROTOCOL;
+
+/**
  * @brief Socket flags
 */
 typedef enum
@@ -54,10 +64,10 @@ typedef enum
  *
  * @param domain The communication domain
  * @param type The communication semantics.
- * @param protocol A particular protocol to be used with the socket
+ * @param protocol A protocol to be used with the socket
  * @retval On success, a file descriptor for the new socket is returned. On error, -1 is returned, and errno is set appropriately. (See errno.h)
  */
-int sal_socket(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, int protocol);
+int sal_socket(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, eSAL_SOCK_PROTOCOL protocol);
 
 /**
  * @brief Initiate a connection on a socket,

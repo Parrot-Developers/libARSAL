@@ -80,6 +80,11 @@ Enumerations</h2></td></tr>
 <b>SAL_SOCK_TYPE_MAX</b>
  }</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Socket types. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#ac54723f60f26860554239b9ccfc4605e">eSAL_SOCK_PROTOCOL</a> { <b>SAL_SOCK_PROTO_TCP</b>, 
+<b>SAL_SOCK_PROTO_UDP</b>, 
+<b>SAL_SOCK_PROTO_MAX</b>
+ }</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Socket protocol. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#aa5e79108b15fafa60ead4abc3102e52c">eSAL_SOCK_FLAG</a> { <b>SAL_SOCK_FLAG_DONTWAIT</b> =  (1 &lt;&lt; 0), 
 <b>SAL_SOCK_FLAG_WAITALL</b> =  (1 &lt;&lt; 1), 
 <b>SAL_SOCK_FLAG_NOSIGNAL</b> =  (1 &lt;&lt; 2), 
@@ -88,8 +93,8 @@ Enumerations</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Socket flags. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#ab0ae239fb4a26f93bbc592b9042b80a3">sal_socket</a> (<a class="el" href="socket_8h.html#a20f1988c7e24cceef9c27f006f06a266">eSAL_SOCK_DOMAIN</a> domain, <a class="el" href="socket_8h.html#a72560529b927cc6546ef157dd7a16573">eSAL_SOCK_TYPE</a> type, int protocol)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an endpoint for communication and returns a descriptor.  <a href="#ab0ae239fb4a26f93bbc592b9042b80a3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#af15ea7a9d8022472e3da4e844c6cbebd">sal_socket</a> (<a class="el" href="socket_8h.html#a20f1988c7e24cceef9c27f006f06a266">eSAL_SOCK_DOMAIN</a> domain, <a class="el" href="socket_8h.html#a72560529b927cc6546ef157dd7a16573">eSAL_SOCK_TYPE</a> type, <a class="el" href="socket_8h.html#ac54723f60f26860554239b9ccfc4605e">eSAL_SOCK_PROTOCOL</a> protocol)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an endpoint for communication and returns a descriptor.  <a href="#af15ea7a9d8022472e3da4e844c6cbebd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a760a8164f27a4af45b4749b4fcde3ea2">sal_connect</a> (int sockfd, const struct sockaddr *addr, int addrlen)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiate a connection on a socket, If the socket sock is of type SOCK_TYPE_DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SAL_SOCK_TYPE_STREAM, this call attempts to make a connection to the socket that is bound to the address specified by addr.  <a href="#a760a8164f27a4af45b4749b4fcde3ea2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a9adfca23c7ccdacc311b94faa9218a1b">sal_sendto</a> (int sockfd, const void *buf, int buflen, int flags, const struct sockaddr *dest_addr, int addrlen)</td></tr>
@@ -440,7 +445,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab0ae239fb4a26f93bbc592b9042b80a3"></a><!-- doxytag: member="socket.h::sal_socket" ref="ab0ae239fb4a26f93bbc592b9042b80a3" args="(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, int protocol)" -->
+<a class="anchor" id="af15ea7a9d8022472e3da4e844c6cbebd"></a><!-- doxytag: member="socket.h::sal_socket" ref="af15ea7a9d8022472e3da4e844c6cbebd" args="(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, eSAL_SOCK_PROTOCOL protocol)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -459,7 +464,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype"><a class="el" href="socket_8h.html#ac54723f60f26860554239b9ccfc4605e">eSAL_SOCK_PROTOCOL</a>&#160;</td>
           <td class="paramname"><em>protocol</em>&#160;</td>
         </tr>
         <tr>
@@ -476,7 +481,7 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">domain</td><td>The communication domain </td></tr>
     <tr><td class="paramname">type</td><td>The communication semantics. </td></tr>
-    <tr><td class="paramname">protocol</td><td>A particular protocol to be used with the socket </td></tr>
+    <tr><td class="paramname">protocol</td><td>A protocol to be used with the socket </td></tr>
   </table>
   </dd>
 </dl>
@@ -494,7 +499,7 @@ Functions</h2></td></tr>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="socket_8h.html">socket.h</a>      </li>
-      <li class="footer">Generated on Wed Jun 6 2012 13:29:36 for libSAL by&#160;
+      <li class="footer">Generated on Wed Jun 6 2012 13:55:53 for libSAL by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

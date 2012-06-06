@@ -19,6 +19,11 @@ enum {\bf eSAL\_\-SOCK\_\-TYPE} \{ {\bfseries SAL\_\-SOCK\_\-TYPE\_\-STREAM},
 {\bfseries SAL\_\-SOCK\_\-TYPE\_\-MAX}
  \}
 \begin{DoxyCompactList}\small\item\em Socket types. \end{DoxyCompactList}\item 
+enum {\bf eSAL\_\-SOCK\_\-PROTOCOL} \{ {\bfseries SAL\_\-SOCK\_\-PROTO\_\-TCP}, 
+{\bfseries SAL\_\-SOCK\_\-PROTO\_\-UDP}, 
+{\bfseries SAL\_\-SOCK\_\-PROTO\_\-MAX}
+ \}
+\begin{DoxyCompactList}\small\item\em Socket protocol. \end{DoxyCompactList}\item 
 enum {\bf eSAL\_\-SOCK\_\-FLAG} \{ {\bfseries SAL\_\-SOCK\_\-FLAG\_\-DONTWAIT} =  (1 $<$$<$ 0), 
 {\bfseries SAL\_\-SOCK\_\-FLAG\_\-WAITALL} =  (1 $<$$<$ 1), 
 {\bfseries SAL\_\-SOCK\_\-FLAG\_\-NOSIGNAL} =  (1 $<$$<$ 2), 
@@ -28,7 +33,7 @@ enum {\bf eSAL\_\-SOCK\_\-FLAG} \{ {\bfseries SAL\_\-SOCK\_\-FLAG\_\-DONTWAIT} =
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int {\bf sal\_\-socket} ({\bf eSAL\_\-SOCK\_\-DOMAIN} domain, {\bf eSAL\_\-SOCK\_\-TYPE} type, int protocol)
+int {\bf sal\_\-socket} ({\bf eSAL\_\-SOCK\_\-DOMAIN} domain, {\bf eSAL\_\-SOCK\_\-TYPE} type, {\bf eSAL\_\-SOCK\_\-PROTOCOL} protocol)
 \begin{DoxyCompactList}\small\item\em Creates an endpoint for communication and returns a descriptor. \end{DoxyCompactList}\item 
 int {\bf sal\_\-connect} (int sockfd, const struct sockaddr $\ast$addr, int addrlen)
 \begin{DoxyCompactList}\small\item\em Initiate a connection on a socket, If the socket sock is of type SOCK\_\-TYPE\_\-DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SAL\_\-SOCK\_\-TYPE\_\-STREAM, this call attempts to make a connection to the socket that is bound to the address specified by addr. \end{DoxyCompactList}\item 
@@ -240,9 +245,9 @@ Transmit a message on a socket If \doxyref{sal\_\-sendto()}{p.}{socket_8h_a9adfc
 \begin{DoxyParamCaption}
 \item[{{\bf eSAL\_\-SOCK\_\-DOMAIN}}]{domain, }
 \item[{{\bf eSAL\_\-SOCK\_\-TYPE}}]{type, }
-\item[{int}]{protocol}
+\item[{{\bf eSAL\_\-SOCK\_\-PROTOCOL}}]{protocol}
 \end{DoxyParamCaption}
-)}\label{socket_8h_ab0ae239fb4a26f93bbc592b9042b80a3}
+)}\label{socket_8h_af15ea7a9d8022472e3da4e844c6cbebd}
 
 
 Creates an endpoint for communication and returns a descriptor. 
@@ -253,7 +258,7 @@ Creates an endpoint for communication and returns a descriptor.
 \hline
 {\em type} & The communication semantics. \\
 \hline
-{\em protocol} & A particular protocol to be used with the socket \\
+{\em protocol} & A protocol to be used with the socket \\
 \hline
 \end{DoxyParams}
 

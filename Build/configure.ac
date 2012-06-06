@@ -3,6 +3,7 @@
 AC_INIT([libSAL], [1.0], [ardrone@ardrone.org])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR(config)
+AC_CONFIG_MACRO_DIR(m4)
 
 # automake initialisation and check for minimal automake API version 1.9
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
@@ -57,8 +58,10 @@ AC_CHECK_HEADERS([sys/socket.h netinet/in.h])
 
 ##########################################################################
 # Checks for programs.
-AC_PROG_RANLIB
 AC_PROG_CC
+AC_DISABLE_SHARED
+AC_PROG_LIBTOOL
+
 AC_CHECK_PROGS([DOXYGEN], [doxygen])
 
 if test -z "$DOXYGEN";

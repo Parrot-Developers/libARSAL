@@ -1,6 +1,8 @@
 ###############################################################################
 # THE LIBRARIES TO BUILD
 ###############################################################################
+ACLOCAL_AMFLAGS = -I m4
+
 # The list of header files that belong to the library (to be installed later)
 HEADER_FILES	=	../Includes/libSAL/time.h 	\
 					../Includes/libSAL/thread.h \
@@ -16,22 +18,25 @@ SOURCE_FILES 	= 	$(HEADER_FILES)		\
 					../Sources/socket.c \
 					../Sources/print.c
 
-# The library names to build (note we are building static libs only)
+# The library names to build (note we are building static and shared libs)
 if DEBUG_MODE
-lib_LIBRARIES 					= ../Library/libsal_dbg.a
-___Library_libsal_dbg_adir 		= $(includedir)/libsal
-___Library_libsal_dbg_a_HEADERS = $(HEADER_FILES)
-___Library_libsal_dbg_a_SOURCES = $(SOURCE_FILES)
+#lib_LIBRARIES 					= ../Library/libsal_dbg.a
+lib_LTLIBRARIES 					= ../Library/libsal_dbg.la
+___Library_libsal_dbg_ladir 		= $(includedir)/libsal
+___Library_libsal_dbg_la_HEADERS 	= $(HEADER_FILES)
+___Library_libsal_dbg_la_SOURCES 	= $(SOURCE_FILES)
 else
-lib_LIBRARIES 				= ../Library/libsal.a
-___Library_libsal_adir 		= $(includedir)/libsal
-___Library_libsal_a_HEADERS = $(HEADER_FILES)
-___Library_libsal_a_SOURCES = $(SOURCE_FILES)
+lib_LTLIBRARIES 				= ../Library/libsal.la
+___Library_libsal_ladir 		= $(includedir)/libsal
+___Library_libsal_la_HEADERS 	= $(HEADER_FILES)
+___Library_libsal_la_SOURCES 	= $(SOURCE_FILES)
 endif
 
-check_PROGRAMS = ../TestBench/unit_test
-___TestBench_unit_test_SOURCES 	= ../TestBench/main.c
-___TestBench_unit_test_LDADD 	= ../Library/libsal.a
+check_PROGRAMS = ../TestBench/test1 ../TestBench/test2
+___TestBench_test1_SOURCES 	= ../TestBench/test1.c
+___TestBench_test1_LDADD 	= ../Library/libsal.la
+___TestBench_test2_SOURCES 	= ../TestBench/test2.c
+___TestBench_test2_LDADD 	= ../Library/libsal.la
 
 # Ensure the distribution of the doxygen configuration file
 EXTRA_DIST = bootstrap

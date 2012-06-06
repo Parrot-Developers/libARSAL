@@ -12,9 +12,11 @@ rm -f \
     aclocal.m4 \
     config.h \
     config.h.in \
+    config.h.in~ \
     config.log \
     config.status \
     configure \
+    libtool \
     stamp-h1
 
 # Generated directories.
@@ -25,6 +27,7 @@ rm -rf \
     Release \
     ../Library \
     config \
+    m4 \
     `find .. -name '.deps'`	\
-    `find .. -name '.dirstamp'`	\    
-    `find .. -name '*.*~'`
+    `find .. -name '.dirstamp'`
+

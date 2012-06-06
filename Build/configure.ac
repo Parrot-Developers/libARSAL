@@ -67,7 +67,6 @@ AC_CHECK_PROGS([DOXYGEN], [doxygen])
 if test -z "$DOXYGEN";
    then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
 else
-	AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 	m4_include(doxygen.ac)
 	DX_HTML_FEATURE(ON)
 	DX_CHM_FEATURE(OFF)
@@ -79,6 +78,7 @@ else
 	DX_PS_FEATURE(OFF)
 	DX_INIT_DOXYGEN([libSAL], [doxygen.cfg], [../Doc])
 fi
+AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 
 # Checks for libraries.
 AC_FUNC_MALLOC

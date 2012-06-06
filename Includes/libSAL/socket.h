@@ -27,9 +27,9 @@ typedef enum
  * @fn sal_socket_t sal_socket(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, int protocol)
  * @brief Creates an endpoint for communication and returns a descriptor.
  *
- * @param domain
- * @param type
- * @param protocol
+ * @param domain The communication domain
+ * @param type The communication semantics.
+ * @param protocol A particular protocol to be used with the socket
  * @retval On success, a file descriptor for the new socket is returned. On error, -1 is returned, and errno is set appropriately. (See errno.h)
  */
 sal_socket_t sal_socket(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, int protocol);

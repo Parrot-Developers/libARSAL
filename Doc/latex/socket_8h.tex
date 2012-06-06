@@ -1,0 +1,70 @@
+\section{socket.h File Reference}
+\label{socket_8h}\index{socket.h@{socket.h}}
+
+
+This file contains headers about socket abstraction layer.  
+
+
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef int {\bfseries sal\_\-socket\_\-t}\label{socket_8h_a1afb11e91680ecf6edea00e9c837c7dd}
+
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries eSAL\_\-SOCK\_\-DOMAIN} \{ {\bfseries SAL\_\-SOCK\_\-DOMAIN\_\-INET}, 
+{\bfseries SAL\_\-SOCK\_\-DOMAIN\_\-INET6}, 
+{\bfseries SAL\_\-SOCK\_\-DOMAIN\_\-MAX}
+ \}
+\item 
+enum {\bfseries eSAL\_\-SOCK\_\-TYPE} \{ {\bfseries SAL\_\-SOCK\_\-TYPE\_\-STREAM}, 
+{\bfseries SAL\_\-SOCK\_\-TYPE\_\-DGRAM}, 
+{\bfseries SAL\_\-SOCK\_\-TYPE\_\-MAX}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+sal\_\-socket\_\-t {\bf sal\_\-socket} (eSAL\_\-SOCK\_\-DOMAIN domain, eSAL\_\-SOCK\_\-TYPE type, int protocol)
+\begin{DoxyCompactList}\small\item\em Creates an endpoint for communication and returns a descriptor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file contains headers about socket abstraction layer. \begin{DoxyDate}{Date}
+06/06/2012 
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+{\tt frederic.dhaeyer@parrot.com} 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\index{socket.h@{socket.h}!sal\_\-socket@{sal\_\-socket}}
+\index{sal\_\-socket@{sal\_\-socket}!socket.h@{socket.h}}
+\subsubsection[{sal\_\-socket}]{\setlength{\rightskip}{0pt plus 5cm}sal\_\-socket\_\-t sal\_\-socket (
+\begin{DoxyParamCaption}
+\item[{eSAL\_\-SOCK\_\-DOMAIN}]{domain, }
+\item[{eSAL\_\-SOCK\_\-TYPE}]{type, }
+\item[{int}]{protocol}
+\end{DoxyParamCaption}
+)}\label{socket_8h_a331ca2a796273f19fe52cba42924e3fe}
+
+
+Creates an endpoint for communication and returns a descriptor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em domain} & The communication domain \\
+\hline
+{\em type} & The communication semantics. \\
+\hline
+{\em protocol} & A particular protocol to be used with the socket \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, a file descriptor for the new socket is returned. On error, -\/1 is returned, and errno is set appropriately. (See errno.h) \\
+\hline
+\end{DoxyRetVals}

@@ -5,30 +5,26 @@
 This file contains headers about socket abstraction layer.  
 
 
-\subsection*{Typedefs}
-\begin{DoxyCompactItemize}
-\item 
-typedef int {\bfseries sal\_\-socket\_\-t}\label{socket_8h_a1afb11e91680ecf6edea00e9c837c7dd}
-
-\end{DoxyCompactItemize}
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
-enum {\bfseries eSAL\_\-SOCK\_\-DOMAIN} \{ {\bfseries SAL\_\-SOCK\_\-DOMAIN\_\-INET}, 
+enum {\bf eSAL\_\-SOCK\_\-DOMAIN} \{ {\bfseries SAL\_\-SOCK\_\-DOMAIN\_\-INET}, 
 {\bfseries SAL\_\-SOCK\_\-DOMAIN\_\-INET6}, 
 {\bfseries SAL\_\-SOCK\_\-DOMAIN\_\-MAX}
  \}
-\item 
-enum {\bfseries eSAL\_\-SOCK\_\-TYPE} \{ {\bfseries SAL\_\-SOCK\_\-TYPE\_\-STREAM}, 
+\begin{DoxyCompactList}\small\item\em Socket domains. \end{DoxyCompactList}\item 
+enum {\bf eSAL\_\-SOCK\_\-TYPE} \{ {\bfseries SAL\_\-SOCK\_\-TYPE\_\-STREAM}, 
 {\bfseries SAL\_\-SOCK\_\-TYPE\_\-DGRAM}, 
 {\bfseries SAL\_\-SOCK\_\-TYPE\_\-MAX}
  \}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Socket types. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-sal\_\-socket\_\-t {\bf sal\_\-socket} (eSAL\_\-SOCK\_\-DOMAIN domain, eSAL\_\-SOCK\_\-TYPE type, int protocol)
-\begin{DoxyCompactList}\small\item\em Creates an endpoint for communication and returns a descriptor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+int {\bf sal\_\-socket} ({\bf eSAL\_\-SOCK\_\-DOMAIN} domain, {\bf eSAL\_\-SOCK\_\-TYPE} type, int protocol)
+\begin{DoxyCompactList}\small\item\em Creates an endpoint for communication and returns a descriptor. \end{DoxyCompactList}\item 
+int {\bf sal\_\-connect} (int sockfd, const struct sockaddr $\ast$addr, int addrlen)
+\begin{DoxyCompactList}\small\item\em Initiate a connection on a socket, If the socket sock is of type SOCK\_\-DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SOCK\_\-STREAM or SOCK\_\-SEQPACKET, this call attempts to make a connection to the socket that is bound to the address specified by addr. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -41,15 +37,42 @@ This file contains headers about socket abstraction layer. \begin{DoxyDate}{Date
 
 
 \subsection{Function Documentation}
+\index{socket.h@{socket.h}!sal\_\-connect@{sal\_\-connect}}
+\index{sal\_\-connect@{sal\_\-connect}!socket.h@{socket.h}}
+\subsubsection[{sal\_\-connect}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-connect (
+\begin{DoxyParamCaption}
+\item[{int}]{sockfd, }
+\item[{const struct sockaddr $\ast$}]{addr, }
+\item[{int}]{addrlen}
+\end{DoxyParamCaption}
+)}\label{socket_8h_a760a8164f27a4af45b4749b4fcde3ea2}
+
+
+Initiate a connection on a socket, If the socket sock is of type SOCK\_\-DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SOCK\_\-STREAM or SOCK\_\-SEQPACKET, this call attempts to make a connection to the socket that is bound to the address specified by addr. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sock} & The socket to connect \\
+\hline
+{\em addr} & The address to connect. \\
+\hline
+{\em addrlen} & The size of the addr \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, 0 is returned. Otherwise, -\/1 is returned and errno is set appropriately. (See errno.h) \\
+\hline
+\end{DoxyRetVals}
 \index{socket.h@{socket.h}!sal\_\-socket@{sal\_\-socket}}
 \index{sal\_\-socket@{sal\_\-socket}!socket.h@{socket.h}}
-\subsubsection[{sal\_\-socket}]{\setlength{\rightskip}{0pt plus 5cm}sal\_\-socket\_\-t sal\_\-socket (
+\subsubsection[{sal\_\-socket}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-socket (
 \begin{DoxyParamCaption}
-\item[{eSAL\_\-SOCK\_\-DOMAIN}]{domain, }
-\item[{eSAL\_\-SOCK\_\-TYPE}]{type, }
+\item[{{\bf eSAL\_\-SOCK\_\-DOMAIN}}]{domain, }
+\item[{{\bf eSAL\_\-SOCK\_\-TYPE}}]{type, }
 \item[{int}]{protocol}
 \end{DoxyParamCaption}
-)}\label{socket_8h_a331ca2a796273f19fe52cba42924e3fe}
+)}\label{socket_8h_ab0ae239fb4a26f93bbc592b9042b80a3}
 
 
 Creates an endpoint for communication and returns a descriptor. 

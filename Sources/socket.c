@@ -11,9 +11,9 @@
 #include <sys/socket.h>
 #endif
 
-sal_socket_t sal_socket(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, int protocol)
+int sal_socket(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, int protocol)
 {
-	sal_socket_t result = -1;
+	int result = -1;
 	int _domain = (int)SAL_SOCK_DOMAIN_MAX;
 	int _type = (int)SAL_SOCK_TYPE_MAX;
 
@@ -56,9 +56,20 @@ sal_socket_t sal_socket(eSAL_SOCK_DOMAIN domain, eSAL_SOCK_TYPE type, int protoc
 	if((_domain != SAL_SOCK_DOMAIN_MAX) && (_type != SAL_SOCK_TYPE_MAX))
 	{
 #if defined(HAVE_SYS_SOCKET_H)
-		result = (sal_socket_t)socket(_domain, _type, protocol);
+		result = socket(_domain, _type, protocol);
 #endif
 	}
+
+	return result;
+}
+
+int sal_connect(int sockfd, const struct sockaddr *addr, int addrlen)
+{
+	int result = -1;
+
+#if defined(HAVE_SYS_SOCKET_H)
+	result = connect(sockfd, addr, (socklen_t)addrlen);
+#endif
 
 	return result;
 }

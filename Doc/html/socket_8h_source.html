@@ -83,15 +83,21 @@ $(document).ready(initResizable);
 <a name="l00040"></a>00040 
 <a name="l00049"></a>00049 <span class="keywordtype">int</span> <a class="code" href="socket_8h.html#ab0ae239fb4a26f93bbc592b9042b80a3" title="Creates an endpoint for communication and returns a descriptor.">sal_socket</a>(<a class="code" href="socket_8h.html#a20f1988c7e24cceef9c27f006f06a266" title="Socket domains.">eSAL_SOCK_DOMAIN</a> domain, <a class="code" href="socket_8h.html#a72560529b927cc6546ef157dd7a16573" title="Socket types.">eSAL_SOCK_TYPE</a> type, <span class="keywordtype">int</span> protocol);
 <a name="l00050"></a>00050 
-<a name="l00060"></a>00060 <span class="keywordtype">int</span> <a class="code" href="socket_8h.html#a760a8164f27a4af45b4749b4fcde3ea2" title="Initiate a connection on a socket, If the socket sock is of type SOCK_TYPE_DGRAM then addr is the add...">sal_connect</a>(<span class="keywordtype">int</span> sockfd, <span class="keyword">const</span> <span class="keyword">struct</span> sockaddr *addr, <span class="keywordtype">int</span> addrlen);
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062 <span class="preprocessor">#endif // _SOCKET_H_</span>
+<a name="l00061"></a>00061 <span class="keywordtype">int</span> <a class="code" href="socket_8h.html#a760a8164f27a4af45b4749b4fcde3ea2" title="Initiate a connection on a socket, If the socket sock is of type SOCK_TYPE_DGRAM then addr is the add...">sal_connect</a>(<span class="keywordtype">int</span> sockfd, <span class="keyword">const</span> <span class="keyword">struct</span> sockaddr *addr, <span class="keywordtype">int</span> addrlen);
+<a name="l00062"></a>00062 
+<a name="l00077"></a>00077 <span class="keywordtype">int</span> <a class="code" href="socket_8h.html#a9adfca23c7ccdacc311b94faa9218a1b" title="Transmit a message on a socket If sal_sendto() is used on a connection-mode (SAL_SOCK_TYPE_STREAM) so...">sal_sendto</a>(<span class="keywordtype">int</span> sockfd, <span class="keyword">const</span> <span class="keywordtype">void</span> *buf, <span class="keywordtype">int</span> buflen, <span class="keywordtype">int</span> flags, <span class="keyword">const</span> <span class="keyword">struct</span> sockaddr *dest_addr, <span class="keywordtype">int</span> addrlen);
+<a name="l00078"></a>00078 
+<a name="l00092"></a>00092 <span class="keywordtype">int</span> <a class="code" href="socket_8h.html#a57e1922e17c7a21504eae9cc1f4071b3" title="Receive a message on a socket.">sal_recvfrom</a>(<span class="keywordtype">int</span> sockfd, <span class="keywordtype">void</span> *buf, <span class="keywordtype">int</span> buflen, <span class="keywordtype">int</span> flags, <span class="keyword">struct</span> sockaddr *src_addr, <span class="keywordtype">int</span> *addrlen);
+<a name="l00093"></a>00093 
+<a name="l00100"></a>00100 <span class="keywordtype">int</span> <a class="code" href="socket_8h.html#aa10d9c466317150ebefc2de4f1dde140" title="Close a socket.">sal_close</a>(<span class="keywordtype">int</span> sockfd);
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102 <span class="preprocessor">#endif // _SOCKET_H_</span>
 </pre></div></div>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="socket_8h.html">socket.h</a>      </li>
-      <li class="footer">Generated on Wed Jun 6 2012 11:11:56 for libSAL by&#160;
+      <li class="footer">Generated on Wed Jun 6 2012 11:37:26 for libSAL by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

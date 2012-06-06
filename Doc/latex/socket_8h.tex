@@ -25,7 +25,13 @@ enum {\bf eSAL\_\-SOCK\_\-TYPE} \{ {\bfseries SAL\_\-SOCK\_\-TYPE\_\-STREAM},
 int {\bf sal\_\-socket} ({\bf eSAL\_\-SOCK\_\-DOMAIN} domain, {\bf eSAL\_\-SOCK\_\-TYPE} type, int protocol)
 \begin{DoxyCompactList}\small\item\em Creates an endpoint for communication and returns a descriptor. \end{DoxyCompactList}\item 
 int {\bf sal\_\-connect} (int sockfd, const struct sockaddr $\ast$addr, int addrlen)
-\begin{DoxyCompactList}\small\item\em Initiate a connection on a socket, If the socket sock is of type SOCK\_\-TYPE\_\-DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SAL\_\-SOCK\_\-TYPE\_\-STREAM, this call attempts to make a connection to the socket that is bound to the address specified by addr. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Initiate a connection on a socket, If the socket sock is of type SOCK\_\-TYPE\_\-DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received. If the socket is of type SAL\_\-SOCK\_\-TYPE\_\-STREAM, this call attempts to make a connection to the socket that is bound to the address specified by addr. \end{DoxyCompactList}\item 
+int {\bf sal\_\-sendto} (int sockfd, const void $\ast$buf, int buflen, int flags, const struct sockaddr $\ast$dest\_\-addr, int addrlen)
+\begin{DoxyCompactList}\small\item\em Transmit a message on a socket If \doxyref{sal\_\-sendto()}{p.}{socket_8h_a9adfca23c7ccdacc311b94faa9218a1b} is used on a connection-\/mode (SAL\_\-SOCK\_\-TYPE\_\-STREAM) socket, the arguments dest\_\-addr and addrlen are ignored (and the error EISCONN may be returned when they are not NULL and 0) Otherwise, the target address is given by dest\_\-addr with addrlen specifying its size. \end{DoxyCompactList}\item 
+int {\bf sal\_\-recvfrom} (int sockfd, void $\ast$buf, int buflen, int flags, struct sockaddr $\ast$src\_\-addr, int $\ast$addrlen)
+\begin{DoxyCompactList}\small\item\em Receive a message on a socket. \end{DoxyCompactList}\item 
+int {\bf sal\_\-close} (int sockfd)
+\begin{DoxyCompactList}\small\item\em Close a socket. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -38,6 +44,27 @@ This file contains headers about socket abstraction layer. \begin{DoxyDate}{Date
 
 
 \subsection{Function Documentation}
+\index{socket.h@{socket.h}!sal\_\-close@{sal\_\-close}}
+\index{sal\_\-close@{sal\_\-close}!socket.h@{socket.h}}
+\subsubsection[{sal\_\-close}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-close (
+\begin{DoxyParamCaption}
+\item[{int}]{sockfd}
+\end{DoxyParamCaption}
+)}\label{socket_8h_aa10d9c466317150ebefc2de4f1dde140}
+
+
+Close a socket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sockfd} & The socket to close \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, 0 is returned. Otherwise, -\/1 is returned, and errno is set appropriately. (See errno.h) \\
+\hline
+\end{DoxyRetVals}
 \index{socket.h@{socket.h}!sal\_\-connect@{sal\_\-connect}}
 \index{sal\_\-connect@{sal\_\-connect}!socket.h@{socket.h}}
 \subsubsection[{sal\_\-connect}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-connect (
@@ -53,11 +80,83 @@ Initiate a connection on a socket, If the socket sock is of type SOCK\_\-TYPE\_\
 
 
 \begin{DoxyParams}{Parameters}
-{\em sockfd} & The socket to connect \\
+{\em sockfd} & The socket descriptor used to connect \\
 \hline
 {\em addr} & The address to connect. \\
 \hline
 {\em addrlen} & The size of the addr \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, 0 is returned. Otherwise, -\/1 is returned and errno is set appropriately. (See errno.h) \\
+\hline
+\end{DoxyRetVals}
+\index{socket.h@{socket.h}!sal\_\-recvfrom@{sal\_\-recvfrom}}
+\index{sal\_\-recvfrom@{sal\_\-recvfrom}!socket.h@{socket.h}}
+\subsubsection[{sal\_\-recvfrom}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-recvfrom (
+\begin{DoxyParamCaption}
+\item[{int}]{sockfd, }
+\item[{void $\ast$}]{buf, }
+\item[{int}]{buflen, }
+\item[{int}]{flags, }
+\item[{struct sockaddr $\ast$}]{src\_\-addr, }
+\item[{int $\ast$}]{addrlen}
+\end{DoxyParamCaption}
+)}\label{socket_8h_a57e1922e17c7a21504eae9cc1f4071b3}
+
+
+Receive a message on a socket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sockfd} & The socket descriptor used to send \\
+\hline
+{\em buf} & The buffer to fill with data received \\
+\hline
+{\em buflen} & The buffer size \\
+\hline
+{\em flags} & The bitwise OR of zero or more of the flags SAL\_\-SOCK\_\-FLAGS \\
+\hline
+{\em src\_\-addr} & The source address \\
+\hline
+{\em addrlen} & The size of the source address\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & success, the number of bytes received is returned. 0 is returned when the peer has performed an orderly shutdow. Otherwise -\/1 is returned if an error occurred and errno is set appropriately. (See errno.h). \\
+\hline
+\end{DoxyRetVals}
+\index{socket.h@{socket.h}!sal\_\-sendto@{sal\_\-sendto}}
+\index{sal\_\-sendto@{sal\_\-sendto}!socket.h@{socket.h}}
+\subsubsection[{sal\_\-sendto}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-sendto (
+\begin{DoxyParamCaption}
+\item[{int}]{sockfd, }
+\item[{const void $\ast$}]{buf, }
+\item[{int}]{buflen, }
+\item[{int}]{flags, }
+\item[{const struct sockaddr $\ast$}]{dest\_\-addr, }
+\item[{int}]{addrlen}
+\end{DoxyParamCaption}
+)}\label{socket_8h_a9adfca23c7ccdacc311b94faa9218a1b}
+
+
+Transmit a message on a socket If \doxyref{sal\_\-sendto()}{p.}{socket_8h_a9adfca23c7ccdacc311b94faa9218a1b} is used on a connection-\/mode (SAL\_\-SOCK\_\-TYPE\_\-STREAM) socket, the arguments dest\_\-addr and addrlen are ignored (and the error EISCONN may be returned when they are not NULL and 0) Otherwise, the target address is given by dest\_\-addr with addrlen specifying its size. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sockfd} & The socket descriptor used to send \\
+\hline
+{\em buf} & The buffer to send \\
+\hline
+{\em buflen} & The buffer size \\
+\hline
+{\em flags} & The bitwise OR of zero or more of the flags SAL\_\-SOCK\_\-FLAGS \\
+\hline
+{\em dest\_\-addr} & The target address \\
+\hline
+{\em addrlen} & The size of the target address\\
 \hline
 \end{DoxyParams}
 

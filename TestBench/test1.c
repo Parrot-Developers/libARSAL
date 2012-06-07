@@ -19,9 +19,6 @@ void *routine(void *arg)
 	SAL_PRINT(PRINT_WARNING, "mutex unlock\n");
 	sal_mutex_unlock(&mutex);
 
-	while(i++ < 3)
-		sleep(1);
-
 	return NULL;
 }
 

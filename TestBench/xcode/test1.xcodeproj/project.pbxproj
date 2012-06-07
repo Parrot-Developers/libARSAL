@@ -15,7 +15,6 @@
 		80CC27341580D5C100D0373C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CC27331580D5C100D0373C /* main.m */; };
 		80CC27381580D5C100D0373C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CC27371580D5C100D0373C /* AppDelegate.m */; };
 		80CC273B1580D5C100D0373C /* test1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 80CC27391580D5C100D0373C /* test1.xcdatamodeld */; };
-		80CC27461580D5F700D0373C /* test1.c in Sources */ = {isa = PBXBuildFile; fileRef = 80CC27451580D5F700D0373C /* test1.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +30,6 @@
 		80CC27361580D5C100D0373C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		80CC27371580D5C100D0373C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		80CC273A1580D5C100D0373C /* test1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = test1.xcdatamodel; sourceTree = "<group>"; };
-		80CC27451580D5F700D0373C /* test1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test1.c; path = ../test1.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +50,6 @@
 		80CC27161580D5C100D0373C = {
 			isa = PBXGroup;
 			children = (
-				80CC27451580D5F700D0373C /* test1.c */,
 				80CC272D1580D5C100D0373C /* test1 */,
 				80CC27241580D5C100D0373C /* Frameworks */,
 				80CC27221580D5C100D0373C /* Products */,
@@ -107,7 +104,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 80CC273E1580D5C100D0373C /* Build configuration list for PBXNativeTarget "test1" */;
 			buildPhases = (
-				80CC274C1580D64C00D0373C /* ShellScript */,
+				80CC274C1580D64C00D0373C /* Build libSAL */,
 				80CC271D1580D5C100D0373C /* Sources */,
 				80CC271E1580D5C100D0373C /* Frameworks */,
 				80CC271F1580D5C100D0373C /* Resources */,
@@ -159,13 +156,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		80CC274C1580D64C00D0373C /* ShellScript */ = {
+		80CC274C1580D64C00D0373C /* Build libSAL */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Build libSAL";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -182,7 +180,6 @@
 				80CC27341580D5C100D0373C /* main.m in Sources */,
 				80CC27381580D5C100D0373C /* AppDelegate.m in Sources */,
 				80CC273B1580D5C100D0373C /* test1.xcdatamodeld in Sources */,
-				80CC27461580D5F700D0373C /* test1.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +250,7 @@
 				HEADER_SEARCH_PATHS = ../../Includes;
 				INFOPLIST_FILE = "test1/test1-Info.plist";
 				LIBRARY_SEARCH_PATHS = ../../Library/.libs;
+				OTHER_LDFLAGS = "-lsal";
 				OTHER_TEST_FLAGS = "-lsal";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -267,6 +265,7 @@
 				HEADER_SEARCH_PATHS = ../../Includes;
 				INFOPLIST_FILE = "test1/test1-Info.plist";
 				LIBRARY_SEARCH_PATHS = ../../Library/.libs;
+				OTHER_LDFLAGS = "-lsal";
 				OTHER_TEST_FLAGS = "-lsal";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

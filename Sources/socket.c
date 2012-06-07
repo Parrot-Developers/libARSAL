@@ -6,6 +6,7 @@
 */
 #include <config.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <libSAL/socket.h>
 
 int sal_socket(int domain, int type, int protocol)

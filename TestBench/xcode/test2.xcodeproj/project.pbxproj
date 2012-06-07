@@ -104,7 +104,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 80CC26ED1580B2C000D0373C /* Build configuration list for PBXNativeTarget "test2" */;
 			buildPhases = (
-				80CC27031580C18100D0373C /* ShellScript */,
+				80CC27031580C18100D0373C /* Build libSAL */,
 				80CC26CC1580B2C000D0373C /* Sources */,
 				80CC26CD1580B2C000D0373C /* Frameworks */,
 				80CC26CE1580B2C000D0373C /* Resources */,
@@ -156,13 +156,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		80CC27031580C18100D0373C /* ShellScript */ = {
+		80CC27031580C18100D0373C /* Build libSAL */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Build libSAL";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

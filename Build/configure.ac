@@ -99,5 +99,4 @@ echo "
   C Compiler.....: $CC $CFLAGS
   Linker.........: $LD $LDFLAGS $LIBS
   Doxygen........: ${DOXYGEN:-NONE}
-  ftw............: $HAVE_FTW_H
 "

@@ -1,14 +1,27 @@
 First draft of README file
 ==========================
 
-On Linux platform :
-To compile library :
+==================
+To compile library
+==================
+On Linux and MacOS X platform :
 $cd Build
 $./bootstrap
 $./configure --prefix <path to install>
 $make
 $make install (if you want tro install library)
 
-To generate doxygen documentation :
+On iOS platform :
+$cd Build
+$./bootstrap
+$./configure CFLAGS="-arch <armv6/armv7> -isysroot<path of iOS SDK>" CC=<path of gcc> --host=arm-apple
+See example : 
+$./configure CFLAGS="-arch armv7 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk"  CC=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/llvm-gcc --host=arm-apple
+$make
+$make install (if you want to install library)
+
+=================================
+To generate doxygen documentation
+=================================
 $make doxygen-doc
 

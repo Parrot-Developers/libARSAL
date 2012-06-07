@@ -75,7 +75,7 @@ DX_INIT_DOXYGEN([libSAL], [doxygen.cfg], [../Doc])
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 
 # Checks for libraries.
-AC_FUNC_MALLOC
+# AC_FUNC_MALLOC
 
 # Checks for header files.
 AC_HEADER_STDC

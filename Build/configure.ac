@@ -74,6 +74,12 @@ DX_PS_FEATURE(OFF)
 DX_INIT_DOXYGEN([libSAL], [doxygen.cfg], [../Doc])
 AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
 
+<<<<<<< HEAD
+=======
+# Checks for libraries.
+# AC_FUNC_MALLOC
+
+>>>>>>> Add Xcode project
 # Checks for header files.
 AC_HEADER_STDC
 

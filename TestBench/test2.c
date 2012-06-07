@@ -31,7 +31,7 @@ void *thread_recv_routine(void *arg)
 	{
 		/* spew-out the results and bail out of here! */
 		SAL_PRINT(PRINT_ERROR, "%s\n", strerror(errno));
-		return;
+		return NULL;
 	}
 
 	/* fill in the socket structure with host information */
@@ -44,32 +44,34 @@ void *thread_recv_routine(void *arg)
 	if ((sd = sal_socket(AF_INET, SOCK_STREAM, 0)) == -1)
 	{
 		SAL_PRINT(PRINT_ERROR, "%s\n", strerror(errno));
-		return;
+		return NULL;
 	}
 
 	/* connect to PORT on HOST */
 	if (sal_connect(sd,(struct sockaddr *)  &pin, sizeof(pin)) == -1)
 	{
 		SAL_PRINT(PRINT_ERROR, "%s\n", strerror(errno));
-		return;
+		return NULL;
 	}
 
 	/* send a message to the server PORT on machine HOST */
 	if (sal_send(sd, MSG, strlen(MSG), 0) == -1) {
 		SAL_PRINT(PRINT_ERROR, "%s\n", strerror(errno));
-		return;
+		return NULL;
 	}
 
 	/* wait for a message to come back from the server */
 	if (sal_recv(sd, dir, DIRSIZE, 0) == -1) {
 		SAL_PRINT(PRINT_ERROR, "%s\n", strerror(errno));
-		return;
+		return NULL;
 	}
 
 	/* spew-out the results and bail out of here! */
 	SAL_PRINT(PRINT_WARNING, "%s\n", dir);
 
 	sal_close(sd);
+
+	return NULL;
 }
 
 void *thread_send_routine(void *arg)
@@ -83,10 +85,10 @@ void *thread_send_routine(void *arg)
 	if ((sd = sal_socket(AF_INET, SOCK_STREAM, 0)) == -1)
 	{
 		SAL_PRINT(PRINT_ERROR, "%s\n", strerror(errno));
-		return;
+		return NULL;
 	}
 
-
+	return NULL;
 }
 
 int main(int argc, char **argv)

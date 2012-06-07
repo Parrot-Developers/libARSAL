@@ -25,8 +25,10 @@ ssize\_\-t {\bf sal\_\-recv} (int sockfd, void $\ast$buf, size\_\-t buflen, int 
 \begin{DoxyCompactList}\small\item\em Receive a message on a socket. \end{DoxyCompactList}\item 
 int {\bf sal\_\-bind} (int sockfd, const struct sockaddr $\ast$addr, socklen\_\-t addrlen)
 \begin{DoxyCompactList}\small\item\em Bind a name to a socket. \end{DoxyCompactList}\item 
-int {\bf listen} (int sockfd, int backlog)
+int {\bf sal\_\-listen} (int sockfd, int backlog)
 \begin{DoxyCompactList}\small\item\em Listen for connections on a socket. \end{DoxyCompactList}\item 
+int {\bf sal\_\-accept} (int sockfd, struct sockaddr $\ast$addr, socklen\_\-t $\ast$addrlen)
+\begin{DoxyCompactList}\small\item\em Accept a connection on a socket. \end{DoxyCompactList}\item 
 int {\bf sal\_\-close} (int sockfd)
 \begin{DoxyCompactList}\small\item\em Close a socket. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -41,28 +43,31 @@ This file contains headers about socket abstraction layer. \begin{DoxyDate}{Date
 
 
 \subsection{Function Documentation}
-\index{socket.h@{socket.h}!listen@{listen}}
-\index{listen@{listen}!socket.h@{socket.h}}
-\subsubsection[{listen}]{\setlength{\rightskip}{0pt plus 5cm}int listen (
+\index{socket.h@{socket.h}!sal\_\-accept@{sal\_\-accept}}
+\index{sal\_\-accept@{sal\_\-accept}!socket.h@{socket.h}}
+\subsubsection[{sal\_\-accept}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-accept (
 \begin{DoxyParamCaption}
 \item[{int}]{sockfd, }
-\item[{int}]{backlog}
+\item[{struct sockaddr $\ast$}]{addr, }
+\item[{socklen\_\-t $\ast$}]{addrlen}
 \end{DoxyParamCaption}
-)}\label{socket_8h_a5989c21d05cb17caba26cef496a7beea}
+)}\label{socket_8h_a308ecb6c14dad6e06c2d38c8cf122f2a}
 
 
-Listen for connections on a socket. 
+Accept a connection on a socket. 
 
 
 \begin{DoxyParams}{Parameters}
 {\em sockfd} & The socket descriptor used to send \\
 \hline
-{\em backlog} & The maximum length to which the queue of pending connections for sockfd may grow\\
+{\em addr} & The address \\
+\hline
+{\em addrlen} & The size of address\\
 \hline
 \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & succes, 0 is returned. Otherwise -\/1 is returned if an error occurred and errno is set appropriately. (See errno.h). \\
+{\em On} & succes, a nonnegative integer is returned. Otherwise -\/1 is returned if an error occurred and errno is set appropriately. (See errno.h). \\
 \hline
 \end{DoxyRetVals}
 \index{socket.h@{socket.h}!sal\_\-bind@{sal\_\-bind}}
@@ -138,6 +143,30 @@ Initiate a connection on a socket, If the socket sock is of type SOCK\_\-DGRAM t
 
 \begin{DoxyRetVals}{Return values}
 {\em On} & success, 0 is returned. Otherwise, -\/1 is returned and errno is set appropriately. (See errno.h) \\
+\hline
+\end{DoxyRetVals}
+\index{socket.h@{socket.h}!sal\_\-listen@{sal\_\-listen}}
+\index{sal\_\-listen@{sal\_\-listen}!socket.h@{socket.h}}
+\subsubsection[{sal\_\-listen}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-listen (
+\begin{DoxyParamCaption}
+\item[{int}]{sockfd, }
+\item[{int}]{backlog}
+\end{DoxyParamCaption}
+)}\label{socket_8h_a20143287ec65680fae8ea46249ee4d25}
+
+
+Listen for connections on a socket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sockfd} & The socket descriptor used to send \\
+\hline
+{\em backlog} & The maximum length to which the queue of pending connections for sockfd may grow\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em On} & succes, 0 is returned. Otherwise -\/1 is returned if an error occurred and errno is set appropriately. (See errno.h). \\
 \hline
 \end{DoxyRetVals}
 \index{socket.h@{socket.h}!sal\_\-recv@{sal\_\-recv}}

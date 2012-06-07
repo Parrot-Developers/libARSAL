@@ -85,8 +85,10 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a message on a socket.  <a href="#a0e5e18d7d3aba8b864b42926e5c3763d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a50b0e4cf0b85ec3625044a872febfb5f">sal_bind</a> (int sockfd, const struct sockaddr *addr, socklen_t addrlen)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Bind a name to a socket.  <a href="#a50b0e4cf0b85ec3625044a872febfb5f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a5989c21d05cb17caba26cef496a7beea">listen</a> (int sockfd, int backlog)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Listen for connections on a socket.  <a href="#a5989c21d05cb17caba26cef496a7beea"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a20143287ec65680fae8ea46249ee4d25">sal_listen</a> (int sockfd, int backlog)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Listen for connections on a socket.  <a href="#a20143287ec65680fae8ea46249ee4d25"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#a308ecb6c14dad6e06c2d38c8cf122f2a">sal_accept</a> (int sockfd, struct sockaddr *addr, socklen_t *addrlen)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Accept a connection on a socket.  <a href="#a308ecb6c14dad6e06c2d38c8cf122f2a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="socket_8h.html#aa10d9c466317150ebefc2de4f1dde140">sal_close</a> (int sockfd)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close a socket.  <a href="#aa10d9c466317150ebefc2de4f1dde140"></a><br/></td></tr>
 </table>
@@ -95,12 +97,12 @@ Functions</h2></td></tr>
 <dl class="date"><dt><b>Date:</b></dt><dd>06/06/2012 </dd></dl>
 <dl class="author"><dt><b>Author:</b></dt><dd><a href="mailto:frederic.dhaeyer@parrot.com">frederic.dhaeyer@parrot.com</a> </dd></dl>
 </div><hr/><h2>Function Documentation</h2>
-<a class="anchor" id="a5989c21d05cb17caba26cef496a7beea"></a><!-- doxytag: member="socket.h::listen" ref="a5989c21d05cb17caba26cef496a7beea" args="(int sockfd, int backlog)" -->
+<a class="anchor" id="a308ecb6c14dad6e06c2d38c8cf122f2a"></a><!-- doxytag: member="socket.h::sal_accept" ref="a308ecb6c14dad6e06c2d38c8cf122f2a" args="(int sockfd, struct sockaddr *addr, socklen_t *addrlen)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int listen </td>
+          <td class="memname">int sal_accept </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>sockfd</em>, </td>
@@ -108,8 +110,14 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>backlog</em>&#160;</td>
+          <td class="paramtype">struct sockaddr *&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">socklen_t *&#160;</td>
+          <td class="paramname"><em>addrlen</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -120,17 +128,18 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Listen for connections on a socket. </p>
+<p>Accept a connection on a socket. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">sockfd</td><td>The socket descriptor used to send </td></tr>
-    <tr><td class="paramname">backlog</td><td>The maximum length to which the queue of pending connections for sockfd may grow</td></tr>
+    <tr><td class="paramname">addr</td><td>The address </td></tr>
+    <tr><td class="paramname">addrlen</td><td>The size of address</td></tr>
   </table>
   </dd>
 </dl>
 <dl><dt><b>Return values:</b></dt><dd>
   <table class="retval">
-    <tr><td class="paramname">On</td><td>succes, 0 is returned. Otherwise -1 is returned if an error occurred and errno is set appropriately. (See errno.h). </td></tr>
+    <tr><td class="paramname">On</td><td>succes, a nonnegative integer is returned. Otherwise -1 is returned if an error occurred and errno is set appropriately. (See errno.h). </td></tr>
   </table>
   </dd>
 </dl>
@@ -260,6 +269,48 @@ Functions</h2></td></tr>
 <dl><dt><b>Return values:</b></dt><dd>
   <table class="retval">
     <tr><td class="paramname">On</td><td>success, 0 is returned. Otherwise, -1 is returned and errno is set appropriately. (See errno.h) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a20143287ec65680fae8ea46249ee4d25"></a><!-- doxytag: member="socket.h::sal_listen" ref="a20143287ec65680fae8ea46249ee4d25" args="(int sockfd, int backlog)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int sal_listen </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>sockfd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>backlog</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Listen for connections on a socket. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sockfd</td><td>The socket descriptor used to send </td></tr>
+    <tr><td class="paramname">backlog</td><td>The maximum length to which the queue of pending connections for sockfd may grow</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl><dt><b>Return values:</b></dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">On</td><td>succes, 0 is returned. Otherwise -1 is returned if an error occurred and errno is set appropriately. (See errno.h). </td></tr>
   </table>
   </dd>
 </dl>
@@ -572,7 +623,7 @@ Functions</h2></td></tr>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="socket_8h.html">socket.h</a>      </li>
-      <li class="footer">Generated on Wed Jun 6 2012 17:51:50 for libSAL by&#160;
+      <li class="footer">Generated on Thu Jun 7 2012 15:20:41 for libSAL by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </li>
     </ul>

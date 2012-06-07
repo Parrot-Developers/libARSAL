@@ -43,9 +43,14 @@ int sal_bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen)
 	return bind(sockfd, addr, addrlen);
 }
 
-int listen(int sockfd, int backlog)
+int sal_listen(int sockfd, int backlog)
 {
 	return listen(sockfd, backlog);
+}
+
+int sal_accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen)
+{
+	return accept(sockfd, addr, addrlen);
 }
 
 int sal_close(int sockfd)

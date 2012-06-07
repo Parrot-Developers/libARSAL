@@ -21,6 +21,15 @@ $PATH=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Dev
 $make
 $make install (if you want to install library)
 
+On NDK Android platform :
+$cd Build
+$./bootstrap
+$./configure CC=<path of gcc> --host=arm
+See example : 
+$./configure CC=arm-linux-androideabi-gcc --host=arm
+$make
+$make install (if you want to install library)
+
 =================================
 To generate doxygen documentation
 =================================

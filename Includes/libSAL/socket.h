@@ -108,7 +108,18 @@ int sal_bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
  *
  * @retval On succes, 0 is returned. Otherwise -1 is returned if an error occurred and errno is set appropriately. (See errno.h).
  */
-int listen(int sockfd, int backlog);
+int sal_listen(int sockfd, int backlog);
+
+/**
+ * @brief Accept a connection on a socket
+ *
+ * @param sockfd The socket descriptor used to send
+ * @param addr The address
+ * @param addrlen The size of address
+ *
+ * @retval On succes, a nonnegative integer is returned. Otherwise -1 is returned if an error occurred and errno is set appropriately. (See errno.h).
+ */
+int sal_accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
 
 /**
  * @brief Close a socket

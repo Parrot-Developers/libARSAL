@@ -59,7 +59,6 @@ AC_CHECK_HEADERS([sys/socket.h netinet/in.h], , AC_MSG_ERROR(The socket header i
 ##########################################################################
 # Checks for programs.
 AC_PROG_CC
-AC_DISABLE_SHARED
 AC_PROG_LIBTOOL
 
 AC_CHECK_PROGS([DOXYGEN], [doxygen])

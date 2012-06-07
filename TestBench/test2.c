@@ -75,6 +75,8 @@ void *thread_recv_routine(void *arg)
 void *thread_send_routine(void *arg)
 {
 	int sd;
+    char    dir[DIRSIZE];
+
 	SAL_PRINT(PRINT_WARNING, "%s started\n", __FUNCTION__);
 
 	/* grab an Internet domain socket */

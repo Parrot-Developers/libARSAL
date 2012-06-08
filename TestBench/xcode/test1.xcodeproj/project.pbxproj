@@ -168,7 +168,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ../../Build\nif [ ! -e ./configure ]; then\n./bootstrap\nfi\nif [ $CONFIGURATION = \"Release\" ] || [ $CONFIGURATION = \"Distribution\" ]; then\nPATH=$PLATFORM_DEVELOPER_USR_DIR/usr/bin:$PATH ./configure CC=\"$PLATFORM_DEVELOPER_USR_DIR/bin/llvm-gcc -arch armv7 -isysroot $SDKROOT\" --host=arm --prefix=$(pwd)/$CONFIGURATION\nelse \t\nPATH=$PLATFORM_DEVELOPER_USR_DIR/usr/bin:$PATH ./configure CC=\"$PLATFORM_DEVELOPER_USR_DIR/bin/llvm-gcc -arch armv7 -isysroot $SDKROOT\" --host=arm --enable-debug --prefix=$(pwd)/$CONFIGURATION\nfi\nmake\nmake install";
+			shellScript = "cd ../../Build\nif [ ! -e ./configure ]; then\n./bootstrap\nfi\nif [ $CONFIGURATION = \"Release\" ] || [ $CONFIGURATION = \"Distribution\" ]; then\nPATH=$PLATFORM_DEVELOPER_USR_DIR/usr/bin:$PATH ./configure CC=\"$PLATFORM_DEVELOPER_USR_DIR/bin/llvm-gcc -arch armv7 -isysroot $SDKROOT\" --host=arm --prefix=$CONFIGURATION_BUILD_DIR\nelse \t\nPATH=$PLATFORM_DEVELOPER_USR_DIR/usr/bin:$PATH ./configure CC=\"$PLATFORM_DEVELOPER_USR_DIR/bin/llvm-gcc -arch armv7 -isysroot $SDKROOT\" --host=arm --enable-debug --prefix=$CONFIGURATION_BUILD_DIR\nfi\nmake\nmake install";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -245,15 +245,16 @@
 		80CC273F1580D5C100D0373C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(CONFIGURATION)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "test1/test1-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(CONFIGURATION)/include";
 				INFOPLIST_FILE = "test1/test1-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION)/lib";
-				OTHER_LDFLAGS = "-lsal";
-				OTHER_TEST_FLAGS = "-lsal -lsal_dbg";
+				OTHER_LDFLAGS = "-lsal_dbg";
+				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "$(CONFIGURATION)/include";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -261,13 +262,14 @@
 		80CC27401580D5C100D0373C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(CONFIGURATION)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "test1/test1-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(CONFIGURATION)/include";
 				INFOPLIST_FILE = "test1/test1-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION)/lib";
 				OTHER_LDFLAGS = "-lsal";
-				OTHER_TEST_FLAGS = "-lsal -lsal_dbg";
+				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;

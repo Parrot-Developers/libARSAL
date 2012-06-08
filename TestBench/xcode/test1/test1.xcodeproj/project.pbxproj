@@ -7,29 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		807D59321581FF4000A95C4B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 807D592F1581FF4000A95C4B /* AppDelegate.m */; };
+		807D59331581FF4000A95C4B /* test1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 807D59301581FF4000A95C4B /* test1.xcdatamodeld */; };
+		807D59371581FF5900A95C4B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 807D59341581FF5900A95C4B /* main.m */; };
+		807D593B1581FF6E00A95C4B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 807D59391581FF6E00A95C4B /* InfoPlist.strings */; };
 		80CC27261580D5C100D0373C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80CC27251580D5C100D0373C /* UIKit.framework */; };
 		80CC27281580D5C100D0373C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80CC27271580D5C100D0373C /* Foundation.framework */; };
 		80CC272A1580D5C100D0373C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80CC27291580D5C100D0373C /* CoreGraphics.framework */; };
 		80CC272C1580D5C100D0373C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80CC272B1580D5C100D0373C /* CoreData.framework */; };
-		80CC27321580D5C100D0373C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80CC27301580D5C100D0373C /* InfoPlist.strings */; };
-		80CC27341580D5C100D0373C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CC27331580D5C100D0373C /* main.m */; };
-		80CC27381580D5C100D0373C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CC27371580D5C100D0373C /* AppDelegate.m */; };
-		80CC273B1580D5C100D0373C /* test1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 80CC27391580D5C100D0373C /* test1.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		807D592E1581FF4000A95C4B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		807D592F1581FF4000A95C4B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = SOURCE_ROOT; };
+		807D59311581FF4000A95C4B /* test1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = test1.xcdatamodel; sourceTree = "<group>"; };
+		807D59341581FF5900A95C4B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
+		807D59351581FF5900A95C4B /* test1-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "test1-Info.plist"; sourceTree = SOURCE_ROOT; };
+		807D59361581FF5900A95C4B /* test1-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "test1-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		807D593A1581FF6E00A95C4B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
 		80CC27211580D5C100D0373C /* test1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80CC27251580D5C100D0373C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		80CC27271580D5C100D0373C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		80CC27291580D5C100D0373C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		80CC272B1580D5C100D0373C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		80CC272F1580D5C100D0373C /* test1-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "test1-Info.plist"; sourceTree = "<group>"; };
-		80CC27311580D5C100D0373C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		80CC27331580D5C100D0373C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		80CC27351580D5C100D0373C /* test1-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "test1-Prefix.pch"; sourceTree = "<group>"; };
-		80CC27361580D5C100D0373C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		80CC27371580D5C100D0373C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		80CC273A1580D5C100D0373C /* test1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = test1.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,9 +78,9 @@
 		80CC272D1580D5C100D0373C /* test1 */ = {
 			isa = PBXGroup;
 			children = (
-				80CC27361580D5C100D0373C /* AppDelegate.h */,
-				80CC27371580D5C100D0373C /* AppDelegate.m */,
-				80CC27391580D5C100D0373C /* test1.xcdatamodeld */,
+				807D592E1581FF4000A95C4B /* AppDelegate.h */,
+				807D592F1581FF4000A95C4B /* AppDelegate.m */,
+				807D59301581FF4000A95C4B /* test1.xcdatamodeld */,
 				80CC272E1580D5C100D0373C /* Supporting Files */,
 			);
 			path = test1;
@@ -89,10 +89,10 @@
 		80CC272E1580D5C100D0373C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				80CC272F1580D5C100D0373C /* test1-Info.plist */,
-				80CC27301580D5C100D0373C /* InfoPlist.strings */,
-				80CC27331580D5C100D0373C /* main.m */,
-				80CC27351580D5C100D0373C /* test1-Prefix.pch */,
+				807D59391581FF6E00A95C4B /* InfoPlist.strings */,
+				807D59341581FF5900A95C4B /* main.m */,
+				807D59351581FF5900A95C4B /* test1-Info.plist */,
+				807D59361581FF5900A95C4B /* test1-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -149,7 +149,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80CC27321580D5C100D0373C /* InfoPlist.strings in Resources */,
+				807D593B1581FF6E00A95C4B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,7 +168,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ../../Build\nif [ ! -e ./configure ]; then\n./bootstrap\nfi\nif [ $CONFIGURATION = \"Release\" ] || [ $CONFIGURATION = \"Distribution\" ]; then\nPATH=$PLATFORM_DEVELOPER_USR_DIR/usr/bin:$PATH ./configure CC=\"$PLATFORM_DEVELOPER_USR_DIR/bin/llvm-gcc -arch armv7 -isysroot $SDKROOT\" --host=arm --prefix=$CONFIGURATION_BUILD_DIR\nelse \t\nPATH=$PLATFORM_DEVELOPER_USR_DIR/usr/bin:$PATH ./configure CC=\"$PLATFORM_DEVELOPER_USR_DIR/bin/llvm-gcc -arch armv7 -isysroot $SDKROOT\" --host=arm --enable-debug --prefix=$CONFIGURATION_BUILD_DIR\nfi\nmake\nmake install";
+			shellScript = "cd ../../../Build\nif [ ! -e ./configure ]; then\n./bootstrap\nfi\nif [ $CONFIGURATION = \"Release\" ] || [ $CONFIGURATION = \"Distribution\" ]; then\nPATH=$PLATFORM_DEVELOPER_USR_DIR/usr/bin:$PATH ./configure CC=\"$PLATFORM_DEVELOPER_USR_DIR/bin/llvm-gcc -arch armv7 -isysroot $SDKROOT\" --host=arm --prefix=$CONFIGURATION_BUILD_DIR\nelse \t\nPATH=$PLATFORM_DEVELOPER_USR_DIR/usr/bin:$PATH ./configure CC=\"$PLATFORM_DEVELOPER_USR_DIR/bin/llvm-gcc -arch armv7 -isysroot $SDKROOT\" --host=arm --enable-debug --prefix=$CONFIGURATION_BUILD_DIR\nfi\nmake\nmake install";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -177,19 +177,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80CC27341580D5C100D0373C /* main.m in Sources */,
-				80CC27381580D5C100D0373C /* AppDelegate.m in Sources */,
-				80CC273B1580D5C100D0373C /* test1.xcdatamodeld in Sources */,
+				807D59321581FF4000A95C4B /* AppDelegate.m in Sources */,
+				807D59331581FF4000A95C4B /* test1.xcdatamodeld in Sources */,
+				807D59371581FF5900A95C4B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		80CC27301580D5C100D0373C /* InfoPlist.strings */ = {
+		807D59391581FF6E00A95C4B /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				80CC27311580D5C100D0373C /* en */,
+				807D593A1581FF6E00A95C4B /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -247,9 +247,9 @@
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(CONFIGURATION)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "test1/test1-Prefix.pch";
+				GCC_PREFIX_HEADER = "test1-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(CONFIGURATION)/include";
-				INFOPLIST_FILE = "test1/test1-Info.plist";
+				INFOPLIST_FILE = "test1-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION)/lib";
 				OTHER_LDFLAGS = "-lsal_dbg";
 				OTHER_TEST_FLAGS = "";
@@ -264,9 +264,9 @@
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(CONFIGURATION)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "test1/test1-Prefix.pch";
+				GCC_PREFIX_HEADER = "test1-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(CONFIGURATION)/include";
-				INFOPLIST_FILE = "test1/test1-Info.plist";
+				INFOPLIST_FILE = "test1-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION)/lib";
 				OTHER_LDFLAGS = "-lsal";
 				OTHER_TEST_FLAGS = "";
@@ -300,14 +300,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		80CC27391580D5C100D0373C /* test1.xcdatamodeld */ = {
+		807D59301581FF4000A95C4B /* test1.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				80CC273A1580D5C100D0373C /* test1.xcdatamodel */,
+				807D59311581FF4000A95C4B /* test1.xcdatamodel */,
 			);
-			currentVersion = 80CC273A1580D5C100D0373C /* test1.xcdatamodel */;
+			currentVersion = 807D59311581FF4000A95C4B /* test1.xcdatamodel */;
 			path = test1.xcdatamodeld;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 			versionGroupType = wrapper.xcdatamodel;
 		};
 /* End XCVersionGroup section */

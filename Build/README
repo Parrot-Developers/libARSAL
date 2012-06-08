@@ -9,7 +9,7 @@ $cd Build
 $./bootstrap
 $./configure --prefix <path to install>
 $make
-$make install (if you want tro install library)
+$make install (if you want to install library)
 
 On iOS platform :
 $cd Build

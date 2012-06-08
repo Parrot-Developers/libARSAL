@@ -20,22 +20,27 @@ SOURCE_FILES 	= 	$(HEADER_FILES)		\
 
 # The library names to build (note we are building static and shared libs)
 if DEBUG_MODE
-lib_LTLIBRARIES 					= ../Library/libsal_dbg.la
-___Library_libsal_dbg_ladir 		= $(includedir)/libsal
-___Library_libsal_dbg_la_HEADERS 	= $(HEADER_FILES)
-___Library_libsal_dbg_la_SOURCES 	= $(SOURCE_FILES)
+lib_LTLIBRARIES 		= libsal_dbg.la
+libsal_dbg_ladir 		= $(includedir)/libSAL
+libsal_dbg_la_HEADERS 	= $(HEADER_FILES)
+libsal_dbg_la_SOURCES 	= $(SOURCE_FILES)
 else
-lib_LTLIBRARIES 				= ../Library/libsal.la
-___Library_libsal_ladir 		= $(includedir)/libsal
-___Library_libsal_la_HEADERS 	= $(HEADER_FILES)
-___Library_libsal_la_SOURCES 	= $(SOURCE_FILES)
+lib_LTLIBRARIES 	= libsal.la
+libsal_ladir 		= $(includedir)/libSAL
+libsal_la_HEADERS 	= $(HEADER_FILES)
+libsal_la_SOURCES 	= $(SOURCE_FILES)
 endif
 
 check_PROGRAMS = ../TestBench/test1 ../TestBench/test2
 ___TestBench_test1_SOURCES 	= ../TestBench/test1.c
-___TestBench_test1_LDADD 	= ../Library/libsal.la
 ___TestBench_test2_SOURCES 	= ../TestBench/test2.c
-___TestBench_test2_LDADD 	= ../Library/libsal.la
+if DEBUG_MODE
+___TestBench_test1_LDADD 	= libsal_dbg.la
+___TestBench_test2_LDADD 	= libsal_dbg.la
+else
+___TestBench_test1_LDADD 	= libsal.la
+___TestBench_test2_LDADD 	= libsal.la
+endif
 
 # Ensure the distribution of the doxygen configuration file
 EXTRA_DIST = bootstrap

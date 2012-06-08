@@ -42,6 +42,8 @@ ___TestBench_test1_LDADD 	= libsal.la
 ___TestBench_test2_LDADD 	= libsal.la
 endif
 
+CLEAN_FILES			= llibsal.la ibsal_dbg.la
+
 # Ensure the distribution of the doxygen configuration file
 EXTRA_DIST = bootstrap
 

@@ -23,11 +23,11 @@ rm -f \
 rm -rf \
     doxygen-doc \
     autom4te.cache \
-    Debug \
-    Release \
-    ../Library \
+    *DSYM* \
     config \
     m4 \
+    libsal_dbg.la \
+    libsal.la \ 
     `find .. -name '.deps'`	\
     `find .. -name '.dirstamp'`
 

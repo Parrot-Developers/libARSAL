@@ -7,29 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		807D59451581FFE000A95C4B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 807D59421581FFE000A95C4B /* AppDelegate.m */; };
+		807D59461581FFE000A95C4B /* test2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 807D59431581FFE000A95C4B /* test2.xcdatamodeld */; };
+		807D594A1581FFF600A95C4B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 807D59471581FFF600A95C4B /* main.m */; };
+		807D594E1581FFFC00A95C4B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 807D594C1581FFFC00A95C4B /* InfoPlist.strings */; };
 		80CC26D51580B2C000D0373C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80CC26D41580B2C000D0373C /* UIKit.framework */; };
 		80CC26D71580B2C000D0373C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80CC26D61580B2C000D0373C /* Foundation.framework */; };
 		80CC26D91580B2C000D0373C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80CC26D81580B2C000D0373C /* CoreGraphics.framework */; };
 		80CC26DB1580B2C000D0373C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80CC26DA1580B2C000D0373C /* CoreData.framework */; };
-		80CC26E11580B2C000D0373C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80CC26DF1580B2C000D0373C /* InfoPlist.strings */; };
-		80CC26E31580B2C000D0373C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CC26E21580B2C000D0373C /* main.m */; };
-		80CC26E71580B2C000D0373C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CC26E61580B2C000D0373C /* AppDelegate.m */; };
-		80CC26EA1580B2C000D0373C /* test2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 80CC26E81580B2C000D0373C /* test2.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		807D59411581FFE000A95C4B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		807D59421581FFE000A95C4B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = SOURCE_ROOT; };
+		807D59441581FFE000A95C4B /* test2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = test2.xcdatamodel; sourceTree = "<group>"; };
+		807D59471581FFF600A95C4B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
+		807D59481581FFF600A95C4B /* test2-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "test2-Info.plist"; sourceTree = SOURCE_ROOT; };
+		807D59491581FFF600A95C4B /* test2-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "test2-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		807D594D1581FFFC00A95C4B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
 		80CC26D01580B2C000D0373C /* test2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80CC26D41580B2C000D0373C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		80CC26D61580B2C000D0373C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		80CC26D81580B2C000D0373C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		80CC26DA1580B2C000D0373C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		80CC26DE1580B2C000D0373C /* test2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "test2-Info.plist"; sourceTree = "<group>"; };
-		80CC26E01580B2C000D0373C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		80CC26E21580B2C000D0373C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		80CC26E41580B2C000D0373C /* test2-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "test2-Prefix.pch"; sourceTree = "<group>"; };
-		80CC26E51580B2C000D0373C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		80CC26E61580B2C000D0373C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		80CC26E91580B2C000D0373C /* test2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = test2.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,9 +78,9 @@
 		80CC26DC1580B2C000D0373C /* test2 */ = {
 			isa = PBXGroup;
 			children = (
-				80CC26E51580B2C000D0373C /* AppDelegate.h */,
-				80CC26E61580B2C000D0373C /* AppDelegate.m */,
-				80CC26E81580B2C000D0373C /* test2.xcdatamodeld */,
+				807D59411581FFE000A95C4B /* AppDelegate.h */,
+				807D59421581FFE000A95C4B /* AppDelegate.m */,
+				807D59431581FFE000A95C4B /* test2.xcdatamodeld */,
 				80CC26DD1580B2C000D0373C /* Supporting Files */,
 			);
 			path = test2;
@@ -89,10 +89,10 @@
 		80CC26DD1580B2C000D0373C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				80CC26DE1580B2C000D0373C /* test2-Info.plist */,
-				80CC26DF1580B2C000D0373C /* InfoPlist.strings */,
-				80CC26E21580B2C000D0373C /* main.m */,
-				80CC26E41580B2C000D0373C /* test2-Prefix.pch */,
+				807D594C1581FFFC00A95C4B /* InfoPlist.strings */,
+				807D59471581FFF600A95C4B /* main.m */,
+				807D59481581FFF600A95C4B /* test2-Info.plist */,
+				807D59491581FFF600A95C4B /* test2-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -149,7 +149,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80CC26E11580B2C000D0373C /* InfoPlist.strings in Resources */,
+				807D594E1581FFFC00A95C4B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,7 +168,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ../../Build\nif [ ! -e ./configure ]; then\n./bootstrap\nfi\nif [ $CONFIGURATION = \"Release\" ] || [ $CONFIGURATION = \"Distribution\" ]; then\nPATH=$PLATFORM_DEVELOPER_USR_DIR/usr/bin:$PATH ./configure CC=\"$PLATFORM_DEVELOPER_USR_DIR/bin/llvm-gcc -arch armv7 -isysroot $SDKROOT\" --host=arm\nelse \t\nPATH=$PLATFORM_DEVELOPER_USR_DIR/usr/bin:$PATH ./configure CC=\"$PLATFORM_DEVELOPER_USR_DIR/bin/llvm-gcc -arch armv7 -isysroot $SDKROOT\" --host=arm --enable-debug\nfi\nmake";
+			shellScript = "cd ../../../Build\nif [ ! -e ./configure ]; then\n./bootstrap\nfi\necho \"Configure for $CONFIGURATION mode.\" \nif [ $CONFIGURATION = \"Release\" ] || [ $CONFIGURATION = \"Distribution\" ]; then\nPATH=$PLATFORM_DEVELOPER_USR_DIR/usr/bin:$PATH ./configure CC=\"$PLATFORM_DEVELOPER_USR_DIR/bin/llvm-gcc -arch armv7 -isysroot $SDKROOT\" --host=arm --disable-shared --prefix=$CONFIGURATION_BUILD_DIR\nelse\nPATH=$PLATFORM_DEVELOPER_USR_DIR/usr/bin:$PATH ./configure CC=\"$PLATFORM_DEVELOPER_USR_DIR/bin/llvm-gcc -arch armv7 -isysroot $SDKROOT\" --host=arm --disabled-shared --enable-debug --prefix=$CONFIGURATION_BUILD_DIR\nfi\nmake\nmake install";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -177,19 +177,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80CC26E31580B2C000D0373C /* main.m in Sources */,
-				80CC26E71580B2C000D0373C /* AppDelegate.m in Sources */,
-				80CC26EA1580B2C000D0373C /* test2.xcdatamodeld in Sources */,
+				807D59451581FFE000A95C4B /* AppDelegate.m in Sources */,
+				807D59461581FFE000A95C4B /* test2.xcdatamodeld in Sources */,
+				807D594A1581FFF600A95C4B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		80CC26DF1580B2C000D0373C /* InfoPlist.strings */ = {
+		807D594C1581FFFC00A95C4B /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				80CC26E01580B2C000D0373C /* en */,
+				807D594D1581FFFC00A95C4B /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -245,12 +245,13 @@
 		80CC26EE1580B2C000D0373C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(CONFIGURATION)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "test2/test2-Prefix.pch";
-				HEADER_SEARCH_PATHS = ../../Includes;
-				INFOPLIST_FILE = "test2/test2-Info.plist";
-				LIBRARY_SEARCH_PATHS = ../../Library/.libs;
-				OTHER_LDFLAGS = "-lsal";
+				GCC_PREFIX_HEADER = "test2-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(CONFIGURATION)/include";
+				INFOPLIST_FILE = "test2-Info.plist";
+				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION)/lib";
+				OTHER_LDFLAGS = "-lsal_dbg";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -259,11 +260,12 @@
 		80CC26EF1580B2C000D0373C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(CONFIGURATION)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "test2/test2-Prefix.pch";
-				HEADER_SEARCH_PATHS = ../../Includes;
-				INFOPLIST_FILE = "test2/test2-Info.plist";
-				LIBRARY_SEARCH_PATHS = ../../Library/.libs;
+				GCC_PREFIX_HEADER = "test2-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(CONFIGURATION)/include";
+				INFOPLIST_FILE = "test2-Info.plist";
+				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION)/lib";
 				OTHER_LDFLAGS = "-lsal";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -294,14 +296,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		80CC26E81580B2C000D0373C /* test2.xcdatamodeld */ = {
+		807D59431581FFE000A95C4B /* test2.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				80CC26E91580B2C000D0373C /* test2.xcdatamodel */,
+				807D59441581FFE000A95C4B /* test2.xcdatamodel */,
 			);
-			currentVersion = 80CC26E91580B2C000D0373C /* test2.xcdatamodel */;
+			currentVersion = 807D59441581FFE000A95C4B /* test2.xcdatamodel */;
 			path = test2.xcdatamodeld;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 			versionGroupType = wrapper.xcdatamodel;
 		};
 /* End XCVersionGroup section */

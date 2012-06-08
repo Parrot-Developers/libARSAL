@@ -21,7 +21,6 @@ int sal_thread_create(sal_thread_t *thread, sal_thread_routine routine, void *ar
 
 #if defined(HAVE_PTHREAD_H)
 	pthread_t *pthread = (pthread_t *)malloc(sizeof(pthread_t));
-	printf("pthread %d, %p\n", (int)*pthread, pthread);
 	*thread = (sal_thread_t)pthread;
 	result = pthread_create((pthread_t *)*thread, NULL, routine, arg);
 #endif

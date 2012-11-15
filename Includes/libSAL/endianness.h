@@ -13,7 +13,12 @@
 /**
  * @brief AR.Drone endianness
  */
+#ifndef __DRONE_ENDIAN
 #define __DRONE_ENDIAN __LITTLE_ENDIAN
+#endif
+#ifndef __INVER_ENDIAN
+#define __INVER_ENDIAN __BIG_ENDIAN
+#endif
 
 
 #if __BYTE_ORDER == __DRONE_ENDIAN
@@ -67,7 +72,7 @@
  */
 #define dtohd(v) (v)
 
-#elif __BYTE_ORDER == __BIG_ENDIAN
+#elif __BYTE_ORDER == __INVER_ENDIAN
 /*
  * HOST --> DRONE Conversion macros
  */

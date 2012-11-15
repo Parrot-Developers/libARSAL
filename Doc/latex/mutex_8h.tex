@@ -10,35 +10,35 @@ This file contains headers about mutex abstraction layer.
 \item 
 typedef void $\ast$ {\bf sal\_\-mutex\_\-t}\label{mutex_8h_ae44477e0b3650f16fc7a41f2949ee5b6}
 
-\begin{DoxyCompactList}\small\item\em Define a mutex type. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Define a mutex type. \item\end{DoxyCompactList}\item 
 typedef void $\ast$ {\bf sal\_\-cond\_\-t}\label{mutex_8h_a942754308e0a64488c07dafa7d7c7ff7}
 
-\begin{DoxyCompactList}\small\item\em Define a condition type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Define a condition type. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 int {\bf sal\_\-mutex\_\-init} ({\bf sal\_\-mutex\_\-t} $\ast$mutex)
-\begin{DoxyCompactList}\small\item\em Initializes a mutex. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Initializes a mutex. \item\end{DoxyCompactList}\item 
 int {\bf sal\_\-mutex\_\-destroy} ({\bf sal\_\-mutex\_\-t} $\ast$mutex)
-\begin{DoxyCompactList}\small\item\em Destroys a mutex. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Destroys a mutex. \item\end{DoxyCompactList}\item 
 int {\bf sal\_\-mutex\_\-lock} ({\bf sal\_\-mutex\_\-t} $\ast$mutex)
-\begin{DoxyCompactList}\small\item\em Locks a mutex. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Locks a mutex. \item\end{DoxyCompactList}\item 
 int {\bf sal\_\-mutex\_\-trylock} ({\bf sal\_\-mutex\_\-t} $\ast$mutex)
-\begin{DoxyCompactList}\small\item\em Tries to lock a mutex. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Tries to lock a mutex. \item\end{DoxyCompactList}\item 
 int {\bf sal\_\-mutex\_\-unlock} ({\bf sal\_\-mutex\_\-t} $\ast$mutex)
-\begin{DoxyCompactList}\small\item\em Unlocks a mutex. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Unlocks a mutex. \item\end{DoxyCompactList}\item 
 int {\bf sal\_\-cond\_\-init} ({\bf sal\_\-cond\_\-t} $\ast$cond)
-\begin{DoxyCompactList}\small\item\em Initializes a condition. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Initializes a condition. \item\end{DoxyCompactList}\item 
 int {\bf sal\_\-cond\_\-destroy} ({\bf sal\_\-cond\_\-t} $\ast$cond)
-\begin{DoxyCompactList}\small\item\em Destroy a condition. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Destroy a condition. \item\end{DoxyCompactList}\item 
 int {\bf sal\_\-cond\_\-wait} ({\bf sal\_\-cond\_\-t} $\ast$cond, {\bf sal\_\-mutex\_\-t} $\ast$mutex)
-\begin{DoxyCompactList}\small\item\em Wait on a condition. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Wait on a condition. \item\end{DoxyCompactList}\item 
 int {\bf sal\_\-cond\_\-timedwait} ({\bf sal\_\-cond\_\-t} $\ast$cond, {\bf sal\_\-mutex\_\-t} $\ast$mutex, int timeout)
-\begin{DoxyCompactList}\small\item\em Wait on a condition and returns error. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Wait on a condition and returns error. \item\end{DoxyCompactList}\item 
 int {\bf sal\_\-cond\_\-signal} ({\bf sal\_\-cond\_\-t} $\ast$cond)
-\begin{DoxyCompactList}\small\item\em Signal a condition. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Signal a condition. \item\end{DoxyCompactList}\item 
 int {\bf sal\_\-cond\_\-broadcast} ({\bf sal\_\-cond\_\-t} $\ast$cond)
-\begin{DoxyCompactList}\small\item\em Signal a condition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Signal a condition. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -55,7 +55,7 @@ This file contains headers about mutex abstraction layer. \begin{DoxyDate}{Date}
 \index{sal\_\-cond\_\-broadcast@{sal\_\-cond\_\-broadcast}!mutex.h@{mutex.h}}
 \subsubsection[{sal\_\-cond\_\-broadcast}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-cond\_\-broadcast (
 \begin{DoxyParamCaption}
-\item[{{\bf sal\_\-cond\_\-t} $\ast$}]{cond}
+\item[{{\bf sal\_\-cond\_\-t} $\ast$}]{ cond}
 \end{DoxyParamCaption}
 )}\label{mutex_8h_a902e26f808e30230155f65af9cacff1c}
 
@@ -64,19 +64,15 @@ Signal a condition.
 
 
 \begin{DoxyParams}{Parameters}
-{\em cond} & The condition to broadcast \\
-\hline
-\end{DoxyParams}
+\item[{\em cond}]The condition to broadcast \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-cond\_\-broadcast()}{p.}{mutex_8h_a902e26f808e30230155f65af9cacff1c} returns 0. If the time is specified by timeout has passed, pthread\_\-cond\_\-timedwait() returns ETIMEDOUT. Otherwise, it returns an error number (See errno.h) \\
-\hline
-\end{DoxyRetVals}
+\item[{\em On}]success, \doxyref{sal\_\-cond\_\-broadcast()}{p.}{mutex_8h_a902e26f808e30230155f65af9cacff1c} returns 0. If the time is specified by timeout has passed, pthread\_\-cond\_\-timedwait() returns ETIMEDOUT. Otherwise, it returns an error number (See errno.h) \end{DoxyRetVals}
 \index{mutex.h@{mutex.h}!sal\_\-cond\_\-destroy@{sal\_\-cond\_\-destroy}}
 \index{sal\_\-cond\_\-destroy@{sal\_\-cond\_\-destroy}!mutex.h@{mutex.h}}
 \subsubsection[{sal\_\-cond\_\-destroy}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-cond\_\-destroy (
 \begin{DoxyParamCaption}
-\item[{{\bf sal\_\-cond\_\-t} $\ast$}]{cond}
+\item[{{\bf sal\_\-cond\_\-t} $\ast$}]{ cond}
 \end{DoxyParamCaption}
 )}\label{mutex_8h_ac17031d0d2cffcd2dce9f9335e011ea4}
 
@@ -85,19 +81,15 @@ Destroy a condition.
 
 
 \begin{DoxyParams}{Parameters}
-{\em cond} & The condition to destroy \\
-\hline
-\end{DoxyParams}
+\item[{\em cond}]The condition to destroy \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-cond\_\-destroy()}{p.}{mutex_8h_ac17031d0d2cffcd2dce9f9335e011ea4} returns 0. Otherwise, it returns an error number (See errno.h) \\
-\hline
-\end{DoxyRetVals}
+\item[{\em On}]success, \doxyref{sal\_\-cond\_\-destroy()}{p.}{mutex_8h_ac17031d0d2cffcd2dce9f9335e011ea4} returns 0. Otherwise, it returns an error number (See errno.h) \end{DoxyRetVals}
 \index{mutex.h@{mutex.h}!sal\_\-cond\_\-init@{sal\_\-cond\_\-init}}
 \index{sal\_\-cond\_\-init@{sal\_\-cond\_\-init}!mutex.h@{mutex.h}}
 \subsubsection[{sal\_\-cond\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-cond\_\-init (
 \begin{DoxyParamCaption}
-\item[{{\bf sal\_\-cond\_\-t} $\ast$}]{cond}
+\item[{{\bf sal\_\-cond\_\-t} $\ast$}]{ cond}
 \end{DoxyParamCaption}
 )}\label{mutex_8h_a1ee1a57854232391f226f17881018b17}
 
@@ -106,19 +98,15 @@ Initializes a condition.
 
 
 \begin{DoxyParams}{Parameters}
-{\em cond} & The condition to initialize \\
-\hline
-\end{DoxyParams}
+\item[{\em cond}]The condition to initialize \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-cond\_\-init()}{p.}{mutex_8h_a1ee1a57854232391f226f17881018b17} returns 0. Otherwise, it returns an error number (See errno.h) \\
-\hline
-\end{DoxyRetVals}
+\item[{\em On}]success, \doxyref{sal\_\-cond\_\-init()}{p.}{mutex_8h_a1ee1a57854232391f226f17881018b17} returns 0. Otherwise, it returns an error number (See errno.h) \end{DoxyRetVals}
 \index{mutex.h@{mutex.h}!sal\_\-cond\_\-signal@{sal\_\-cond\_\-signal}}
 \index{sal\_\-cond\_\-signal@{sal\_\-cond\_\-signal}!mutex.h@{mutex.h}}
 \subsubsection[{sal\_\-cond\_\-signal}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-cond\_\-signal (
 \begin{DoxyParamCaption}
-\item[{{\bf sal\_\-cond\_\-t} $\ast$}]{cond}
+\item[{{\bf sal\_\-cond\_\-t} $\ast$}]{ cond}
 \end{DoxyParamCaption}
 )}\label{mutex_8h_a52144244638615a92345e37d19fd12c5}
 
@@ -127,21 +115,17 @@ Signal a condition.
 
 
 \begin{DoxyParams}{Parameters}
-{\em cond} & The condition to signal \\
-\hline
-\end{DoxyParams}
+\item[{\em cond}]The condition to signal \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-cond\_\-signal()}{p.}{mutex_8h_a52144244638615a92345e37d19fd12c5} returns 0. If the time is specified by timeout has passed, pthread\_\-cond\_\-timedwait() returns ETIMEDOUT. Otherwise, it returns an error number (See errno.h) \\
-\hline
-\end{DoxyRetVals}
+\item[{\em On}]success, \doxyref{sal\_\-cond\_\-signal()}{p.}{mutex_8h_a52144244638615a92345e37d19fd12c5} returns 0. If the time is specified by timeout has passed, pthread\_\-cond\_\-timedwait() returns ETIMEDOUT. Otherwise, it returns an error number (See errno.h) \end{DoxyRetVals}
 \index{mutex.h@{mutex.h}!sal\_\-cond\_\-timedwait@{sal\_\-cond\_\-timedwait}}
 \index{sal\_\-cond\_\-timedwait@{sal\_\-cond\_\-timedwait}!mutex.h@{mutex.h}}
 \subsubsection[{sal\_\-cond\_\-timedwait}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-cond\_\-timedwait (
 \begin{DoxyParamCaption}
-\item[{{\bf sal\_\-cond\_\-t} $\ast$}]{cond, }
-\item[{{\bf sal\_\-mutex\_\-t} $\ast$}]{mutex, }
-\item[{int}]{timeout}
+\item[{{\bf sal\_\-cond\_\-t} $\ast$}]{ cond, }
+\item[{{\bf sal\_\-mutex\_\-t} $\ast$}]{ mutex, }
+\item[{int}]{ timeout}
 \end{DoxyParamCaption}
 )}\label{mutex_8h_ad3ed8ddb4fd564c8a6d7323df5f1b674}
 
@@ -150,24 +134,16 @@ Wait on a condition and returns error.
 
 
 \begin{DoxyParams}{Parameters}
-{\em cond} & The condition to wait \\
-\hline
-{\em mutex} & The mutex linked to condition. \\
-\hline
-{\em timeout} & The time to wait before \doxyref{sal\_\-cond\_\-timedwait()}{p.}{mutex_8h_ad3ed8ddb4fd564c8a6d7323df5f1b674} returns ETIMEDOUT. \\
-\hline
-\end{DoxyParams}
+\item[{\em cond}]The condition to wait \item[{\em mutex}]The mutex linked to condition. \item[{\em timeout}]The time to wait before \doxyref{sal\_\-cond\_\-timedwait()}{p.}{mutex_8h_ad3ed8ddb4fd564c8a6d7323df5f1b674} returns ETIMEDOUT. \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-cond\_\-timedwait()}{p.}{mutex_8h_ad3ed8ddb4fd564c8a6d7323df5f1b674} returns 0. If the time is specified by timeout has passed, pthread\_\-cond\_\-timedwait() returns ETIMEDOUT. Otherwise, it returns an error number (See errno.h) \\
-\hline
-\end{DoxyRetVals}
+\item[{\em On}]success, \doxyref{sal\_\-cond\_\-timedwait()}{p.}{mutex_8h_ad3ed8ddb4fd564c8a6d7323df5f1b674} returns 0. If the time is specified by timeout has passed, pthread\_\-cond\_\-timedwait() returns ETIMEDOUT. Otherwise, it returns an error number (See errno.h) \end{DoxyRetVals}
 \index{mutex.h@{mutex.h}!sal\_\-cond\_\-wait@{sal\_\-cond\_\-wait}}
 \index{sal\_\-cond\_\-wait@{sal\_\-cond\_\-wait}!mutex.h@{mutex.h}}
 \subsubsection[{sal\_\-cond\_\-wait}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-cond\_\-wait (
 \begin{DoxyParamCaption}
-\item[{{\bf sal\_\-cond\_\-t} $\ast$}]{cond, }
-\item[{{\bf sal\_\-mutex\_\-t} $\ast$}]{mutex}
+\item[{{\bf sal\_\-cond\_\-t} $\ast$}]{ cond, }
+\item[{{\bf sal\_\-mutex\_\-t} $\ast$}]{ mutex}
 \end{DoxyParamCaption}
 )}\label{mutex_8h_a601882a498ec42519466e12e3fa06cdc}
 
@@ -176,21 +152,15 @@ Wait on a condition.
 
 
 \begin{DoxyParams}{Parameters}
-{\em cond} & The condition to wait \\
-\hline
-{\em mutex} & The mutex link to condition. \\
-\hline
-\end{DoxyParams}
+\item[{\em cond}]The condition to wait \item[{\em mutex}]The mutex link to condition. \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-cond\_\-wait()}{p.}{mutex_8h_a601882a498ec42519466e12e3fa06cdc} returns 0. Otherwise, it returns an error number (See errno.h) \\
-\hline
-\end{DoxyRetVals}
+\item[{\em On}]success, \doxyref{sal\_\-cond\_\-wait()}{p.}{mutex_8h_a601882a498ec42519466e12e3fa06cdc} returns 0. Otherwise, it returns an error number (See errno.h) \end{DoxyRetVals}
 \index{mutex.h@{mutex.h}!sal\_\-mutex\_\-destroy@{sal\_\-mutex\_\-destroy}}
 \index{sal\_\-mutex\_\-destroy@{sal\_\-mutex\_\-destroy}!mutex.h@{mutex.h}}
 \subsubsection[{sal\_\-mutex\_\-destroy}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-mutex\_\-destroy (
 \begin{DoxyParamCaption}
-\item[{{\bf sal\_\-mutex\_\-t} $\ast$}]{mutex}
+\item[{{\bf sal\_\-mutex\_\-t} $\ast$}]{ mutex}
 \end{DoxyParamCaption}
 )}\label{mutex_8h_ab539850efe78dd90ceba327d9c13145a}
 
@@ -199,19 +169,15 @@ Destroys a mutex.
 
 
 \begin{DoxyParams}{Parameters}
-{\em mutex} & The mutex to destroy \\
-\hline
-\end{DoxyParams}
+\item[{\em mutex}]The mutex to destroy \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-mutex\_\-init()}{p.}{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879} returns 0. Otherwise, it returns an error number (See errno.h) \\
-\hline
-\end{DoxyRetVals}
+\item[{\em On}]success, \doxyref{sal\_\-mutex\_\-init()}{p.}{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879} returns 0. Otherwise, it returns an error number (See errno.h) \end{DoxyRetVals}
 \index{mutex.h@{mutex.h}!sal\_\-mutex\_\-init@{sal\_\-mutex\_\-init}}
 \index{sal\_\-mutex\_\-init@{sal\_\-mutex\_\-init}!mutex.h@{mutex.h}}
 \subsubsection[{sal\_\-mutex\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-mutex\_\-init (
 \begin{DoxyParamCaption}
-\item[{{\bf sal\_\-mutex\_\-t} $\ast$}]{mutex}
+\item[{{\bf sal\_\-mutex\_\-t} $\ast$}]{ mutex}
 \end{DoxyParamCaption}
 )}\label{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879}
 
@@ -220,19 +186,15 @@ Initializes a mutex.
 
 
 \begin{DoxyParams}{Parameters}
-{\em mutex} & The mutex to initialize \\
-\hline
-\end{DoxyParams}
+\item[{\em mutex}]The mutex to initialize \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-mutex\_\-init()}{p.}{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879} returns 0. Otherwise, it returns an error number (See errno.h) \\
-\hline
-\end{DoxyRetVals}
+\item[{\em On}]success, \doxyref{sal\_\-mutex\_\-init()}{p.}{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879} returns 0. Otherwise, it returns an error number (See errno.h) \end{DoxyRetVals}
 \index{mutex.h@{mutex.h}!sal\_\-mutex\_\-lock@{sal\_\-mutex\_\-lock}}
 \index{sal\_\-mutex\_\-lock@{sal\_\-mutex\_\-lock}!mutex.h@{mutex.h}}
 \subsubsection[{sal\_\-mutex\_\-lock}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-mutex\_\-lock (
 \begin{DoxyParamCaption}
-\item[{{\bf sal\_\-mutex\_\-t} $\ast$}]{mutex}
+\item[{{\bf sal\_\-mutex\_\-t} $\ast$}]{ mutex}
 \end{DoxyParamCaption}
 )}\label{mutex_8h_ad5acc2c9f6cced0765f3ecc2b18add5a}
 
@@ -241,19 +203,15 @@ Locks a mutex.
 
 
 \begin{DoxyParams}{Parameters}
-{\em mutex} & The mutex to lock \\
-\hline
-\end{DoxyParams}
+\item[{\em mutex}]The mutex to lock \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-mutex\_\-init()}{p.}{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879} returns 0. Otherwise, it returns an error number (See errno.h) \\
-\hline
-\end{DoxyRetVals}
+\item[{\em On}]success, \doxyref{sal\_\-mutex\_\-init()}{p.}{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879} returns 0. Otherwise, it returns an error number (See errno.h) \end{DoxyRetVals}
 \index{mutex.h@{mutex.h}!sal\_\-mutex\_\-trylock@{sal\_\-mutex\_\-trylock}}
 \index{sal\_\-mutex\_\-trylock@{sal\_\-mutex\_\-trylock}!mutex.h@{mutex.h}}
 \subsubsection[{sal\_\-mutex\_\-trylock}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-mutex\_\-trylock (
 \begin{DoxyParamCaption}
-\item[{{\bf sal\_\-mutex\_\-t} $\ast$}]{mutex}
+\item[{{\bf sal\_\-mutex\_\-t} $\ast$}]{ mutex}
 \end{DoxyParamCaption}
 )}\label{mutex_8h_adfcc3cbc6241355584b456416c22d7d7}
 
@@ -262,19 +220,15 @@ Tries to lock a mutex.
 
 
 \begin{DoxyParams}{Parameters}
-{\em mutex} & The mutex to lock \\
-\hline
-\end{DoxyParams}
+\item[{\em mutex}]The mutex to lock \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-mutex\_\-init()}{p.}{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879} returns 0. Otherwise, it returns an error number (See errno.h) \\
-\hline
-\end{DoxyRetVals}
+\item[{\em On}]success, \doxyref{sal\_\-mutex\_\-init()}{p.}{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879} returns 0. Otherwise, it returns an error number (See errno.h) \end{DoxyRetVals}
 \index{mutex.h@{mutex.h}!sal\_\-mutex\_\-unlock@{sal\_\-mutex\_\-unlock}}
 \index{sal\_\-mutex\_\-unlock@{sal\_\-mutex\_\-unlock}!mutex.h@{mutex.h}}
 \subsubsection[{sal\_\-mutex\_\-unlock}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-mutex\_\-unlock (
 \begin{DoxyParamCaption}
-\item[{{\bf sal\_\-mutex\_\-t} $\ast$}]{mutex}
+\item[{{\bf sal\_\-mutex\_\-t} $\ast$}]{ mutex}
 \end{DoxyParamCaption}
 )}\label{mutex_8h_a6ffe1fc49588225708a0f1a37e83c83f}
 
@@ -283,11 +237,7 @@ Unlocks a mutex.
 
 
 \begin{DoxyParams}{Parameters}
-{\em mutex} & The mutex to unlock \\
-\hline
-\end{DoxyParams}
+\item[{\em mutex}]The mutex to unlock \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-mutex\_\-init()}{p.}{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879} returns 0. Otherwise, it returns an error number (See errno.h) \\
-\hline
-\end{DoxyRetVals}
+\item[{\em On}]success, \doxyref{sal\_\-mutex\_\-init()}{p.}{mutex_8h_a97c2c1e2caff058b6d5832c6cf9c7879} returns 0. Otherwise, it returns an error number (See errno.h) \end{DoxyRetVals}

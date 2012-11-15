@@ -11,7 +11,7 @@ This file contains headers about debug print abstraction layer.
 \item 
 \#define {\bf SAL\_\-PRINT}(level, format,...)~sal\_\-print(level, \char`\"{}\%s \%d:\%s:\%d -\/ \char`\"{} format, {\bf sal\_\-prefix\_\-table}[level], time(NULL), \_\-\_\-FUNCTION\_\-\_\-, \_\-\_\-LINE\_\-\_\-, \#\#\_\-\_\-VA\_\-ARGS\_\-\_\-)\label{print_8h_ab3d9093cccdef7b8de0404541d56c8c0}
 
-\begin{DoxyCompactList}\small\item\em print a specific output (i.e. \char`\"{}[ERR] 121545444:main:10 -\/ My debug log\char`\"{}) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em print a specific output (i.e. \char`\"{}[ERR] 121545444:main:10 -\/ My debug log\char`\"{}) \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
@@ -20,18 +20,18 @@ enum {\bf ePRINT\_\-LEVEL} \{ {\bf PRINT\_\-ERROR},
 {\bf PRINT\_\-DEBUG}, 
 {\bf PRINT\_\-MAX}
  \}
-\begin{DoxyCompactList}\small\item\em Output level. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Output level. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 int {\bf sal\_\-print} ({\bf ePRINT\_\-LEVEL} level, const char $\ast$format,...)
-\begin{DoxyCompactList}\small\item\em Convert a formatted output. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Convert a formatted output. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
 const char $\ast$ {\bf sal\_\-prefix\_\-table} [$\,$]\label{print_8h_ac25f7c37b7cbbeeecab54734dc680d62}
 
-\begin{DoxyCompactList}\small\item\em Table to display prefix about error, warning or debug messages. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Table to display prefix about error, warning or debug messages. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -72,9 +72,9 @@ PRINT\_\-MAX\label{print_8h_acddc3b5b66b0c2a55c86dbab6cdc54a8abcfd86e7b539889441
 \index{sal\_\-print@{sal\_\-print}!print.h@{print.h}}
 \subsubsection[{sal\_\-print}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-print (
 \begin{DoxyParamCaption}
-\item[{{\bf ePRINT\_\-LEVEL}}]{level, }
-\item[{const char $\ast$}]{format, }
-\item[{}]{...}
+\item[{{\bf ePRINT\_\-LEVEL}}]{ level, }
+\item[{const char $\ast$}]{ format, }
+\item[{}]{ ...}
 \end{DoxyParamCaption}
 )}\label{print_8h_af40aeac8b51d7a37f1578496051e03f6}
 
@@ -83,13 +83,7 @@ Convert a formatted output.
 
 
 \begin{DoxyParams}{Parameters}
-{\em level} & The level of output format \\
-\hline
-{\em format} & output format \\
-\hline
-\end{DoxyParams}
+\item[{\em level}]The level of output format \item[{\em format}]output format \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-print()}{p.}{print_8h_af40aeac8b51d7a37f1578496051e03f6} returns the number of characters printed. Otherwise, it returns a negative value. \\
-\hline
-\end{DoxyRetVals}
+\item[{\em On}]success, \doxyref{sal\_\-print()}{p.}{print_8h_af40aeac8b51d7a37f1578496051e03f6} returns the number of characters printed. Otherwise, it returns a negative value. \end{DoxyRetVals}

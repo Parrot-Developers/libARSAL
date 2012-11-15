@@ -8,7 +8,8 @@ HEADER_FILES	=	../Includes/libSAL/time.h 	\
 					../Includes/libSAL/thread.h \
 					../Includes/libSAL/mutex.h 	\
 					../Includes/libSAL/socket.h \
-					../Includes/libSAL/print.h
+					../Includes/libSAL/print.h \
+					../Includes/libSAL/endianness.h
 
 # The sources to add to the library and to add to the source distribution
 SOURCE_FILES 	= 	$(HEADER_FILES)		\
@@ -42,7 +43,7 @@ ___TestBench_test1_LDADD 	= libsal.la
 ___TestBench_test2_LDADD 	= libsal.la
 endif
 
-CLEAN_FILES			= llibsal.la ibsal_dbg.la
+CLEAN_FILES			= libsal.la libsal_dbg.la
 
 # Ensure the distribution of the doxygen configuration file
 EXTRA_DIST = bootstrap
@@ -52,4 +53,3 @@ if HAVE_DOXYGEN
 include doxygen.am
 EXTRA_DIST += doxygen.ac doxygen.am $(DX_CONFIG)
 endif
-	

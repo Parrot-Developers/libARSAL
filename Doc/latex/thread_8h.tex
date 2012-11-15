@@ -10,19 +10,19 @@ This file contains headers about thread abstraction layer.
 \item 
 typedef void $\ast$ {\bf sal\_\-thread\_\-t}\label{thread_8h_a0e586c8fa470863d8cb2fc0796df3bd0}
 
-\begin{DoxyCompactList}\small\item\em Define a thread type. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Define a thread type. \item\end{DoxyCompactList}\item 
 typedef void $\ast$($\ast$ {\bf sal\_\-thread\_\-routine} )(void $\ast$)\label{thread_8h_afbceb50e62eecc75c97989f3457d826f}
 
-\begin{DoxyCompactList}\small\item\em Define a callback function type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Define a callback function type. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 int {\bf sal\_\-thread\_\-create} ({\bf sal\_\-thread\_\-t} $\ast$thread, {\bf sal\_\-thread\_\-routine} routine, void $\ast$arg)
-\begin{DoxyCompactList}\small\item\em Create a new thread. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Create a new thread. \item\end{DoxyCompactList}\item 
 int {\bf sal\_\-thread\_\-join} ({\bf sal\_\-thread\_\-t} thread, void $\ast$$\ast$retval)
-\begin{DoxyCompactList}\small\item\em Join a thread. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Join a thread. \item\end{DoxyCompactList}\item 
 int {\bf sal\_\-thread\_\-destroy} ({\bf sal\_\-thread\_\-t} $\ast$thread)
-\begin{DoxyCompactList}\small\item\em Destroy a thread. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Destroy a thread. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -39,9 +39,9 @@ This file contains headers about thread abstraction layer. \begin{DoxyDate}{Date
 \index{sal\_\-thread\_\-create@{sal\_\-thread\_\-create}!thread.h@{thread.h}}
 \subsubsection[{sal\_\-thread\_\-create}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-thread\_\-create (
 \begin{DoxyParamCaption}
-\item[{{\bf sal\_\-thread\_\-t} $\ast$}]{thread, }
-\item[{{\bf sal\_\-thread\_\-routine}}]{routine, }
-\item[{void $\ast$}]{arg}
+\item[{{\bf sal\_\-thread\_\-t} $\ast$}]{ thread, }
+\item[{{\bf sal\_\-thread\_\-routine}}]{ routine, }
+\item[{void $\ast$}]{ arg}
 \end{DoxyParamCaption}
 )}\label{thread_8h_a754f6b28e73a64799d117b3927588c27}
 
@@ -50,23 +50,15 @@ Create a new thread.
 
 
 \begin{DoxyParams}{Parameters}
-{\em thread} & The thread to create \\
-\hline
-{\em routine} & The routine to invoke by thread \\
-\hline
-{\em arg} & The argument passed to routine() \\
-\hline
-\end{DoxyParams}
+\item[{\em thread}]The thread to create \item[{\em routine}]The routine to invoke by thread \item[{\em arg}]The argument passed to routine() \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-thread\_\-create()}{p.}{thread_8h_a754f6b28e73a64799d117b3927588c27} returns 0. Otherwise, it returns an error number (See errno.h) \\
-\hline
-\end{DoxyRetVals}
+\item[{\em On}]success, \doxyref{sal\_\-thread\_\-create()}{p.}{thread_8h_a754f6b28e73a64799d117b3927588c27} returns 0. Otherwise, it returns an error number (See errno.h) \end{DoxyRetVals}
 \index{thread.h@{thread.h}!sal\_\-thread\_\-destroy@{sal\_\-thread\_\-destroy}}
 \index{sal\_\-thread\_\-destroy@{sal\_\-thread\_\-destroy}!thread.h@{thread.h}}
 \subsubsection[{sal\_\-thread\_\-destroy}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-thread\_\-destroy (
 \begin{DoxyParamCaption}
-\item[{{\bf sal\_\-thread\_\-t} $\ast$}]{thread}
+\item[{{\bf sal\_\-thread\_\-t} $\ast$}]{ thread}
 \end{DoxyParamCaption}
 )}\label{thread_8h_a89021a847ab9a854a2b0377a08914de6}
 
@@ -75,20 +67,16 @@ Destroy a thread.
 
 
 \begin{DoxyParams}{Parameters}
-{\em thread} & The thread to destroy \\
-\hline
-\end{DoxyParams}
+\item[{\em thread}]The thread to destroy \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-thread\_\-create()}{p.}{thread_8h_a754f6b28e73a64799d117b3927588c27} returns 0. Otherwise, it returns an error number (See errno.h) \\
-\hline
-\end{DoxyRetVals}
+\item[{\em On}]success, \doxyref{sal\_\-thread\_\-create()}{p.}{thread_8h_a754f6b28e73a64799d117b3927588c27} returns 0. Otherwise, it returns an error number (See errno.h) \end{DoxyRetVals}
 \index{thread.h@{thread.h}!sal\_\-thread\_\-join@{sal\_\-thread\_\-join}}
 \index{sal\_\-thread\_\-join@{sal\_\-thread\_\-join}!thread.h@{thread.h}}
 \subsubsection[{sal\_\-thread\_\-join}]{\setlength{\rightskip}{0pt plus 5cm}int sal\_\-thread\_\-join (
 \begin{DoxyParamCaption}
-\item[{{\bf sal\_\-thread\_\-t}}]{thread, }
-\item[{void $\ast$$\ast$}]{retval}
+\item[{{\bf sal\_\-thread\_\-t}}]{ thread, }
+\item[{void $\ast$$\ast$}]{ retval}
 \end{DoxyParamCaption}
 )}\label{thread_8h_ab6850b322b6b1109c176877346a32c45}
 
@@ -97,13 +85,7 @@ Join a thread.
 
 
 \begin{DoxyParams}{Parameters}
-{\em thread} & The thread to join \\
-\hline
-{\em retval} & If this pointer is not NULL, the exit status is placed into $\ast$retval \\
-\hline
-\end{DoxyParams}
+\item[{\em thread}]The thread to join \item[{\em retval}]If this pointer is not NULL, the exit status is placed into $\ast$retval \end{DoxyParams}
 
 \begin{DoxyRetVals}{Return values}
-{\em On} & success, \doxyref{sal\_\-thread\_\-join()}{p.}{thread_8h_ab6850b322b6b1109c176877346a32c45} returns 0. Otherwise, it returns an error number (See errno.h) \\
-\hline
-\end{DoxyRetVals}
+\item[{\em On}]success, \doxyref{sal\_\-thread\_\-join()}{p.}{thread_8h_ab6850b322b6b1109c176877346a32c45} returns 0. Otherwise, it returns an error number (See errno.h) \end{DoxyRetVals}

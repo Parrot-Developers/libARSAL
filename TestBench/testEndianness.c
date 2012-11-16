@@ -10,7 +10,7 @@
 #  define __BYTE_ORDER __LITTLE_ENDIAN
 # else
 #  define __BYTE_ORDER __PDP_ENDIAN
-# endif 
+# endif
 #else
 # include <endian.h>
 #endif

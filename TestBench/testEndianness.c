@@ -1,5 +1,21 @@
+#ifdef __APPLE__
+# include <architecture/byte_order.h>
+# include <libkern/OSByteOrder.h>
+# define __LITTLE_ENDIAN 1234
+# define __BIG_ENDIAN 4321
+# define __PDP_ENDIAN 3412
+# ifdef __BIG_ENDIAN__
+#  define __BYTE_ORDER __BIG_ENDIAN
+# elif defined (__LITTLE_ENDIAN__)
+#  define __BYTE_ORDER __LITTLE_ENDIAN
+# else
+#  define __BYTE_ORDER __PDP_ENDIAN
+# endif 
+#else
+# include <endian.h>
+#endif
+
 // Define to force the testbench to beleive that the drone is big endian
-#include <endian.h>
 #define FORCE_ENDIANNESS (0)
 
 #if FORCE_ENDIANNESS
@@ -240,19 +256,19 @@ main (int argc, char *argv[])
 {
 // Set host endian string
 #if __BYTE_ORDER == __LITTLE_ENDIAN
-    char *hostE = lestr;
+    const char *hostE = lestr;
 #elif __BYTE_ORDER == __BIG_ENDIAN
-    char *hostE = bestr;
+    const char *hostE = bestr;
 #else
-    char *hostE = oestr;
+    const char *hostE = oestr;
 #endif
 // Set drone endian string
 #if __DRONE_ENDIAN == __LITTLE_ENDIAN
-    char *droneE = lestr;
+    const char *droneE = lestr;
 #elif __DRONE_ENDIAN == __BIG_ENDIAN
-    char *droneE = bestr;
+    const char *droneE = bestr;
 #else
-    char *droneE = oestr;
+    const char *droneE = oestr;
 #endif
 // Show both endianness
     SAL_PRINT (PRINT_WARNING, "Host  Endianness : %s\n", hostE);

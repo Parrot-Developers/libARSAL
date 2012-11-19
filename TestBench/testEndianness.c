@@ -1,3 +1,6 @@
+// Define to force the testbench to beleive that the drone is big endian
+#define INVERT_DRONE_ENDIANNESS (0)
+
 #ifdef __APPLE__
 # include <architecture/byte_order.h>
 # include <libkern/OSByteOrder.h>
@@ -15,12 +18,8 @@
 # include <endian.h>
 #endif
 
-// Define to force the testbench to beleive that the drone is big endian
-#define FORCE_ENDIANNESS (0)
-
-#if FORCE_ENDIANNESS
+#if INVERT_DRONE_ENDIANNESS
 #define __DRONE_ENDIAN __BIG_ENDIAN
-#define __INVER_ENDIAN __LITTLE_ENDIAN
 #endif
 
 // Header we want to test

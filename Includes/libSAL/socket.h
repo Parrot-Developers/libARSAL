@@ -129,4 +129,16 @@ int sal_accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
  */
 int sal_close(int sockfd);
 
+/**
+ * @brief Set the socket options
+ *
+ * @param sockfd The socket to set options
+ * @param level the protocol level
+ * @param optname the option name
+ * @param optval the option value
+ * @param optlen the length of the option value
+ * @retval On success, 0 is returned. Otherwise, -1 is returned, and errno is set appropriately. (See errno.h)
+ */            
+int sal_setsockopt(int sockfd, int level, int optname,const void *optval, socklen_t optlen);
+
 #endif // _SOCKET_H_

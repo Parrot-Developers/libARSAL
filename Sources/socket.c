@@ -58,3 +58,8 @@ int sal_close(int sockfd)
 {
 	return close(sockfd);
 }
+
+int sal_setsockopt(int sockfd, int level, int optname,const void *optval, socklen_t optlen)
+{
+	return setsockopt(sockfd, level, optname,optval, optlen);
+}

@@ -157,6 +157,10 @@
  */
 #define dtohd(v) ARSwapBigToHostDouble(v)
 
+#else
+# error Drone PDP endianness is not supported
+#endif
+
 
 #if !defined(OS_INLINE)
 # if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
@@ -309,11 +313,6 @@ ARSwapBigToHostDouble (double orig)
   u.i = OSSwapBigToHostInt64 (u.i);
   return u.d;
 }
-
-#else
-# error Drone PDP endianness is not supported
-#endif
-
 
 #else // ! defined (__APPLE__)
 

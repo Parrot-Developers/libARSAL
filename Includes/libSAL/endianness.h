@@ -36,129 +36,129 @@
 #endif
 
 /**
- * @brief AR.Drone endianness
+ * @brief Device endianness
  */
-#ifndef __DRONE_ENDIAN
-# define __DRONE_ENDIAN __LITTLE_ENDIAN
+#ifndef __DEVICE_ENDIAN
+# define __DEVICE_ENDIAN __LITTLE_ENDIAN
 #endif
 
 /**
  * @brief Opposite endiannes
  */
 #ifndef __INVER_ENDIAN
-# if __DRONE_ENDIAN == __LITTLE_ENDIAN
+# if __DEVICE_ENDIAN == __LITTLE_ENDIAN
 #  define __INVER_ENDIAN __BIG_ENDIAN
-# elif __DRONE_ENDIAN == __BIG_ENDIAN
+# elif __DEVICE_ENDIAN == __BIG_ENDIAN
 #  define __INVER_ENDIAN __LITTLE_ENDIAN
 # else
-#  error Drone endian __PDP_ENDIAN not supported
+#  error Device endian __PDP_ENDIAN not supported
 # endif
 #endif
 
-#if __DRONE_ENDIAN == __LITTLE_ENDIAN
+#if __DEVICE_ENDIAN == __LITTLE_ENDIAN
 /*
- * HOST --> DRONE Conversion macros
+ * HOST --> DEVICE Conversion macros
  */
 
 /**
- * @brief Convert a short int (2 bytes) to drone endianness
+ * @brief Convert a short int (2 bytes) to device endianness
  */
 #define htods(v) OSSwapHostToLittleInt16(v)
 /**
- * @brief Convert a long int (4 bytes) to drone endianness
+ * @brief Convert a long int (4 bytes) to device endianness
  */
 #define htodl(v) OSSwapHostToLittleInt32(v)
 /**
- * @brief Convert a long long int (8 bytes) to drone endianness
+ * @brief Convert a long long int (8 bytes) to device endianness
  */
 #define htodll(v) OSSwapHostToLittleInt64(v)
 /**
- * @brief Convert a IEEE-754 float (4 bytes) to drone endianness
+ * @brief Convert a IEEE-754 float (4 bytes) to device endianness
  */
 #define htodf(v) ARSwapHostToLittleFloat(v)
 /**
- * @brief Convert a IEEE-754 double (8 bytes) to drone endianness
+ * @brief Convert a IEEE-754 double (8 bytes) to device endianness
  */
 #define htodd(v) ARSwapHostToLittleDouble(v)
 
 /*
- * DRONE --> HOST Conversion macros
+ * DEVICE --> HOST Conversion macros
  */
 
 /**
- * @brief Convert a short int (2 bytes) from drone endianness
+ * @brief Convert a short int (2 bytes) from device endianness
  */
 #define dtohs(v) OSSwapLittleToHostInt16(v)
 /**
- * @brief Convert a long int (4 bytes) from drone endianness
+ * @brief Convert a long int (4 bytes) from device endianness
  */
 #define dtohl(v) OSSwapLittleToHostInt32(v)
 /**
- * @brief Convert a long long int (8 bytes) from drone endianness
+ * @brief Convert a long long int (8 bytes) from device endianness
  */
 #define dtohll(v) OSSwapLittleToHostInt64(v)
 /**
- * @brief Convert a IEEE-754 float (4 bytes) from drone endianness
+ * @brief Convert a IEEE-754 float (4 bytes) from device endianness
  */
 #define dtohf(v) ARSwapLittleToHostFloat(v)
 /**
- * @brief Convert a IEEE-754 double (8 bytes) from drone endianness
+ * @brief Convert a IEEE-754 double (8 bytes) from device endianness
  */
 #define dtohd(v) ARSwapLittleToHostDouble(v)
 
-#elif __DRONE_ENDIAN == __BIG_ENDIAN
+#elif __DEVICE_ENDIAN == __BIG_ENDIAN
 /*
- * HOST --> DRONE Conversion macros
+ * HOST --> DEVICE Conversion macros
  */
 
 /**
- * @brief Convert a short int (2 bytes) to drone endianness
+ * @brief Convert a short int (2 bytes) to device endianness
  */
 #define htods(v) OSSwapHostToBigInt16(v)
 /**
- * @brief Convert a long int (4 bytes) to drone endianness
+ * @brief Convert a long int (4 bytes) to device endianness
  */
 #define htodl(v) OSSwapHostToBigInt32(v)
 /**
- * @brief Convert a long long int (8 bytes) to drone endianness
+ * @brief Convert a long long int (8 bytes) to device endianness
  */
 #define htodll(v) OSSwapHostToBigInt64(v)
 /**
- * @brief Convert a IEEE-754 float (4 bytes) to drone endianness
+ * @brief Convert a IEEE-754 float (4 bytes) to device endianness
  */
 #define htodf(v) ARSwapHostToBigFloat(v)
 /**
- * @brief Convert a IEEE-754 double (8 bytes) to drone endianness
+ * @brief Convert a IEEE-754 double (8 bytes) to device endianness
  */
 #define htodd(v) ARSwapHostToBigDouble(v)
 
 /*
- * DRONE --> HOST Conversion macros
+ * DEVICE --> HOST Conversion macros
  */
 
 /**
- * @brief Convert a short int (2 bytes) from drone endianness
+ * @brief Convert a short int (2 bytes) from device endianness
  */
 #define dtohs(v) OSSwapBigToHostInt16(v)
 /**
- * @brief Convert a long int (4 bytes) from drone endianness
+ * @brief Convert a long int (4 bytes) from device endianness
  */
 #define dtohl(v) OSSwapBigToHostInt32(v)
 /**
- * @brief Convert a long long int (8 bytes) from drone endianness
+ * @brief Convert a long long int (8 bytes) from device endianness
  */
 #define dtohll(v) OSSwapBigToHostInt64(v)
 /**
- * @brief Convert a IEEE-754 float (4 bytes) from drone endianness
+ * @brief Convert a IEEE-754 float (4 bytes) from device endianness
  */
 #define dtohf(v) ARSwapBigToHostFloat(v)
 /**
- * @brief Convert a IEEE-754 double (8 bytes) from drone endianness
+ * @brief Convert a IEEE-754 double (8 bytes) from device endianness
  */
 #define dtohd(v) ARSwapBigToHostDouble(v)
 
 #else
-# error Drone PDP endianness is not supported
+# error Device PDP endianness is not supported
 #endif
 
 
@@ -319,124 +319,124 @@ ARSwapBigToHostDouble (double orig)
 #include <endian.h>
 
 /**
- * @brief AR.Drone endianness
+ * @brief Device endianness
  */
-#ifndef __DRONE_ENDIAN
-# define __DRONE_ENDIAN __LITTLE_ENDIAN
+#ifndef __DEVICE_ENDIAN
+# define __DEVICE_ENDIAN __LITTLE_ENDIAN
 #endif
 
 /**
  * @brief Opposite endiannes
  */
 #ifndef __INVER_ENDIAN
-# if __DRONE_ENDIAN == __LITTLE_ENDIAN
+# if __DEVICE_ENDIAN == __LITTLE_ENDIAN
 #  define __INVER_ENDIAN __BIG_ENDIAN
-# elif __DRONE_ENDIAN == __BIG_ENDIAN
+# elif __DEVICE_ENDIAN == __BIG_ENDIAN
 #  define __INVER_ENDIAN __LITTLE_ENDIAN
 # else
-#  error Drone endian __PDP_ENDIAN not supported
+#  error Device endian __PDP_ENDIAN not supported
 # endif
 #endif
 
-#if __BYTE_ORDER == __DRONE_ENDIAN
+#if __BYTE_ORDER == __DEVICE_ENDIAN
 /*
- * HOST --> DRONE Conversion macros
+ * HOST --> DEVICE Conversion macros
  */
 
 /**
- * @brief Convert a short int (2 bytes) to drone endianness
+ * @brief Convert a short int (2 bytes) to device endianness
  */
 #define htods(v) (v)
 /**
- * @brief Convert a long int (4 bytes) to drone endianness
+ * @brief Convert a long int (4 bytes) to device endianness
  */
 #define htodl(v) (v)
 /**
- * @brief Convert a long long int (8 bytes) to drone endianness
+ * @brief Convert a long long int (8 bytes) to device endianness
  */
 #define htodll(v) (v)
 /**
- * @brief Convert a IEEE-754 float (4 bytes) to drone endianness
+ * @brief Convert a IEEE-754 float (4 bytes) to device endianness
  */
 #define htodf(v) (v)
 /**
- * @brief Convert a IEEE-754 double (8 bytes) to drone endianness
+ * @brief Convert a IEEE-754 double (8 bytes) to device endianness
  */
 #define htodd(v) (v)
 
 /*
- * DRONE --> HOST Conversion macros
+ * DEVICE --> HOST Conversion macros
  */
 
 /**
- * @brief Convert a short int (2 bytes) from drone endianness
+ * @brief Convert a short int (2 bytes) from device endianness
  */
 #define dtohs(v) (v)
 /**
- * @brief Convert a long int (4 bytes) from drone endianness
+ * @brief Convert a long int (4 bytes) from device endianness
  */
 #define dtohl(v) (v)
 /**
- * @brief Convert a long long int (8 bytes) from drone endianness
+ * @brief Convert a long long int (8 bytes) from device endianness
  */
 #define dtohll(v) (v)
 /**
- * @brief Convert a IEEE-754 float (4 bytes) from drone endianness
+ * @brief Convert a IEEE-754 float (4 bytes) from device endianness
  */
 #define dtohf(v) (v)
 /**
- * @brief Convert a IEEE-754 double (8 bytes) from drone endianness
+ * @brief Convert a IEEE-754 double (8 bytes) from device endianness
  */
 #define dtohd(v) (v)
 
 #elif __BYTE_ORDER == __INVER_ENDIAN
 /*
- * HOST --> DRONE Conversion macros
+ * HOST --> DEVICE Conversion macros
  */
 
 /**
- * @brief Convert a short int (2 bytes) to drone endianness
+ * @brief Convert a short int (2 bytes) to device endianness
  */
 #define htods(v) (__typeof__ (v))_libsal_bswaps((uint16_t)v)
 /**
- * @brief Convert a long int (4 bytes) to drone endianness
+ * @brief Convert a long int (4 bytes) to device endianness
  */
 #define htodl(v) (__typeof__ (v))_libsal_bswapl((uint32_t)v)
 /**
- * @brief Convert a long long int (8 bytes) to drone endianness
+ * @brief Convert a long long int (8 bytes) to device endianness
  */
 #define htodll(v) (__typeof__ (v))_libsal_bswapll((uint64_t)v)
 /**
- * @brief Convert a IEEE-754 float (4 bytes) to drone endianness
+ * @brief Convert a IEEE-754 float (4 bytes) to device endianness
  */
 #define htodf(v) (__typeof__ (v))_libsal_bswapf((float)v)
 /**
- * @brief Convert a IEEE-754 double (8 bytes) to drone endianness
+ * @brief Convert a IEEE-754 double (8 bytes) to device endianness
  */
 #define htodd(v) (__typeof__ (v))_libsal_bswapd((double)v)
 
 /*
- * DRONE --> HOST Conversion macros
+ * DEVICE --> HOST Conversion macros
  */
 
 /**
- * @brief Convert a short int (2 bytes) from drone endianness
+ * @brief Convert a short int (2 bytes) from device endianness
  */
 #define dtohs(v) (__typeof__ (v))_libsal_bswaps((uint16_t)v)
 /**
- * @brief Convert a long int (4 bytes) from drone endianness
+ * @brief Convert a long int (4 bytes) from device endianness
  */
 #define dtohl(v) (__typeof__ (v))_libsal_bswapl((uint32_t)v)
 /**
- * @brief Convert a long long int (8 bytes) from drone endianness
+ * @brief Convert a long long int (8 bytes) from device endianness
  */
 #define dtohll(v) (__typeof__ (v))_libsal_bswapll((uint64_t)v)
 /**
- * @brief Convert a IEEE-754 float (4 bytes) from drone endianness
+ * @brief Convert a IEEE-754 float (4 bytes) from device endianness
  */
 #define dtohf(v) (__typeof__ (v))_libsal_bswapf((float)v)
 /**
- * @brief Convert a IEEE-754 double (8 bytes) from drone endianness
+ * @brief Convert a IEEE-754 double (8 bytes) from device endianness
  */
 #define dtohd(v) (__typeof__ (v))_libsal_bswapd((double)v)
 

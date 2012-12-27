@@ -1,5 +1,5 @@
 // Define to force the testbench to beleive that the drone is big endian
-#define INVERT_DRONE_ENDIANNESS (0)
+#define INVERT_DEVICE_ENDIANNESS (0)
 
 #ifdef __APPLE__
 # include <architecture/byte_order.h>
@@ -18,8 +18,8 @@
 # include <endian.h>
 #endif
 
-#if INVERT_DRONE_ENDIANNESS
-#define __DRONE_ENDIAN __BIG_ENDIAN
+#if INVERT_DEVICE_ENDIANNESS
+#define __DEVICE_ENDIAN __BIG_ENDIAN
 #endif
 
 // Header we want to test
@@ -33,7 +33,7 @@
 #define HE_I64 0x1234567890abcdefll
 
 // Drone endian values
-#if __BYTE_ORDER == __DRONE_ENDIAN
+#if __BYTE_ORDER == __DEVICE_ENDIAN
 #define DE_I16 HE_I16
 #define DE_I32 HE_I32
 #define DE_I64 HE_I64
@@ -262,9 +262,9 @@ main (int argc, char *argv[])
     const char *hostE = oestr;
 #endif
 // Set drone endian string
-#if __DRONE_ENDIAN == __LITTLE_ENDIAN
+#if __DEVICE_ENDIAN == __LITTLE_ENDIAN
     const char *droneE = lestr;
-#elif __DRONE_ENDIAN == __BIG_ENDIAN
+#elif __DEVICE_ENDIAN == __BIG_ENDIAN
     const char *droneE = bestr;
 #else
     const char *droneE = oestr;

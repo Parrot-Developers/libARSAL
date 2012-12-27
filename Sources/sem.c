@@ -48,6 +48,7 @@ int sal_sem_destroy(sal_sem_t *sem)
     errno = 0;
     result = sem_destroy((sem_t *)*sem);
     free(*sem);
+    *sem = NULL;
 #endif
 
     return result;
@@ -80,7 +81,7 @@ int sal_sem_timedwait(sal_sem_t *sem, const struct timespec *timeout)
     int result = -1;
 
 #if defined(HAVE_SEMAPHORE_H)
-    const struct timeval currentTime = {0};
+    struct timeval currentTime = {0};
     struct timespec finalTime = {0};
     gettimeofday (&currentTime, NULL);
     TIMEVAL_TO_TIMESPEC (&currentTime, &finalTime);

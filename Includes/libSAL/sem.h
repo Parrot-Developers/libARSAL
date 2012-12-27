@@ -7,6 +7,8 @@
 #ifndef _SAL_SEM_H_
 #define _SAL_SEM_H_
 
+#include <time.h>
+
 /**
  * @brief Define a semaphore type.
  */

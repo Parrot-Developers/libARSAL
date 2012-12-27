@@ -57,6 +57,14 @@ AC_CHECK_HEADERS([semaphore.h], [
     ])
 ], AC_MSG_ERROR(The semaphore header is required in order to build the library!))
 
+#Check for sem_timedwait
+AC_CHECK_HEADERS([semaphore.h], [
+    AC_CHECK_FUNCS(sem_timedwait, , [
+        AC_CHECK_LIB(pthread, sem_timedwait, LIBS="$LIBS -pthread",
+		AC_MSG_WARN(Your semaphore.h implementation does not include sem_timedwait. Using our own implementation with 1ms resolution instead))
+    ])
+], )
+
 # Checks for socket.h
 AC_CHECK_HEADERS([sys/socket.h netinet/in.h], , AC_MSG_ERROR(The socket header is required in order to build the library!))
 

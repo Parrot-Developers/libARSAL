@@ -7,6 +7,7 @@ ACLOCAL_AMFLAGS = -I m4
 HEADER_FILES	=	../Includes/libSAL/time.h 	\
 					../Includes/libSAL/thread.h \
 					../Includes/libSAL/mutex.h 	\
+					../Includes/libSAL/sem.h 	\
 					../Includes/libSAL/socket.h \
 					../Includes/libSAL/print.h \
 					../Includes/libSAL/endianness.h
@@ -16,6 +17,7 @@ SOURCE_FILES 	= 	$(HEADER_FILES)		\
 					../Sources/time.c	\
 					../Sources/thread.c \
 					../Sources/mutex.c  \
+					../Sources/sem.c 	\
 					../Sources/socket.c \
 					../Sources/print.c
 

@@ -99,7 +99,7 @@ int sal_sem_timedwait(sal_sem_t *sem, const struct timespec *timeout)
 #define NSEC_TO_MSEC (1000000)
     unsigned long long msCount = (timeout->tv_sec * SEC_TO_MSEC) + (timeout->tv_nsec / NSEC_TO_MSEC) + 1; // We add one for the first wait
 #undef SEC_TO_MSEC
-#under NSEC_TO_MSEC
+#undef NSEC_TO_MSEC
     int shouldLoop = 1;
     while (1 == shouldLoop && 0 != msCount--)
     {

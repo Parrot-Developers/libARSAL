@@ -3,9 +3,9 @@
  * @brief This file contains headers about endianness abstraction layer
  * @date 11/14/2012
  * @author nicolas.brulez@parrot.com
-*/
-#ifndef _LIBSAL_ENDIANNESS_H_
-#define _LIBSAL_ENDIANNESS_H_
+ */
+#ifndef _SAL_ENDIANNESS_H_
+#define _SAL_ENDIANNESS_H_
 
 #include <inttypes.h>
 
@@ -179,13 +179,13 @@ OS_INLINE
 float
 ARSwapHostToLittleFloat (float orig)
 {
-  union fconv {
-    float f;
-    uint32_t i;
-  } u;
-  u.f = orig;
-  u.i = OSSwapHostToLittleInt32 (u.i);
-  return u.f;
+    union fconv {
+        float f;
+        uint32_t i;
+    } u;
+    u.f = orig;
+    u.i = OSSwapHostToLittleInt32 (u.i);
+    return u.f;
 }
 
 /**
@@ -197,13 +197,13 @@ OS_INLINE
 float
 ARSwapLittleToHostFloat (float orig)
 {
-  union fconv {
-    float f;
-    uint32_t i;
-  } u;
-  u.f = orig;
-  u.i = OSSwapLittleToHostInt32 (u.i);
-  return u.f;
+    union fconv {
+        float f;
+        uint32_t i;
+    } u;
+    u.f = orig;
+    u.i = OSSwapLittleToHostInt32 (u.i);
+    return u.f;
 }
 
 /**
@@ -215,13 +215,13 @@ OS_INLINE
 float
 ARSwapHostToBigFloat (float orig)
 {
-  union fconv {
-    float f;
-    uint32_t i;
-  } u;
-  u.f = orig;
-  u.i = OSSwapHostToBigInt32 (u.i);
-  return u.f;
+    union fconv {
+        float f;
+        uint32_t i;
+    } u;
+    u.f = orig;
+    u.i = OSSwapHostToBigInt32 (u.i);
+    return u.f;
 }
 
 /**
@@ -233,13 +233,13 @@ OS_INLINE
 float
 ARSwapBigToHostFloat (float orig)
 {
-  union fconv {
-    float f;
-    uint32_t i;
-  } u;
-  u.f = orig;
-  u.i = OSSwapBigToHostInt32 (u.i);
-  return u.f;
+    union fconv {
+        float f;
+        uint32_t i;
+    } u;
+    u.f = orig;
+    u.i = OSSwapBigToHostInt32 (u.i);
+    return u.f;
 }
 
 /**
@@ -251,13 +251,13 @@ OS_INLINE
 double
 ARSwapHostToLittleDouble (double orig)
 {
-  union dconv {
-    double d;
-    uint64_t i;
-  } u;
-  u.d = orig;
-  u.i = OSSwapHostToLittleInt64 (u.i);
-  return u.d;
+    union dconv {
+        double d;
+        uint64_t i;
+    } u;
+    u.d = orig;
+    u.i = OSSwapHostToLittleInt64 (u.i);
+    return u.d;
 }
 
 /**
@@ -269,13 +269,13 @@ OS_INLINE
 double
 ARSwapLittleToHostDouble (double orig)
 {
-  union dconv {
-    double d;
-    uint64_t i;
-  } u;
-  u.d = orig;
-  u.i = OSSwapLittleToHostInt64 (u.i);
-  return u.d;
+    union dconv {
+        double d;
+        uint64_t i;
+    } u;
+    u.d = orig;
+    u.i = OSSwapLittleToHostInt64 (u.i);
+    return u.d;
 }
 
 /**
@@ -287,13 +287,13 @@ OS_INLINE
 double
 ARSwapHostToBigDouble (double orig)
 {
-  union dconv {
-    double d;
-    uint64_t i;
-  } u;
-  u.d = orig;
-  u.i = OSSwapHostToBigInt64 (u.i);
-  return u.d;
+    union dconv {
+        double d;
+        uint64_t i;
+    } u;
+    u.d = orig;
+    u.i = OSSwapHostToBigInt64 (u.i);
+    return u.d;
 }
 
 /**
@@ -305,13 +305,13 @@ OS_INLINE
 double
 ARSwapBigToHostDouble (double orig)
 {
-  union dconv {
-    double d;
-    uint64_t i;
-  } u;
-  u.d = orig;
-  u.i = OSSwapBigToHostInt64 (u.i);
-  return u.d;
+    union dconv {
+        double d;
+        uint64_t i;
+    } u;
+    u.d = orig;
+    u.i = OSSwapBigToHostInt64 (u.i);
+    return u.d;
 }
 
 #else // ! defined (__APPLE__)
@@ -509,4 +509,4 @@ static inline double _libsal_bswapd (double orig)
 
 #endif // __APPLE__
 
-#endif /* _LIBSAL_ENDIANNESS_H_ */
+#endif /* _SAL_ENDIANNESS_H_ */

@@ -3,9 +3,9 @@
  * @brief This file contains headers about socket abstraction layer
  * @date 06/06/2012
  * @author frederic.dhaeyer@parrot.com
-*/
-#ifndef _SOCKET_H_
-#define _SOCKET_H_
+ */
+#ifndef _SAL_SOCKET_H_
+#define _SAL_SOCKET_H_
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -139,7 +139,7 @@ int sal_close(int sockfd);
  * @param optval the option value
  * @param optlen the length of the option value
  * @retval On success, 0 is returned. Otherwise, -1 is returned, and errno is set appropriately. (See errno.h)
- */            
+ */
 int sal_setsockopt(int sockfd, int level, int optname,const void *optval, socklen_t optlen);
 
-#endif // _SOCKET_H_
+#endif // _SAL_SOCKET_H_

@@ -1,12 +1,11 @@
 /**
- * \file libSAL/thread.h
- * \brief This file contains headers about thread abstraction layer 
- * \date 05/18/2012 
- * \author frederic.dhaeyer@parrot.com 
-*/
-//------------------------------
-#ifndef _THREAD_H_
-#define _THREAD_H_
+ * @file libSAL/thread.h
+ * @brief This file contains headers about thread abstraction layer
+ * @date 05/18/2012
+ * @author frederic.dhaeyer@parrot.com
+ */
+#ifndef _SAL_THREAD_H_
+#define _SAL_THREAD_H_
 
 /**
  * @brief Define a thread type.
@@ -45,4 +44,4 @@ int sal_thread_join(sal_thread_t thread, void **retval);
  */
 int sal_thread_destroy(sal_thread_t *thread);
 
-#endif // _THREAD_H_
+#endif // _SAL_THREAD_H_

@@ -3,9 +3,9 @@
  * @brief This file contains headers about mutex abstraction layer
  * @date 05/18/2012
  * @author frederic.dhaeyer@parrot.com
-*/
-#ifndef _MUTEX_H_
-#define _MUTEX_H_
+ */
+#ifndef _SAL_MUTEX_H_
+#define _SAL_MUTEX_H_
 
 /**
  * @brief Define a mutex type.
@@ -108,4 +108,4 @@ int sal_cond_signal(sal_cond_t *cond);
  */
 int sal_cond_broadcast(sal_cond_t *cond);
 
-#endif // _MUTEX_H_
+#endif // _SAL_MUTEX_H_

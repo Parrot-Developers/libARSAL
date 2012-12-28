@@ -24,17 +24,19 @@ AC_MSG_RESULT([$debugit])
 
 if test x"$debugit" = x"yes"; then
     AC_DEFINE([DEBUG],[],[Debug Mode])
-    CFLAGS="$CFLAGS -g -Wall -Werror -Wno-uninitialized -O0"
+    CFLAGS+=" -g -Wall -Werror -Wno-uninitialized -O0"
 else
     AC_DEFINE([NDEBUG],[],[No-debug Mode])
-    CFLAGS="$CFLAGS -O3"
+    CFLAGS+=" -O3"
 fi
 AM_CONDITIONAL([DEBUG_MODE], [test "$debugit" = "yes"])
 
 ##########################################################################
 # Define includes directories
 ##########################################################################
-CFLAGS="$CFLAGS -I../Includes"
+CFLAGS+=" -I../Includes"
+
+CPPFLAGS="$CFLAGS"
 
 ##########################################################################
 # Check headers
@@ -53,10 +55,9 @@ AC_CHECK_HEADERS([pthread.h], [
 AC_CHECK_HEADERS([semaphore.h], , AC_MSG_ERROR(The semaphore header is required in order to build the library!))
 
 #Check for semaphore functions
-AC_CHECK_FUNCS([sem_init sem_destroy sem_wait sem_trywait sem_timedwait sem_post sem_getvalue], , [
-    AC_CHECK_LIB(pthread, [sem_init sem_destroy sem_wait sem_trywait sem_timedwait sem_post sem_getvalue], LIBS="$LIBS -pthread",
-	AC_MSG_WARN(Your semaphore implmentation does not support all needed functions --> Using custom one))
-])
+AC_CHECK_FUNCS([sem_init sem_destroy sem_wait sem_trywait sem_timedwait sem_post sem_getvalue], ,
+	AC_MSG_WARN(Your semaphore implmentation does not support all needed functions --> Using custom one)
+)
 
 # Checks for socket.h
 AC_CHECK_HEADERS([sys/socket.h netinet/in.h], , AC_MSG_ERROR(The socket header is required in order to build the library!))

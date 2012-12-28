@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <string.h>
 #include <netdb.h>
+#include <unistd.h>
 #include <libSAL/socket.h>
 #include <libSAL/thread.h>
 #include <libSAL/mutex.h>
@@ -20,7 +21,6 @@ void *thread_client(void *arg)
     char hostname[100];
     char    dir[DIRSIZE];
 	int	sd;
-	struct sockaddr_in sin;
 	struct sockaddr_in pin;
 	struct hostent *hp;
 
@@ -80,8 +80,8 @@ void *thread_server(void *arg)
 {
     char     dir[DIRSIZE];  /* used for incomming dir name, and
 				outgoing data */
-    int 	 sd, sd_current, cc, fromlen, tolen;
-    int 	 addrlen;
+    int 	 sd, sd_current;
+    unsigned int 	 addrlen;
     struct   sockaddr_in sin;
     struct   sockaddr_in pin;
 
@@ -150,7 +150,6 @@ void *thread_server(void *arg)
 
 int main(int argc, char **argv)
 {
-	int i;
 	sal_thread_t server, client;
 
 	SAL_PRINT(PRINT_ERROR, "mutex init\n");

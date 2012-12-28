@@ -9,7 +9,6 @@ int variable = 0;
 
 void *routine(void *arg)
 {
-	int i = 0;
 	SAL_PRINT(PRINT_DEBUG, "Routine started\n");
 	SAL_PRINT(PRINT_WARNING, "mutex lock\n");
 	sal_mutex_lock(&mutex);

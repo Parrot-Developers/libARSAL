@@ -246,9 +246,9 @@ int testDouble (int prevRes)
     return TEST_OK;
 }
 
-static const char *lestr = "Little";
-static const char *bestr = "Big   ";
-static const char *oestr = "Other ";
+#define lestr "Little"
+#define bestr "Big   "
+#define oestr "Other "
 
 int
 main (int argc, char *argv[])

@@ -34,7 +34,7 @@ AM_CONDITIONAL([DEBUG_MODE], [test "$debugit" = "yes"])
 ##########################################################################
 # Define includes directories
 ##########################################################################
-CFLAGS+=" -I../Includes"
+CFLAGS+=" -I$srcdir/../Includes"
 
 CPPFLAGS="$CFLAGS"
 
@@ -110,3 +110,4 @@ echo "
   Linker.........: $LD $LDFLAGS $LIBS
   Doxygen........: ${DOXYGEN:-NONE}
 "
+

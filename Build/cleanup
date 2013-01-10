@@ -20,6 +20,8 @@ rm -f \
     libsal.la \
     stamp-h1
 
+find .. -name '*~' -delete
+
 find .. -name '.dirstamp' -delete
 
 # Generated directories.

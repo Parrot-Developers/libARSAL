@@ -25,9 +25,16 @@ typedef enum
 extern const char *sal_prefix_table[];
 
 /**
- * @brief print a specific output (i.e. "[ERR] TAG |121545444:main:10 - My debug log")
+ * @brief print a specific output (i.e. "[ERR] TAG | 14:30:24 | main:10 - My debug log")
  */
-#define SAL_PRINT(level, tag, format, ...)   sal_print(level, tag, "%d:%s:%d - " format, time (NULL), __FUNCTION__, __LINE__, ##__VA_ARGS__)
+#define SAL_PRINT(level, tag, format, ...)                              \
+    do                                                                  \
+    {                                                                   \
+        char __nowTimeStr [9];                                          \
+        time_t __nowTimeT = time (NULL);                                \
+        strftime (__nowTimeStr, 9, "%H:%M:%S", localtime (&__nowTimeT)); \
+        sal_print(level, tag, "%s | %s:%d - " format, __nowTimeStr, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+    } while (0)
 
 /**
  * @brief Convert a formatted output.

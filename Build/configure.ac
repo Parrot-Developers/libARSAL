@@ -43,6 +43,8 @@ CPPFLAGS="$CFLAGS"
 ##########################################################################
 AC_CHECK_HEADERS([sys/time.h time.h stdio.h stdarg.h])
 
+AC_CHECK_HEADERS([android/log.h], LIBS+=" -llog",)
+
 # Checks for pthread.h
 AC_CHECK_HEADERS([pthread.h], [
     AC_CHECK_FUNC(pthread_create, , [

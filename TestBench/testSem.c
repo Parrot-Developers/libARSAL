@@ -41,13 +41,13 @@ sal_sem_t errCountSem;
         {                                                               \
             if (TEST != __count)                                        \
             {                                                           \
-                SAL_PRINT (PRINT_ERROR, "BAD COUNT, got %d, expected %d\n", __count, TEST); \
+                SAL_PRINT (PRINT_ERROR, "testSem", "BAD COUNT, got %d, expected %d\n", __count, TEST); \
                 sal_sem_post (&errCountSem);                            \
             }                                                           \
         }                                                               \
         else                                                            \
         {                                                               \
-            SAL_PRINT (PRINT_ERROR, "Unable to get sem value\n");       \
+            SAL_PRINT (PRINT_ERROR, "testSem", "Unable to get sem value\n");       \
             sal_sem_post (&errCountSem);                                \
         }                                                               \
     } while (0)
@@ -92,7 +92,7 @@ tryWaitTest (void *data)
     absDiff = abs (2 - waitCount);
     if (0 != absDiff)
     {
-        SAL_PRINT (PRINT_ERROR, "Bad wait count : got %d, expected %d\n", waitCount, 2);
+        SAL_PRINT (PRINT_ERROR, "testSem", "Bad wait count : got %d, expected %d\n", waitCount, 2);
     }
     while (0 != absDiff--)
     {
@@ -101,7 +101,7 @@ tryWaitTest (void *data)
 
     if (EAGAIN != locerrno)
     {
-        SAL_PRINT (PRINT_ERROR, "Trywait failed with error %d, expected a fail with error %d (EAGAIN)\n", locerrno, EAGAIN);
+        SAL_PRINT (PRINT_ERROR, "testSem", "Trywait failed with error %d, expected a fail with error %d (EAGAIN)\n", locerrno, EAGAIN);
         sal_sem_post (&errCountSem);
     }
     return NULL;
@@ -124,7 +124,7 @@ timedWaitTest (void *data)
     absDiff = abs (3 - waitCount);
     if (0 != absDiff)
     {
-        SAL_PRINT (PRINT_ERROR, "Bad wait count : got %d, expected %d\n", waitCount, 3);
+        SAL_PRINT (PRINT_ERROR, "testSem", "Bad wait count : got %d, expected %d\n", waitCount, 3);
     }
     while (0 != absDiff--)
     {
@@ -133,7 +133,7 @@ timedWaitTest (void *data)
 
     if (ETIMEDOUT != locerrno)
     {
-        SAL_PRINT (PRINT_ERROR, "Timedwait failed with error %d, expected a fail with error %d (ETIMEDOUT)\n", locerrno, ETIMEDOUT);
+        SAL_PRINT (PRINT_ERROR, "testSem", "Timedwait failed with error %d, expected a fail with error %d (ETIMEDOUT)\n", locerrno, ETIMEDOUT);
         sal_sem_post (&errCountSem);
     }
     return NULL;
@@ -148,17 +148,17 @@ main (int argc, char *argv[])
     sal_thread_t testThread;
     if (-1 == sal_sem_init (&errCountSem, 0, 0))
     {
-        SAL_PRINT (PRINT_ERROR, "Unable to initialize semaphore, aborting tests\n");
+        SAL_PRINT (PRINT_ERROR, "testSem", "Unable to initialize semaphore, aborting tests\n");
         return 1;
     }
 
     /* END OF INIT */
 
     /* WAIT TEST */
-    SAL_PRINT (PRINT_WARNING, "WAIT TEST ...\n");
+    SAL_PRINT (PRINT_WARNING, "testSem", "WAIT TEST ...\n");
     if (-1 == sal_sem_init (&testSem, 0, 0))
     {
-        SAL_PRINT (PRINT_ERROR, "Unable to initialize semaphore, aborting wait test\n");
+        SAL_PRINT (PRINT_ERROR, "testSem", "Unable to initialize semaphore, aborting wait test\n");
         sal_sem_post (&errCountSem);
     }
     else
@@ -185,13 +185,13 @@ main (int argc, char *argv[])
         sal_thread_destroy (&testThread);
         sal_sem_destroy (&testSem);
     }
-    SAL_PRINT (PRINT_WARNING, "END OF TEST\n");
+    SAL_PRINT (PRINT_WARNING, "testSem", "END OF TEST\n");
 
     /* TRYWAIT TEST */
-    SAL_PRINT (PRINT_WARNING, "TRYWAIT TEST ...\n");
+    SAL_PRINT (PRINT_WARNING, "testSem", "TRYWAIT TEST ...\n");
     if (-1 == sal_sem_init (&testSem, 0, 0))
     {
-        SAL_PRINT (PRINT_ERROR, "Unable to initialize semaphore, aborting trywait test\n");
+        SAL_PRINT (PRINT_ERROR, "testSem", "Unable to initialize semaphore, aborting trywait test\n");
         sal_sem_post (&errCountSem);
     }
     else
@@ -207,13 +207,13 @@ main (int argc, char *argv[])
         sal_thread_destroy (&testThread);
         sal_sem_destroy (&testSem);
     }
-    SAL_PRINT (PRINT_WARNING, "END OF TEST\n");
+    SAL_PRINT (PRINT_WARNING, "testSem", "END OF TEST\n");
 
     /* TIMEDWAIT TEST */
-    SAL_PRINT (PRINT_WARNING, "TIMEDWAIT TEST ...\n");
+    SAL_PRINT (PRINT_WARNING, "testSem", "TIMEDWAIT TEST ...\n");
     if (-1 == sal_sem_init (&testSem, 0, 0))
     {
-        SAL_PRINT (PRINT_ERROR, "Unable to initialize semaphore, aborting timedwait test\n");
+        SAL_PRINT (PRINT_ERROR, "testSem", "Unable to initialize semaphore, aborting timedwait test\n");
         sal_sem_post (&errCountSem);
     }
     else
@@ -233,21 +233,21 @@ main (int argc, char *argv[])
         sal_thread_destroy (&testThread);
         sal_sem_destroy (&testSem);
     }
-    SAL_PRINT (PRINT_WARNING, "END OF TEST\n");
+    SAL_PRINT (PRINT_WARNING, "testSem", "END OF TEST\n");
 
     /* SUMMARY PRINT */
     sal_sem_getvalue (&errCountSem, &errCount);
     sal_sem_destroy (&errCountSem);
-    SAL_PRINT (PRINT_WARNING, "\n\n\n");
-    SAL_PRINT (PRINT_WARNING, "<<< SUMMARY : >>>\n");
+    SAL_PRINT (PRINT_WARNING, "testSem", "\n\n\n");
+    SAL_PRINT (PRINT_WARNING, "testSem", "<<< SUMMARY : >>>\n");
     if (0 == errCount)
     {
-        SAL_PRINT (PRINT_WARNING, "    NO ERROR\n");
+        SAL_PRINT (PRINT_WARNING, "testSem", "    NO ERROR\n");
     }
     else
     {
         char term = (errCount > 1) ? 'S' : ' ';
-        SAL_PRINT (PRINT_WARNING, "    %d ERROR%c\n", errCount, term);
+        SAL_PRINT (PRINT_WARNING, "testSem", "    %d ERROR%c\n", errCount, term);
     }
 
     return errCount;

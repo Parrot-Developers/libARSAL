@@ -9,13 +9,13 @@ int variable = 0;
 
 void *routine(void *arg)
 {
-    SAL_PRINT(PRINT_DEBUG, "Routine started\n");
-    SAL_PRINT(PRINT_WARNING, "mutex lock\n");
+    SAL_PRINT(PRINT_DEBUG, "test1", "Routine started\n");
+    SAL_PRINT(PRINT_WARNING, "test1", "mutex lock\n");
     sal_mutex_lock(&mutex);
     variable = 1;
-    SAL_PRINT(PRINT_ERROR, "mutex signal\n");
+    SAL_PRINT(PRINT_ERROR, "test1", "mutex signal\n");
     sal_cond_signal(&cond);
-    SAL_PRINT(PRINT_WARNING, "mutex unlock\n");
+    SAL_PRINT(PRINT_WARNING, "test1", "mutex unlock\n");
     sal_mutex_unlock(&mutex);
 
     return NULL;
@@ -25,36 +25,36 @@ int main(int argc, char **argv)
 {
     sal_thread_t thread;
 
-    SAL_PRINT(PRINT_ERROR, "mutex init\n");
+    SAL_PRINT(PRINT_ERROR, "test1", "mutex init\n");
     sal_mutex_init(&mutex);
 
-    SAL_PRINT(PRINT_WARNING, "condition init\n");
+    SAL_PRINT(PRINT_WARNING, "test1", "condition init\n");
     sal_cond_init(&cond);
 
-    SAL_PRINT(PRINT_WARNING, "thread create\n");
+    SAL_PRINT(PRINT_WARNING, "test1", "thread create\n");
     sal_thread_create(&thread, routine, NULL);
 
-    SAL_PRINT(PRINT_ERROR, "Variable : %d\n", variable);
+    SAL_PRINT(PRINT_ERROR, "test1", "Variable : %d\n", variable);
 
     sal_thread_join(thread, NULL);
 
-    SAL_PRINT(PRINT_ERROR, "mutex lock\n");
+    SAL_PRINT(PRINT_ERROR, "test1", "mutex lock\n");
     sal_mutex_lock(&mutex);
-    SAL_PRINT(PRINT_ERROR, "mutex wait\n");
+    SAL_PRINT(PRINT_ERROR, "test1", "mutex wait\n");
     sal_cond_timedwait(&cond, &mutex, 1000);
     //sal_cond_wait(&cond, &mutex);
-    SAL_PRINT(PRINT_ERROR, "mutex unlock\n");
+    SAL_PRINT(PRINT_ERROR, "test1", "mutex unlock\n");
     sal_mutex_unlock(&mutex);
 
-    SAL_PRINT(PRINT_DEBUG, "Variable : %d\n", variable);
+    SAL_PRINT(PRINT_DEBUG, "test1", "Variable : %d\n", variable);
 
-    SAL_PRINT(PRINT_DEBUG, "condition destroy\n");
+    SAL_PRINT(PRINT_DEBUG, "test1", "condition destroy\n");
     sal_cond_destroy(&cond);
 
-    SAL_PRINT(PRINT_DEBUG, "mutex destroy\n");
+    SAL_PRINT(PRINT_DEBUG, "test1", "mutex destroy\n");
     sal_mutex_destroy(&mutex);
 
-    SAL_PRINT(PRINT_DEBUG, "thread destroy\n");
+    SAL_PRINT(PRINT_DEBUG, "test1", "thread destroy\n");
     sal_thread_destroy(&thread);
     return 0;
 }

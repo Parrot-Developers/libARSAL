@@ -25,9 +25,9 @@ typedef enum
 extern const char *sal_prefix_table[];
 
 /**
- * @brief print a specific output (i.e. "[ERR] 121545444:main:10 - My debug log")
+ * @brief print a specific output (i.e. "[ERR] TAG |121545444:main:10 - My debug log")
  */
-#define SAL_PRINT(level, format, ...)   sal_print(level, "%s %d:%s:%d - " format, sal_prefix_table[level], time(NULL), __FUNCTION__, __LINE__, ##__VA_ARGS__)
+#define SAL_PRINT(level, tag, format, ...)   sal_print(level, tag, "%d:%s:%d - " format, time (NULL), __FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 /**
  * @brief Convert a formatted output.
@@ -36,6 +36,6 @@ extern const char *sal_prefix_table[];
  * @param format output format
  * @retval On success, sal_print() returns the number of characters printed. Otherwise, it returns a negative value.
  */
-int sal_print(ePRINT_LEVEL level, const char *format, ...);
+int sal_print(ePRINT_LEVEL level, const char *tag, const char *format, ...);
 
 #endif // _SAL_PRINT_H_

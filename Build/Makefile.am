@@ -24,11 +24,17 @@ SOURCE_FILES 	= 	$(HEADER_FILES)		\
 # The library names to build (note we are building static and shared libs)
 if DEBUG_MODE
 lib_LTLIBRARIES 		= libsal_dbg.la
+if NO_SO_VERSION
+libsal_dbg_la_LDFLAGS   = -avoid-version
+endif
 libsal_dbg_ladir 		= $(includedir)/libSAL
 libsal_dbg_la_HEADERS 	= $(HEADER_FILES)
 libsal_dbg_la_SOURCES 	= $(SOURCE_FILES)
 else
 lib_LTLIBRARIES 	= libsal.la
+if NO_SO_VERSION
+libsal_la_LDFLAGS   = -avoid-version
+endif
 libsal_ladir 		= $(includedir)/libSAL
 libsal_la_HEADERS 	= $(HEADER_FILES)
 libsal_la_SOURCES 	= $(SOURCE_FILES)

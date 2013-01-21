@@ -32,6 +32,19 @@ fi
 AM_CONDITIONAL([DEBUG_MODE], [test "$debugit" = "yes"])
 
 ##########################################################################
+# Non versionned .so compilation support (for Android)
+##########################################################################
+AC_MSG_CHECKING([whether to put version number in .so files])
+AC_ARG_ENABLE([so-version],
+    [AS_HELP_STRING([--disable-so-version],
+    [disable version names in .so files [default=enabled]])],
+    [sover="$enableval"],
+    [sover=yes])
+AC_MSG_RESULT([$sover])
+
+AM_CONDITIONAL([NO_SO_VERSION], [test "$sover" = "no"])
+
+##########################################################################
 # Define includes directories
 ##########################################################################
 CFLAGS+=" -I$srcdir/../Includes"

@@ -8,6 +8,10 @@
 #define _SAL_PRINT_H_
 #include <time.h>
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 /**
  * @brief Output level
  */
@@ -27,6 +31,7 @@ extern const char *sal_prefix_table[];
 /**
  * @brief print a specific output (i.e. "[ERR] TAG | 14:30:24 | main:10 - My debug log")
  */
+#if defined(DEBUG)
 #define SAL_PRINT(level, tag, format, ...)                              \
     do                                                                  \
     {                                                                   \
@@ -35,6 +40,19 @@ extern const char *sal_prefix_table[];
         strftime (__nowTimeStr, 9, "%H:%M:%S", localtime (&__nowTimeT)); \
         sal_print(level, tag, "%s | %s:%d - " format, __nowTimeStr, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
     } while (0)
+#else
+#define SAL_PRINT(level, tag, format, ...)                              \
+    do                                                                  \
+    {                                                                   \
+        if (PRINT_DEBUG > level)                                        \
+        {                                                               \
+            char __nowTimeStr [9];                                      \
+            time_t __nowTimeT = time (NULL);                            \
+            strftime (__nowTimeStr, 9, "%H:%M:%S", localtime (&__nowTimeT)); \
+            sal_print(level, tag, "%s | %s:%d - " format, __nowTimeStr, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+        }                                                               \
+    } while (0)
+#endif
 
 /**
  * @brief Convert a formatted output.

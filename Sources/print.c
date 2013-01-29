@@ -59,9 +59,7 @@ int sal_print(ePRINT_LEVEL level, const char *tag, const char *format, ...)
     {
     case PRINT_ERROR:
     case PRINT_WARNING:
-#if defined(DEBUG)
     case PRINT_DEBUG:
-#endif
         printf ("%s %s | ", sal_prefix_table [level], tag);
         result = vprintf(format, va);
         break;

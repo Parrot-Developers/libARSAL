@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Android build for libSAL
+# Android build for libARSAL
 
 CURDIR=$(pwd)
 

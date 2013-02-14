@@ -1,60 +1,60 @@
 #include <stdio.h>
-#include <libSAL/mutex.h>
-#include <libSAL/thread.h>
-#include <libSAL/print.h>
+#include <libARSAL/ARSAL_Mutex.h>
+#include <libARSAL/ARSAL_Thread.h>
+#include <libARSAL/ARSAL_Print.h>
 
-sal_mutex_t mutex;
-sal_cond_t cond;
+ARSAL_Mutex_t mutex;
+ARSAL_Cond_t cond;
 int variable = 0;
 
 void *routine(void *arg)
 {
-    SAL_PRINT(PRINT_DEBUG, "test1", "Routine started\n");
-    SAL_PRINT(PRINT_WARNING, "test1", "mutex lock\n");
-    sal_mutex_lock(&mutex);
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, "test1", "Routine started\n");
+    ARSAL_PRINT(ARSAL_PRINT_WARNING, "test1", "mutex lock\n");
+    ARSAL_Mutex_Lock(&mutex);
     variable = 1;
-    SAL_PRINT(PRINT_ERROR, "test1", "mutex signal\n");
-    sal_cond_signal(&cond);
-    SAL_PRINT(PRINT_WARNING, "test1", "mutex unlock\n");
-    sal_mutex_unlock(&mutex);
+    ARSAL_PRINT(ARSAL_PRINT_ERROR, "test1", "mutex signal\n");
+    ARSAL_Cond_Signal(&cond);
+    ARSAL_PRINT(ARSAL_PRINT_WARNING, "test1", "mutex unlock\n");
+    ARSAL_Mutex_Unlock(&mutex);
 
     return NULL;
 }
 
 int main(int argc, char **argv)
 {
-    sal_thread_t thread;
+    ARSAL_Thread_t thread;
 
-    SAL_PRINT(PRINT_ERROR, "test1", "mutex init\n");
-    sal_mutex_init(&mutex);
+    ARSAL_PRINT(ARSAL_PRINT_ERROR, "test1", "mutex init\n");
+    ARSAL_Mutex_Init(&mutex);
 
-    SAL_PRINT(PRINT_WARNING, "test1", "condition init\n");
-    sal_cond_init(&cond);
+    ARSAL_PRINT(ARSAL_PRINT_WARNING, "test1", "condition init\n");
+    ARSAL_Cond_Init(&cond);
 
-    SAL_PRINT(PRINT_WARNING, "test1", "thread create\n");
-    sal_thread_create(&thread, routine, NULL);
+    ARSAL_PRINT(ARSAL_PRINT_WARNING, "test1", "thread create\n");
+    ARSAL_Thread_Create(&thread, routine, NULL);
 
-    SAL_PRINT(PRINT_ERROR, "test1", "Variable : %d\n", variable);
+    ARSAL_PRINT(ARSAL_PRINT_ERROR, "test1", "Variable : %d\n", variable);
 
-    sal_thread_join(thread, NULL);
+    ARSAL_Thread_Join(thread, NULL);
 
-    SAL_PRINT(PRINT_ERROR, "test1", "mutex lock\n");
-    sal_mutex_lock(&mutex);
-    SAL_PRINT(PRINT_ERROR, "test1", "mutex wait\n");
-    sal_cond_timedwait(&cond, &mutex, 1000);
-    //sal_cond_wait(&cond, &mutex);
-    SAL_PRINT(PRINT_ERROR, "test1", "mutex unlock\n");
-    sal_mutex_unlock(&mutex);
+    ARSAL_PRINT(ARSAL_PRINT_ERROR, "test1", "mutex lock\n");
+    ARSAL_Mutex_Lock(&mutex);
+    ARSAL_PRINT(ARSAL_PRINT_ERROR, "test1", "mutex wait\n");
+    ARSAL_Cond_Timedwait(&cond, &mutex, 1000);
+    //ARSAL_Cond_Wait(&cond, &mutex);
+    ARSAL_PRINT(ARSAL_PRINT_ERROR, "test1", "mutex unlock\n");
+    ARSAL_Mutex_Unlock(&mutex);
 
-    SAL_PRINT(PRINT_DEBUG, "test1", "Variable : %d\n", variable);
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, "test1", "Variable : %d\n", variable);
 
-    SAL_PRINT(PRINT_DEBUG, "test1", "condition destroy\n");
-    sal_cond_destroy(&cond);
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, "test1", "condition destroy\n");
+    ARSAL_Cond_Destroy(&cond);
 
-    SAL_PRINT(PRINT_DEBUG, "test1", "mutex destroy\n");
-    sal_mutex_destroy(&mutex);
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, "test1", "mutex destroy\n");
+    ARSAL_Mutex_Destroy(&mutex);
 
-    SAL_PRINT(PRINT_DEBUG, "test1", "thread destroy\n");
-    sal_thread_destroy(&thread);
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, "test1", "thread destroy\n");
+    ARSAL_Thread_Destroy(&thread);
     return 0;
 }

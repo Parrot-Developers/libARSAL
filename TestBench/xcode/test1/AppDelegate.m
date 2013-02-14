@@ -8,26 +8,26 @@
 
 #import "AppDelegate.h"
 #include <stdio.h>
-#include <libSAL/mutex.h>
-#include <libSAL/thread.h>
-#include <libSAL/print.h>
+#include <libARSAL/ARSAL_Mutex.h>
+#include <libARSAL/ARSAL_Thread.h>
+#include <libARSAL/ARSAL_Print.h>
 
-sal_mutex_t mutex;
-sal_cond_t cond;
+ARSAL_Mutex_t mutex;
+ARSAL_Cond_t cond;
 int variable = 0;
 
 void *routine(void *arg)
 {
-	SAL_PRINT(PRINT_DEBUG, "Routine started\n");
-	SAL_PRINT(PRINT_WARNING, "mutex lock\n");
-	sal_mutex_lock(&mutex);
-	variable = 1;
-	SAL_PRINT(PRINT_ERROR, "mutex signal\n");
-	sal_cond_signal(&cond);
-	SAL_PRINT(PRINT_WARNING, "mutex unlock\n");
-	sal_mutex_unlock(&mutex);
-        
-	return NULL;
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, "Routine started\n");
+    ARSAL_PRINT(ARSAL_PRINT_WARNING, "mutex lock\n");
+    ARSAL_Mutex_Lock(&mutex);
+    variable = 1;
+    ARSAL_PRINT(ARSAL_PRINT_ERROR, "mutex signal\n");
+    ARSAL_Cond_Signal(&cond);
+    ARSAL_PRINT(ARSAL_PRINT_WARNING, "mutex unlock\n");
+    ARSAL_Mutex_Unlock(&mutex);
+
+    return NULL;
 }
 
 @implementation AppDelegate
@@ -39,39 +39,39 @@ void *routine(void *arg)
 
 - (void)launchThread
 {
-	sal_thread_t thread;
-    
-	SAL_PRINT(PRINT_ERROR, "mutex init\n");
-	sal_mutex_init(&mutex);
-    
-	SAL_PRINT(PRINT_WARNING, "condition init\n");
-	sal_cond_init(&cond);
-    
-	SAL_PRINT(PRINT_WARNING, "thread create\n");
-	sal_thread_create(&thread, routine, NULL);
-    
-	SAL_PRINT(PRINT_ERROR, "Variable : %d\n", variable);
-    
-	sal_thread_join(thread, NULL);
-    
-	SAL_PRINT(PRINT_ERROR, "mutex lock\n");
-	sal_mutex_lock(&mutex);
-	SAL_PRINT(PRINT_ERROR, "mutex wait\n");
-	sal_cond_timedwait(&cond, &mutex, 1000);
-	//sal_cond_wait(&cond, &mutex);
-	SAL_PRINT(PRINT_ERROR, "mutex unlock\n");
-	sal_mutex_unlock(&mutex);
-    
-	SAL_PRINT(PRINT_DEBUG, "Variable : %d\n", variable);
-    
-	SAL_PRINT(PRINT_DEBUG, "condition destroy\n");
-	sal_cond_destroy(&cond);
-    
-	SAL_PRINT(PRINT_DEBUG, "mutex destroy\n");
-	sal_mutex_destroy(&mutex);
-    
-	SAL_PRINT(PRINT_DEBUG, "thread destroy\n");
-	sal_thread_destroy(&thread);
+    ARSAL_Thread_t thread;
+
+    ARSAL_PRINT(ARSAL_PRINT_ERROR, "mutex init\n");
+    ARSAL_Mutex_Init(&mutex);
+
+    ARSAL_PRINT(ARSAL_PRINT_WARNING, "condition init\n");
+    ARSAL_Cond_Init(&cond);
+
+    ARSAL_PRINT(ARSAL_PRINT_WARNING, "thread create\n");
+    ARSAL_Thread_Create(&thread, routine, NULL);
+
+    ARSAL_PRINT(ARSAL_PRINT_ERROR, "Variable : %d\n", variable);
+
+    ARSAL_Thread_Join(thread, NULL);
+
+    ARSAL_PRINT(ARSAL_PRINT_ERROR, "mutex lock\n");
+    ARSAL_Mutex_Lock(&mutex);
+    ARSAL_PRINT(ARSAL_PRINT_ERROR, "mutex wait\n");
+    ARSAL_Cond_Timedwait(&cond, &mutex, 1000);
+    //ARSAL_Cond_Wait(&cond, &mutex);
+    ARSAL_PRINT(ARSAL_PRINT_ERROR, "mutex unlock\n");
+    ARSAL_Mutex_Unlock(&mutex);
+
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, "Variable : %d\n", variable);
+
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, "condition destroy\n");
+    ARSAL_Cond_Destroy(&cond);
+
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, "mutex destroy\n");
+    ARSAL_Mutex_Destroy(&mutex);
+
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, "thread destroy\n");
+    ARSAL_Thread_Destroy(&thread);
 }
 
 - (void)dealloc
@@ -101,7 +101,7 @@ void *routine(void *arg)
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
@@ -127,11 +127,11 @@ void *routine(void *arg)
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
-        } 
+        }
     }
 }
 
@@ -144,7 +144,7 @@ void *routine(void *arg)
     if (__managedObjectContext != nil) {
         return __managedObjectContext;
     }
-    
+
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
         __managedObjectContext = [[NSManagedObjectContext alloc] init];
@@ -172,39 +172,39 @@ void *routine(void *arg)
     if (__persistentStoreCoordinator != nil) {
         return __persistentStoreCoordinator;
     }
-    
+
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"test1.sqlite"];
-    
+
     NSError *error = nil;
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
         /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-         
-         Typical reasons for an error here include:
-         * The persistent store is not accessible;
-         * The schema for the persistent store is incompatible with current managed object model.
-         Check the error message to determine what the actual problem was.
-         
-         
-         If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
-         
-         If you encounter schema incompatibility errors during development, you can reduce their frequency by:
-         * Simply deleting the existing store:
-         [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
-         
-         * Performing automatic lightweight migration by passing the following dictionary as the options parameter: 
-         [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
-         
-         Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
-         
-         */
+          Replace this implementation with code to handle the error appropriately.
+
+          abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+
+          Typical reasons for an error here include:
+          * The persistent store is not accessible;
+          * The schema for the persistent store is incompatible with current managed object model.
+          Check the error message to determine what the actual problem was.
+
+
+          If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
+
+          If you encounter schema incompatibility errors during development, you can reduce their frequency by:
+          * Simply deleting the existing store:
+          [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
+
+          * Performing automatic lightweight migration by passing the following dictionary as the options parameter:
+          [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+
+          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
+
+        */
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
-    }    
-    
+    }
+
     return __persistentStoreCoordinator;
 }
 

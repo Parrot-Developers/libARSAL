@@ -104,7 +104,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 80CC273E1580D5C100D0373C /* Build configuration list for PBXNativeTarget "test1" */;
 			buildPhases = (
-				80CC274C1580D64C00D0373C /* Build libSAL */,
+				80CC274C1580D64C00D0373C /* Build libARSAL */,
 				80CC271D1580D5C100D0373C /* Sources */,
 				80CC271E1580D5C100D0373C /* Frameworks */,
 				80CC271F1580D5C100D0373C /* Resources */,
@@ -156,14 +156,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		80CC274C1580D64C00D0373C /* Build libSAL */ = {
+		80CC274C1580D64C00D0373C /* Build libARSAL */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Build libSAL";
+			name = "Build libARSAL";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -251,7 +251,7 @@
 				HEADER_SEARCH_PATHS = "$(CONFIGURATION)/include";
 				INFOPLIST_FILE = "test1-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION)/lib";
-				OTHER_LDFLAGS = "-lsal_dbg";
+				OTHER_LDFLAGS = "-larsal_dbg";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -268,7 +268,7 @@
 				HEADER_SEARCH_PATHS = "$(CONFIGURATION)/include";
 				INFOPLIST_FILE = "test1-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION)/lib";
-				OTHER_LDFLAGS = "-lsal";
+				OTHER_LDFLAGS = "-larsal";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";

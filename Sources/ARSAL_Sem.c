@@ -99,7 +99,7 @@ int ARSAL_Sem_Init(ARSAL_Sem_t *sem, int shared, int value)
         if (0 == result)
         {
             isMutexInit = 1;
-            result = ARSAL_Cond_init (&(psem->cond));
+            result = ARSAL_Cond_Init (&(psem->cond));
             ARSAL_SEM_ERRNO_TRANSFORM (result);
             psem->count = value;
         }
@@ -152,12 +152,12 @@ int ARSAL_Sem_Destroy(ARSAL_Sem_t *sem)
      */
 
     ARSAL_Sem_CustomImpl_t *psem = (ARSAL_Sem_CustomImpl_t *)*sem;
-    result = ARSAL_Cond_broadcast (&(psem->cond));
+    result = ARSAL_Cond_Broadcast (&(psem->cond));
     ARSAL_SEM_ERRNO_TRANSFORM (result);
 
     if (0 == result)
     {
-        result = ARSAL_Cond_destroy (&(psem->cond));
+        result = ARSAL_Cond_Destroy (&(psem->cond));
         ARSAL_SEM_ERRNO_TRANSFORM (result);
     }
 
@@ -210,7 +210,7 @@ int ARSAL_Sem_Wait(ARSAL_Sem_t *sem)
 
     if (0 == result && 0 >= psem->count)
     {
-        result = ARSAL_Cond_wait (&(psem->cond), &(psem->lock));
+        result = ARSAL_Cond_Wait (&(psem->cond), &(psem->lock));
         ARSAL_SEM_ERRNO_TRANSFORM (result);
     }
 
@@ -346,7 +346,7 @@ int ARSAL_Sem_Timedwait(ARSAL_Sem_t *sem, const struct timespec *timeout)
         int msToWait = (timeout->tv_sec * SEC_TO_MSEC) + (timeout->tv_nsec / NSEC_TO_MSEC);
 #undef SEC_TO_MSEC
 #undef NSEC_TO_MSEC
-        result = ARSAL_Cond_timedwait (&(psem->cond), &(psem->lock), msToWait);
+        result = ARSAL_Cond_Timedwait (&(psem->cond), &(psem->lock), msToWait);
         ARSAL_SEM_ERRNO_TRANSFORM (result);
     }
 
@@ -421,7 +421,7 @@ int ARSAL_Sem_Post(ARSAL_Sem_t *sem)
 
     if (0 == result)
     {
-        result = ARSAL_Cond_signal (&(psem->cond));
+        result = ARSAL_Cond_Signal (&(psem->cond));
         ARSAL_SEM_ERRNO_TRANSFORM (result);
     }
 

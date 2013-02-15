@@ -30,13 +30,13 @@ int ARSAL_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format
 
     switch(level)
     {
-    case PRINT_ERROR:
+    case ARSAL_PRINT_ERROR:
         result = __android_log_vprint (ANDROID_LOG_ERROR, tag, format, va);
         break;
-    case PRINT_WARNING:
+    case ARSAL_PRINT_WARNING:
         result = __android_log_vprint (ANDROID_LOG_WARN, tag, format, va);
         break;
-    case PRINT_DEBUG:
+    case ARSAL_PRINT_DEBUG:
         result = __android_log_vprint (ANDROID_LOG_DEBUG, tag, format, va);
         break;
 

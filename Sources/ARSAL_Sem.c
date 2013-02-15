@@ -94,7 +94,7 @@ int ARSAL_Sem_Init(ARSAL_Sem_t *sem, int shared, int value)
     if (NULL != psem)
     {
         isMalloc = 1;
-        result = ARSAL_Mutex_init (&(psem->lock));
+        result = ARSAL_Mutex_Init (&(psem->lock));
         ARSAL_SEM_ERRNO_TRANSFORM (result);
         if (0 == result)
         {
@@ -113,7 +113,7 @@ int ARSAL_Sem_Init(ARSAL_Sem_t *sem, int shared, int value)
     {
         if (1 == isMutexInit)
         {
-            ARSAL_Mutex_destroy (&(psem->lock));
+            ARSAL_Mutex_Destroy (&(psem->lock));
         }
         if (1 == isMalloc)
         {
@@ -163,7 +163,7 @@ int ARSAL_Sem_Destroy(ARSAL_Sem_t *sem)
 
     if (0 == result)
     {
-        result = ARSAL_Mutex_destroy (&(psem->lock));
+        result = ARSAL_Mutex_Destroy (&(psem->lock));
         ARSAL_SEM_ERRNO_TRANSFORM (result);
     }
 
@@ -205,7 +205,7 @@ int ARSAL_Sem_Wait(ARSAL_Sem_t *sem)
 
     ARSAL_Sem_CustomImpl_t *psem = (ARSAL_Sem_CustomImpl_t *)*sem;
     int unlockRes = 0;
-    result = ARSAL_Mutex_lock (&(psem->lock));
+    result = ARSAL_Mutex_Lock (&(psem->lock));
     ARSAL_SEM_ERRNO_TRANSFORM (result);
 
     if (0 == result && 0 >= psem->count)
@@ -222,7 +222,7 @@ int ARSAL_Sem_Wait(ARSAL_Sem_t *sem)
         }
     }
 
-    unlockRes = ARSAL_Mutex_unlock (&(psem->lock));
+    unlockRes = ARSAL_Mutex_Unlock (&(psem->lock));
     if (0 != unlockRes)
     {
         errno = unlockRes;
@@ -263,7 +263,7 @@ int ARSAL_Sem_Trywait(ARSAL_Sem_t *sem)
 
     ARSAL_Sem_CustomImpl_t *psem = (ARSAL_Sem_CustomImpl_t *)*sem;
     int unlockRes = 0;
-    result = ARSAL_Mutex_trylock (&(psem->lock));
+    result = ARSAL_Mutex_Trylock (&(psem->lock));
     ARSAL_SEM_ERRNO_TRANSFORM (result);
     if (-1 == result && EBUSY == errno)
     {
@@ -284,7 +284,7 @@ int ARSAL_Sem_Trywait(ARSAL_Sem_t *sem)
         }
     }
 
-    unlockRes = ARSAL_Mutex_unlock (&(psem->lock));
+    unlockRes = ARSAL_Mutex_Unlock (&(psem->lock));
     if (0 != unlockRes)
     {
         result = -1;
@@ -336,7 +336,7 @@ int ARSAL_Sem_Timedwait(ARSAL_Sem_t *sem, const struct timespec *timeout)
 
     ARSAL_Sem_CustomImpl_t *psem = (ARSAL_Sem_CustomImpl_t *)*sem;
     int unlockRes = 0;
-    result = ARSAL_Mutex_lock (&(psem->lock));
+    result = ARSAL_Mutex_Lock (&(psem->lock));
     ARSAL_SEM_ERRNO_TRANSFORM (result);
 
     if (0 == result && 0 >= psem->count)
@@ -358,7 +358,7 @@ int ARSAL_Sem_Timedwait(ARSAL_Sem_t *sem, const struct timespec *timeout)
         }
     }
 
-    unlockRes = ARSAL_Mutex_unlock (&(psem->lock));
+    unlockRes = ARSAL_Mutex_Unlock (&(psem->lock));
     if (0 != unlockRes)
     {
         result = -1;
@@ -396,7 +396,7 @@ int ARSAL_Sem_Post(ARSAL_Sem_t *sem)
 
     ARSAL_Sem_CustomImpl_t *psem = (ARSAL_Sem_CustomImpl_t *)*sem;
     int unlockRes = 0;
-    result = ARSAL_Mutex_lock (&(psem->lock));
+    result = ARSAL_Mutex_Lock (&(psem->lock));
     ARSAL_SEM_ERRNO_TRANSFORM (result);
 
     if (0 == result)
@@ -412,7 +412,7 @@ int ARSAL_Sem_Post(ARSAL_Sem_t *sem)
         }
     }
 
-    unlockRes = ARSAL_Mutex_unlock (&(psem->lock));
+    unlockRes = ARSAL_Mutex_Unlock (&(psem->lock));
     if (0 != unlockRes)
     {
         result = -1;
@@ -455,7 +455,7 @@ int ARSAL_Sem_Getvalue(ARSAL_Sem_t *sem, int *value)
 
     ARSAL_Sem_CustomImpl_t *psem = (ARSAL_Sem_CustomImpl_t *)*sem;
     int unlockRes = 0;
-    result = ARSAL_Mutex_lock (&(psem->lock));
+    result = ARSAL_Mutex_Lock (&(psem->lock));
     ARSAL_SEM_ERRNO_TRANSFORM (result);
 
     if (0 == result)
@@ -463,7 +463,7 @@ int ARSAL_Sem_Getvalue(ARSAL_Sem_t *sem, int *value)
         *value = psem->count;
     }
 
-    unlockRes = ARSAL_Mutex_unlock (&(psem->lock));
+    unlockRes = ARSAL_Mutex_Unlock (&(psem->lock));
     if (0 != unlockRes)
     {
         result = -1;

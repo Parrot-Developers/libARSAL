@@ -24,17 +24,11 @@ SOURCE_FILES                            =   $(HEADER_FILES)             \
 # The library names to build (note we are building static and shared libs)
 if DEBUG_MODE
 lib_LTLIBRARIES                         =   libarsal_dbg.la
-if NO_SO_VERSION
-libarsal_dbg_la_LDFLAGS                 =   -avoid-version
-endif
 libarsal_dbg_ladir                      =   $(includedir)/libARSAL
 libarsal_dbg_la_HEADERS                 =   $(HEADER_FILES)
 libarsal_dbg_la_SOURCES                 =   $(SOURCE_FILES)
 else
 lib_LTLIBRARIES                         =   libarsal.la
-if NO_SO_VERSION
-libarsal_la_LDFLAGS                     =   -avoid-version
-endif
 libarsal_ladir                          =   $(includedir)/libARSAL
 libarsal_la_HEADERS                     =   $(HEADER_FILES)
 libarsal_la_SOURCES                     =   $(SOURCE_FILES)

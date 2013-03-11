@@ -1,6 +1,6 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
-AC_INIT([libARSAL], [1.0], [ardrone@ardrone.org])
+AC_INIT([libARSAL], [0.1.0], [ardrone@ardrone.org])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_MACRO_DIR(m4)
@@ -41,8 +41,6 @@ AC_ARG_ENABLE([so-version],
     [sover="$enableval"],
     [sover=yes])
 AC_MSG_RESULT([$sover])
-
-AM_CONDITIONAL([NO_SO_VERSION], [test "$sover" = "no"])
 
 ##########################################################################
 # Define includes directories
@@ -105,6 +103,13 @@ AC_HEADER_STDC
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_SIZE_T
 
+# Generate libtool version info number
+if test x"$sover" = x"yes"; then
+	LDFLAGS+=" -release $PACKAGE_VERSION"
+else
+    LDFLAGS+=" -avoid-version"
+fi
+
 # distribute additional compiler and linker flags
 # --> set these variables instead of CFLAGS or LDFLAGS
 AC_SUBST([CFLAGS])
@@ -118,7 +123,7 @@ AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
 
 echo "
-  ($PACKAGE_NAME) version $PACKAGE_VERSION
+  $PACKAGE_NAME version $PACKAGE_VERSION
   Prefix.........: $prefix
   Debug Build....: $debugit
   C Compiler.....: $CC $CFLAGS

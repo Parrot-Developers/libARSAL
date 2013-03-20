@@ -10,6 +10,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <sys/uio.h>
 
 /**
  * @brief Creates an endpoint for communication and returns a descriptor.
@@ -89,6 +90,27 @@ ssize_t ARSAL_Socket_Recvfrom(int sockfd, void *buf, size_t buflen, int flags, s
  */
 ssize_t ARSAL_Socket_Recv(int sockfd, void *buf, size_t buflen, int flags);
 
+/**
+ * @brief Send multiple data on a socket
+ *
+ * @param sockfd The socket descriptor used to send
+ * @param iov An array of struct iovec, which describes the data buffers
+ * @param iovcnt The number of data buffers in iov
+ *
+ * @return On success, the number of written bytes is returned. On error, -1 is returned, and errno is set
+ */
+ssize_t ARSAL_Socket_Writev (int sockfd, const struct iovec *iov, int iovcnt);
+
+/**
+ * @brief Read multiple data from a socket
+ *
+ * @param sockfd The socket descriptor used to read
+ * @param iov An array of struct iovec, which describes the data buffers
+ * @param iovcnt The number of data buffers in iov
+ *
+ * @return On success, the number of bytes read is returned. On error, -1 is returned, and errno is set
+ */
+ssize_t ARSAL_Socket_Readv (int sockfd, const struct iovec *iov, int iovcnt);
 
 /**
  * @brief Bind a name to a socket

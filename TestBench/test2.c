@@ -13,6 +13,8 @@
 #define MSG         "HELLO WORLD !!!"
 #define DIRSIZE     8192
 
+#define __TAG__ "test2"
+
 void *thread_client(void *arg)
 {
     char hostname[100];
@@ -21,13 +23,13 @@ void *thread_client(void *arg)
     struct sockaddr_in pin;
     struct hostent *hp;
 
-    ARSAL_PRINT(ARSAL_PRINT_WARNING, "test2", "%s started\n", __FUNCTION__);
+    ARSAL_PRINT(ARSAL_PRINT_WARNING, __TAG__, "%s started\n", __FUNCTION__);
     strcpy(hostname,HOST);
 
     /* go find out about the desired host machine */
     if ((hp = gethostbyname(hostname)) == 0)
     {
-        ARSAL_PRINT(ARSAL_PRINT_ERROR, "test2", "gethostbyname : %s\n", strerror(errno));
+        ARSAL_PRINT(ARSAL_PRINT_ERROR, __TAG__, "gethostbyname : %s\n", strerror(errno));
         return NULL;
     }
 
@@ -40,33 +42,33 @@ void *thread_client(void *arg)
     /* grab an Internet domain socket */
     if ((sd = ARSAL_Socket_Create(AF_INET, SOCK_STREAM, 0)) == -1)
     {
-        ARSAL_PRINT(ARSAL_PRINT_ERROR, "test2", "ARSAL_Socket_Create : %s\n", strerror(errno));
+        ARSAL_PRINT(ARSAL_PRINT_ERROR, __TAG__, "ARSAL_Socket_Create : %s\n", strerror(errno));
         return NULL;
     }
 
     /* connect to PORT on HOST */
     if (ARSAL_Socket_Connect(sd,(struct sockaddr *)  &pin, sizeof(pin)) == -1)
     {
-        ARSAL_PRINT(ARSAL_PRINT_ERROR, "test2", "ARSAL_Socket_Connect : %s\n", strerror(errno));
+        ARSAL_PRINT(ARSAL_PRINT_ERROR, __TAG__, "ARSAL_Socket_Connect : %s\n", strerror(errno));
         return NULL;
     }
 
     /* send a message to the server PORT on machine HOST */
     if (ARSAL_Socket_Send(sd, MSG, strlen(MSG), 0) == -1)
     {
-        ARSAL_PRINT(ARSAL_PRINT_ERROR, "test2", "ARSAL_Socket_Send : %s\n", strerror(errno));
+        ARSAL_PRINT(ARSAL_PRINT_ERROR, __TAG__, "ARSAL_Socket_Send : %s\n", strerror(errno));
         return NULL;
     }
 
     /* wait for a message to come back from the server */
     if (ARSAL_Socket_Recv(sd, dir, DIRSIZE, 0) == -1)
     {
-        ARSAL_PRINT(ARSAL_PRINT_ERROR, "test2", "ARSAL_Socket_Recv : %s\n", strerror(errno));
+        ARSAL_PRINT(ARSAL_PRINT_ERROR, __TAG__, "ARSAL_Socket_Recv : %s\n", strerror(errno));
         return NULL;
     }
 
     /* spew-out the results and bail out of here! */
-    ARSAL_PRINT(ARSAL_PRINT_WARNING, "test2", "Message received : %s\n", dir);
+    ARSAL_PRINT(ARSAL_PRINT_WARNING, __TAG__, "Message received : %s\n", dir);
 
     ARSAL_Socket_Close(sd);
 
@@ -82,11 +84,11 @@ void *thread_server(void *arg)
     struct   sockaddr_in sin;
     struct   sockaddr_in pin;
 
-    ARSAL_PRINT(ARSAL_PRINT_WARNING, "test2", "%s started\n", __FUNCTION__);
+    ARSAL_PRINT(ARSAL_PRINT_WARNING, __TAG__, "%s started\n", __FUNCTION__);
     /* grab an Internet domain socket */
     if ((sd = ARSAL_Socket_Create(AF_INET, SOCK_STREAM, 0)) == -1)
     {
-        ARSAL_PRINT(ARSAL_PRINT_ERROR, "test2", "ARSAL_Socket_Create : %s\n", strerror(errno));
+        ARSAL_PRINT(ARSAL_PRINT_ERROR, __TAG__, "ARSAL_Socket_Create : %s\n", strerror(errno));
         return NULL;
     }
 
@@ -99,14 +101,14 @@ void *thread_server(void *arg)
     /* bind the socket to the port number */
     if (ARSAL_Socket_Bind(sd, (struct sockaddr *) &sin, sizeof(sin)) == -1)
     {
-        ARSAL_PRINT(ARSAL_PRINT_ERROR, "test2", "ARSAL_Socket_Bind : %s\n", strerror(errno));
+        ARSAL_PRINT(ARSAL_PRINT_ERROR, __TAG__, "ARSAL_Socket_Bind : %s\n", strerror(errno));
         return NULL;
     }
 
     /* show that we are willing to listen */
     if (ARSAL_Socket_Listen(sd, 5) == -1)
     {
-        ARSAL_PRINT(ARSAL_PRINT_ERROR, "test2", "ARSAL_Socket_Listen : %s\n", strerror(errno));
+        ARSAL_PRINT(ARSAL_PRINT_ERROR, __TAG__, "ARSAL_Socket_Listen : %s\n", strerror(errno));
         return NULL;
     }
 
@@ -114,24 +116,24 @@ void *thread_server(void *arg)
     addrlen = sizeof(pin);
     if ((sd_current = ARSAL_Socket_Accept(sd, (struct sockaddr *)&pin, &addrlen)) == -1)
     {
-        ARSAL_PRINT(ARSAL_PRINT_ERROR, "test2", "ARSAL_Socket_Accept : %s\n", strerror(errno));
+        ARSAL_PRINT(ARSAL_PRINT_ERROR, __TAG__, "ARSAL_Socket_Accept : %s\n", strerror(errno));
         return NULL;
     }
 
     /* get a message from the client */
     if (ARSAL_Socket_Recv(sd_current, dir, sizeof(dir), 0) == -1)
     {
-        ARSAL_PRINT(ARSAL_PRINT_ERROR, "test2", "ARSAL_Socket_Recv : %s\n", strerror(errno));
+        ARSAL_PRINT(ARSAL_PRINT_ERROR, __TAG__, "ARSAL_Socket_Recv : %s\n", strerror(errno));
         return NULL;
     }
 
     /* spew-out the results and bail out of here! */
-    ARSAL_PRINT(ARSAL_PRINT_WARNING, "test2", "Message received : %s\n", dir);
+    ARSAL_PRINT(ARSAL_PRINT_WARNING, __TAG__, "Message received : %s\n", dir);
 
     /* acknowledge the message, reply w/ the file names */
     if (ARSAL_Socket_Send(sd_current, dir, strlen(dir), 0) == -1)
     {
-        ARSAL_PRINT(ARSAL_PRINT_ERROR, "test2", "ARSAL_Socket_Send : %s\n", strerror(errno));
+        ARSAL_PRINT(ARSAL_PRINT_ERROR, __TAG__, "ARSAL_Socket_Send : %s\n", strerror(errno));
         return NULL;
     }
 
@@ -149,14 +151,14 @@ int main(int argc, char **argv)
 {
     ARSAL_Thread_t server, client;
 
-    ARSAL_PRINT(ARSAL_PRINT_WARNING, "test2", "create threads\n");
+    ARSAL_PRINT(ARSAL_PRINT_WARNING, __TAG__, "create threads\n");
     ARSAL_Thread_Create(&server, thread_server, NULL);
     ARSAL_Thread_Create(&client, thread_client, NULL);
 
     ARSAL_Thread_Join(server, NULL);
     ARSAL_Thread_Join(client, NULL);
 
-    ARSAL_PRINT(ARSAL_PRINT_DEBUG, "test2", "destroy threads\n");
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, __TAG__, "destroy threads\n");
     ARSAL_Thread_Destroy(&server);
     ARSAL_Thread_Destroy(&client);
     return 0;

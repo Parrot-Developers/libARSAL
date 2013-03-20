@@ -39,6 +39,16 @@ ssize_t ARSAL_Socket_Recv(int sockfd, void *buf, size_t buflen, int flags)
     return ARSAL_Socket_Recvfrom(sockfd, buf, buflen, flags, (struct sockaddr *)NULL, (socklen_t *)NULL);
 }
 
+ssize_t ARSAL_Socket_Writev (int sockfd, const struct iovec *iov, int iovcnt)
+{
+    return writev (sockfd, iov, iovcnt);
+}
+
+ssize_t ARSAL_Socket_Readv (int sockfd, const struct iovec *iov, int iovcnt)
+{
+    return readv (sockfd, iov, iovcnt);
+}
+
 int ARSAL_Socket_Bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen)
 {
     return bind(sockfd, addr, addrlen);

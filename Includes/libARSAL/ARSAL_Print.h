@@ -7,6 +7,7 @@
 #ifndef _ARSAL_PRINT_H_
 #define _ARSAL_PRINT_H_
 #include <time.h>
+#include <string.h>
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -33,7 +34,14 @@ typedef enum
         char __nowTimeStr [9];                                          \
         time_t __nowTimeT = time (NULL);                                \
         strftime (__nowTimeStr, 9, "%H:%M:%S", localtime (&__nowTimeT)); \
-        ARSAL_PrintRaw(level, tag, "%s | %s:%d - " format, __nowTimeStr, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+        if (format[strlen (format)-1] != '\n')                          \
+        {                                                               \
+            ARSAL_PrintRaw(level, tag, "%s | %s:%d - " format "\n", __nowTimeStr, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+        }                                                               \
+        else                                                            \
+        {                                                               \
+            ARSAL_PrintRaw(level, tag, "%s | %s:%d - " format, __nowTimeStr, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+        }                                                               \
     } while (0)
 #else
 #define ARSAL_PRINT(level, tag, format, ...)                            \
@@ -44,7 +52,14 @@ typedef enum
             char __nowTimeStr [9];                                      \
             time_t __nowTimeT = time (NULL);                            \
             strftime (__nowTimeStr, 9, "%H:%M:%S", localtime (&__nowTimeT)); \
-            ARSAL_PrintRaw(level, tag, "%s | %s:%d - " format, __nowTimeStr, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+            if (format[strlen (format)-1] != '\n')                      \
+            {                                                           \
+                ARSAL_PrintRaw(level, tag, "%s | %s:%d - " format "\n", __nowTimeStr, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+            }                                                           \
+            else                                                        \
+            {                                                           \
+                ARSAL_PrintRaw(level, tag, "%s | %s:%d - " format, __nowTimeStr, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+            }                                                           \
         }                                                               \
     } while (0)
 #endif

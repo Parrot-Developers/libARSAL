@@ -8,6 +8,7 @@
 #define _ARSAL_PRINT_H_
 #include <time.h>
 #include <string.h>
+#include <libARSAL/ARSAL_Time.h>
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -25,22 +26,23 @@ typedef enum
 } eARSAL_PRINT_LEVEL;
 
 /**
- * @brief print a specific output (i.e. "[ERR] TAG | 14:30:24 | main:10 - My debug log")
+ * @brief print a specific output (i.e. "[ERR] TAG | 14:30:24:245 | main:10 - My debug log")
  */
 #if defined(DEBUG)
 #define ARSAL_PRINT(level, tag, format, ...)                            \
     do                                                                  \
     {                                                                   \
         char __nowTimeStr [9];                                          \
-        time_t __nowTimeT = time (NULL);                                \
-        strftime (__nowTimeStr, 9, "%H:%M:%S", localtime (&__nowTimeT)); \
+        struct timeval __tv;                                            \
+        gettimeofday (&__tv, NULL);                                     \
+        strftime (__nowTimeStr, 9, "%H:%M:%S", localtime (&(__tv.tv_sec))); \
         if (format[strlen (format)-1] != '\n')                          \
         {                                                               \
-            ARSAL_PrintRaw(level, tag, "%s | %s:%d - " format "\n", __nowTimeStr, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+            ARSAL_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, __tv.tv_usec / 1000, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
         }                                                               \
         else                                                            \
         {                                                               \
-            ARSAL_PrintRaw(level, tag, "%s | %s:%d - " format, __nowTimeStr, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+            ARSAL_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, __tv.tv_usec / 1000, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
         }                                                               \
     } while (0)
 #else
@@ -50,15 +52,16 @@ typedef enum
         if (ARSAL_PRINT_DEBUG > level)                                  \
         {                                                               \
             char __nowTimeStr [9];                                      \
-            time_t __nowTimeT = time (NULL);                            \
-            strftime (__nowTimeStr, 9, "%H:%M:%S", localtime (&__nowTimeT)); \
+            struct timeval __tv;                                        \
+            gettimeofday (&__tv, NULL);                                 \
+            strftime (__nowTimeStr, 9, "%H:%M:%S", localtime (&(__tv.tv_sec))); \
             if (format[strlen (format)-1] != '\n')                      \
-            {                                                           \
-                ARSAL_PrintRaw(level, tag, "%s | %s:%d - " format "\n", __nowTimeStr, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+                      {                                                 \
+                ARSAL_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, __tv.tv_usec / 1000, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             }                                                           \
             else                                                        \
             {                                                           \
-                ARSAL_PrintRaw(level, tag, "%s | %s:%d - " format, __nowTimeStr, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+                ARSAL_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, __tv.tv_usec / 1000, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             }                                                           \
         }                                                               \
     } while (0)

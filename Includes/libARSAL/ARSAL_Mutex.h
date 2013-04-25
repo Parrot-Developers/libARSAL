@@ -21,7 +21,7 @@ typedef void* ARSAL_Cond_t;
  * @brief Initializes a mutex.
  *
  * @param mutex The mutex to initialize
- * @retval On success, ARSAL_Mutex_init() returns 0. Otherwise, it returns an error number (See errno.h)
+ * @retval On success, ARSAL_Mutex_Init() returns 0. Otherwise, it returns an error number (See errno.h)
  */
 int ARSAL_Mutex_Init(ARSAL_Mutex_t *mutex);
 
@@ -29,7 +29,7 @@ int ARSAL_Mutex_Init(ARSAL_Mutex_t *mutex);
  * @brief Destroys a mutex
  *
  * @param mutex The mutex to destroy
- * @retval On success, ARSAL_Mutex_destroy() returns 0. Otherwise, it returns an error number (See errno.h)
+ * @retval On success, ARSAL_Mutex_Destroy() returns 0. Otherwise, it returns an error number (See errno.h)
  */
 int ARSAL_Mutex_Destroy(ARSAL_Mutex_t *mutex);
 
@@ -37,7 +37,7 @@ int ARSAL_Mutex_Destroy(ARSAL_Mutex_t *mutex);
  * @brief Locks a mutex
  *
  * @param mutex The mutex to lock
- * @retval On success, ARSAL_Mutex_lock() returns 0. Otherwise, it returns an error number (See errno.h)
+ * @retval On success, ARSAL_Mutex_Lock() returns 0. Otherwise, it returns an error number (See errno.h)
  */
 int ARSAL_Mutex_Lock(ARSAL_Mutex_t *mutex);
 
@@ -45,7 +45,7 @@ int ARSAL_Mutex_Lock(ARSAL_Mutex_t *mutex);
  * @brief Tries to lock a mutex
  *
  * @param mutex The mutex to lock
- * @retval On success, ARSAL_Mutex_trylock() returns 0. Otherwise, it returns an error number (See errno.h)
+ * @retval On success, ARSAL_Mutex_Trylock() returns 0. Otherwise, it returns an error number (See errno.h)
  */
 int ARSAL_Mutex_Trylock(ARSAL_Mutex_t *mutex);
 
@@ -53,7 +53,7 @@ int ARSAL_Mutex_Trylock(ARSAL_Mutex_t *mutex);
  * @brief Unlocks a mutex
  *
  * @param mutex The mutex to unlock
- * @retval On success, ARSAL_Mutex_unlock() returns 0. Otherwise, it returns an error number (See errno.h)
+ * @retval On success, ARSAL_Mutex_Unlock() returns 0. Otherwise, it returns an error number (See errno.h)
  */
 int ARSAL_Mutex_Unlock(ARSAL_Mutex_t *mutex);
 
@@ -61,7 +61,7 @@ int ARSAL_Mutex_Unlock(ARSAL_Mutex_t *mutex);
  * @brief Initializes a condition
  *
  * @param cond The condition to initialize
- * @retval On success, ARSAL_Cond_init() returns 0. Otherwise, it returns an error number (See errno.h)
+ * @retval On success, ARSAL_Cond_Init() returns 0. Otherwise, it returns an error number (See errno.h)
  */
 int ARSAL_Cond_Init(ARSAL_Cond_t *cond);
 
@@ -69,7 +69,7 @@ int ARSAL_Cond_Init(ARSAL_Cond_t *cond);
  * @brief Destroy a condition
  *
  * @param cond The condition to destroy
- * @retval On success, ARSAL_Cond_destroy() returns 0. Otherwise, it returns an error number (See errno.h)
+ * @retval On success, ARSAL_Cond_Destroy() returns 0. Otherwise, it returns an error number (See errno.h)
  */
 int ARSAL_Cond_Destroy(ARSAL_Cond_t *cond);
 
@@ -78,7 +78,7 @@ int ARSAL_Cond_Destroy(ARSAL_Cond_t *cond);
  *
  * @param cond The condition to wait
  * @param mutex The mutex link to condition.
- * @retval On success, ARSAL_Cond_wait() returns 0. Otherwise, it returns an error number (See errno.h)
+ * @retval On success, ARSAL_Cond_Wait() returns 0. Otherwise, it returns an error number (See errno.h)
  */
 int ARSAL_Cond_Wait(ARSAL_Cond_t *cond, ARSAL_Mutex_t *mutex);
 
@@ -87,8 +87,8 @@ int ARSAL_Cond_Wait(ARSAL_Cond_t *cond, ARSAL_Mutex_t *mutex);
  *
  * @param cond The condition to wait
  * @param mutex The mutex linked to condition.
- * @param timeout The time to wait before ARSAL_Cond_timedwait() returns ETIMEDOUT.
- * @retval On success, ARSAL_Cond_timedwait() returns 0. If the time is specified by timeout has passed, ARSAL_Cond_timedwait() returns ETIMEDOUT. Otherwise, it returns an error number (See errno.h)
+ * @param timeout The time (ms) to wait before ARSAL_Cond_Timedwait() returns ETIMEDOUT.
+ * @retval On success, ARSAL_Cond_Timedwait() returns 0. If the time is specified by timeout has passed, ARSAL_Cond_Timedwait() returns ETIMEDOUT. Otherwise, it returns an error number (See errno.h)
  */
 int ARSAL_Cond_Timedwait(ARSAL_Cond_t *cond, ARSAL_Mutex_t *mutex, int timeout);
 
@@ -96,15 +96,15 @@ int ARSAL_Cond_Timedwait(ARSAL_Cond_t *cond, ARSAL_Mutex_t *mutex, int timeout);
  * @brief Signal a condition
  *
  * @param cond The condition to signal
- * @retval On success, ARSAL_Cond_signal() returns 0. If the time is specified by timeout has passed, ARSAL_Cond_timedwait() returns ETIMEDOUT. Otherwise, it returns an error number (See errno.h)
+ * @retval On success, ARSAL_Cond_Signal() returns 0. Otherwise, it returns an error number (See errno.h)
  */
 int ARSAL_Cond_Signal(ARSAL_Cond_t *cond);
 
 /**
- * @brief Signal a condition
+ * @brief Broadcast a condition
  *
  * @param cond The condition to broadcast
- * @retval On success, ARSAL_Cond_broadcast() returns 0. If the time is specified by timeout has passed, ARSAL_Cond_timedwait() returns ETIMEDOUT. Otherwise, it returns an error number (See errno.h)
+ * @retval On success, ARSAL_Cond_Broadcast() returns 0. Otherwise, it returns an error number (See errno.h)
  */
 int ARSAL_Cond_Broadcast(ARSAL_Cond_t *cond);
 

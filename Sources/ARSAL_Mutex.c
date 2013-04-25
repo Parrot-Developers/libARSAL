@@ -11,12 +11,6 @@
 
 #if defined(HAVE_PTHREAD_H)
 #include <pthread.h>
-
-#define ARSAL_Mutex_NORMAL PTHREAD_MUTEX_NORMAL
-#define ARSAL_Mutex_ERRORCHECK PTHREAD_MUTEX_ERRORCHECK
-#define ARSAL_Mutex_RECURSIVE PTHREAD_MUTEX_RECURSIVE
-#define ARSAL_Mutex_DEFAULT PTHREAD_MUTEX_DEFAULT
-
 #else
 #error The pthread.h header is required in order to build the library
 #endif
@@ -31,54 +25,6 @@ int ARSAL_Mutex_Init(ARSAL_Mutex_t *mutex)
     result = pthread_mutex_init((pthread_mutex_t *)*mutex, NULL);
 #endif
 
-    return result;
-}
-
-int ARSAL_Mutex_InitWithType(ARSAL_Mutex_t *mutex, eARSAL_MUTEX_TYPE type)
-{
-    int result = 0;
-#if defined(HAVE_PTHREAD_H)
-    pthread_mutexattr_t attr;
-    int pthreadMutexType = PTHREAD_MUTEX_DEFAULT;
-
-    /** set pthreadMutexType frome type */
-    switch(type)
-    {
-        case ARSAL_MUTEX_TYPE_NORMAL:
-            pthreadMutexType = PTHREAD_MUTEX_NORMAL;
-            break;
-        
-        case ARSAL_MUTEX_TYPE_ERRORCHECK:
-            pthreadMutexType = PTHREAD_MUTEX_ERRORCHECK;
-            break;
-        
-        case ARSAL_MUTEX_TYPE_RECURSIVE:
-            pthreadMutexType = PTHREAD_MUTEX_RECURSIVE;
-            break;
-        
-        case PTHREAD_MUTEX_DEFAULT:
-            pthreadMutexType = PTHREAD_MUTEX_DEFAULT;
-            break;
-        
-        default:
-            pthreadMutexType = PTHREAD_MUTEX_DEFAULT;
-            break;
-    }
-    
-    /** Initializes the attribute */
-    result = pthread_mutexattr_settype(&attr, pthreadMutexType); 
-    
-    if(result == 0)
-    {
-        /** Allocates the mutex */
-        pthread_mutex_t *pmutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-        *mutex = (ARSAL_Mutex_t)pmutex;
-        
-        /** Initializes the mutex with the attribute */
-        result = pthread_mutex_init((pthread_mutex_t *)*mutex, &attr);
-    }
-#endif
-    
     return result;
 }
 

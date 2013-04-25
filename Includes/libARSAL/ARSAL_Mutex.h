@@ -17,6 +17,20 @@ typedef void* ARSAL_Mutex_t;
  */
 typedef void* ARSAL_Cond_t;
 
+
+/**
+ *  @brief ARSAL mutex type known.
+**/
+typedef enum
+{
+    ARSAL_MUTEX_TYPE_DEFAULT = 0, /**< Attempting to recursively lock a mutex of this type results in undefined behavior. Attempting to unlock a mutex of this type which was not locked by the calling thread results in undefined behavior. Attempting to unlock a mutex of this type which is not locked results in undefined behavior. An implementation may map this mutex to one of the other mutex types. */
+    ARSAL_MUTEX_TYPE_NORMAL, /**< This type of mutex does not detect deadlock. A thread attempting to relock this mutex without first unlocking it shall deadlock. Attempting to unlock a mutex locked by a different thread results in undefined behavior. Attempting to unlock an unlocked mutex results in undefined behavior. */
+    ARSAL_MUTEX_TYPE_ERRORCHECK, /**< This type of mutex provides error checking. A thread attempting to relock this mutex without first unlocking it shall return with an error. A thread attempting to unlock a mutex which another thread has locked shall return with an error. A thread attempting to unlock an unlocked mutex shall return with an error.*/
+    ARSAL_MUTEX_TYPE_RECURSIVE, /**< A thread attempting to relock this mutex without first unlocking it shall succeed in locking the mutex. The relocking deadlock which can occur with mutexes of type PTHREAD_MUTEX_NORMAL cannot occur with this type of mutex. Multiple locks of this mutex shall require the same number of unlocks to release the mutex before another thread can acquire the mutex. A thread attempting to unlock a mutex which another thread has locked shall return with an error. A thread attempting to unlock an unlocked mutex shall return with an error. */
+    ARSAL_MUTEX_MAX, /**< The maximum of enum, do not use !*/
+
+} eARSAL_MUTEX_TYPE;
+
 /**
  * @brief Initializes a mutex.
  *
@@ -24,6 +38,15 @@ typedef void* ARSAL_Cond_t;
  * @retval On success, ARSAL_Mutex_Init() returns 0. Otherwise, it returns an error number (See errno.h)
  */
 int ARSAL_Mutex_Init(ARSAL_Mutex_t *mutex);
+
+/**
+ * @brief Initializes a mutex with type.
+ *
+ * @param mutex The mutex to initialize
+ * @param type The mutex type
+ * @retval On success, ARSAL_Mutex_InitWithType() returns 0. Otherwise, it returns an error number (See errno.h)
+ */
+int ARSAL_Mutex_InitWithType(ARSAL_Mutex_t *mutex, eARSAL_MUTEX_TYPE type);
 
 /**
  * @brief Destroys a mutex

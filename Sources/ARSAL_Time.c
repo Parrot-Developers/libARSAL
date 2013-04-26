@@ -5,6 +5,7 @@
  * @author frederic.dhaeyer@parrot.com
  */
 #include <config.h>
+#include <libARSAL/ARSAL_Time.h>
 
 // TO CHECK
 /*#if defined(HAVE_MACH_MACH_TIME_H)
@@ -25,3 +26,28 @@
   }
   #endif
 */
+
+int32_t ARSAL_Time_ComputeMsTimeDiff (struct timeval *start, struct timeval *end)
+{
+    int32_t result = -1;
+    struct timeval diff;
+    if (start == NULL || end == NULL)
+    {
+        return result;
+    }
+
+    diff.tv_sec = end->tv_sec - start->tv_sec;
+    if (start->tv_usec > end->tv_usec)
+    {
+        diff.tv_sec--;
+        diff.tv_usec = 1000000 - (start->tv_usec - end->tv_usec);
+    }
+    else
+    {
+        diff.tv_usec = end->tv_usec - start->tv_usec;
+    }
+
+    result = (diff.tv_sec * 1000) + (diff.tv_usec / 1000);
+
+    return result;
+}

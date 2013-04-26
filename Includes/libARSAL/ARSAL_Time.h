@@ -6,6 +6,7 @@
  */
 #ifndef _ARSAL_TIME_H_
 #define _ARSAL_TIME_H_
+#include <inttypes.h>
 #include <time.h>
 #include <sys/time.h>
 #include <unistd.h>
@@ -33,6 +34,19 @@
         (tv)->tv_usec = (ts)->tv_nsec / 1000;   \
     } while(0)
 #endif
+
+/**
+ * @brief Computes the difference between two timeval
+ *
+ * This function returns the time, in miliseconds, between the two
+ * given timevals.
+ *
+ * @param start Start of the time interval to compute
+ * @param end End of the time interval to compute
+ * @return The number of ms between the two timeval. A negative number is an error
+ * @warning Make sure that "end" is after "start"
+ */
+int32_t ARSAL_Time_ComputeMsTimeDiff (struct timeval *start, struct timeval *end);
 
 #if 0 // Disable Doxygen comment while function is not implemented
 /**

@@ -27,11 +27,28 @@
   #endif
 */
 
+int ARSAL_Time_TimevalEquals (struct timeval *t1, struct timeval *t2)
+{
+    int result = 0;
+    if ((t1 == NULL) ||
+        (t2 == NULL))
+    {
+        return result;
+    }
+    if ((t1->tv_sec == t2->tv_sec) &&
+        (t1->tv_usec == t2->tv_usec))
+    {
+        result = 1;
+    }
+    return result;
+}
+
 int32_t ARSAL_Time_ComputeMsTimeDiff (struct timeval *start, struct timeval *end)
 {
     int32_t result = -1;
     struct timeval diff;
-    if (start == NULL || end == NULL)
+    if ((start == NULL) ||
+        (end == NULL))
     {
         return result;
     }

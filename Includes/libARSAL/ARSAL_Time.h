@@ -36,6 +36,17 @@
 #endif
 
 /**
+ * @brief Checks the equality of two timeval
+ *
+ * @param t1 First time to compare
+ * @param t2 Second time to compare
+ *
+ * @return 1 if t1 and t2 represent the same value
+ * @return 0 in all other cases
+ */
+int ARSAL_Time_TimevalEquals (struct timeval *t1, struct timeval *t2);
+
+/**
  * @brief Computes the difference between two timeval
  *
  * This function returns the time, in miliseconds, between the two

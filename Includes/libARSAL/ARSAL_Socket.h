@@ -72,7 +72,7 @@ ssize_t ARSAL_Socket_Send(int sockfd, const void *buf, size_t buflen, int flags)
  * @param src_addr The source address
  * @param addrlen The size of the source address
  *
- * @retval On success, the number of bytes received is returned. 0 is returned when the peer has performed an orderly shutdow.
+ * @retval On success, the number of bytes received is returned. 0 is returned when the peer has performed an orderly shutdown.
  * Otherwise -1 is returned if an error occurred and errno is set appropriately. (See errno.h).
  */
 ssize_t ARSAL_Socket_Recvfrom(int sockfd, void *buf, size_t buflen, int flags, struct sockaddr *src_addr, socklen_t *addrlen);

@@ -13,21 +13,24 @@ LIBNAME_LOWER=$(echo $LIBNAME | tr [:upper:] [:lower:])
 
 # $1 will always be the --prefix=... arg
 
+# $2 will always be the JNI installation directory
+
 # $3 is the action (release, debug, clean)
 
 PREFIX=$1
-CONFIGURATION=$(echo $2  | tr [:upper:] [:lower:])
+JNIDIR=$2
+CONFIGURATION=$(echo $3  | tr [:upper:] [:lower:])
 
 echo "Building "$LIBNAME" with prefix : <"$PREFIX">"
 echo "And target : <"$CONFIGURATION">"
 
 # If any arg is missing, return
-if [ -z $PREFIX ] || [ -z $CONFIGURATION ]; then
+if [ -z $PREFIX ] || [ -z $CONFIGURATION ] || [ -z $JNIDIR ]; then
 	echo "Missing args !"
 	exit 1
 fi
 
-# If arg 3 is clean, run cleanup, delete installed files (if any) and return
+# If configuration is clean, run cleanup, delete installed files (if any) and return
 if [ "xclean" = "x$CONFIGURATION" ]; then
 	cd $BUILDDIR
 	./cleanup

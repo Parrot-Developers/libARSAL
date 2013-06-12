@@ -150,6 +150,10 @@ def readEnumEntriesFromFile (filename):
                 _, _, comment = line.partition ('/**<')
                 comment, _, _ = comment.partition ('*/')
                 comment = comment.strip ()
+                # If the comment is not in /**< */ format, try ///< format
+                if comment == '':
+                    _, _, comment = line.partition ('///<')
+                    comment = comment.strip ()
                 entry = AREnumEntry (name, value, comment)
                 currentEnumType.addEntry (entry)
     return allEnums

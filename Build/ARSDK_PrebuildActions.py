@@ -258,10 +258,4 @@ for fname in os.listdir (INC_DIR):
             writeEnumToJavaFile (enumType)
             writeToStringFunction (enumType)
 
-sys.exit (0)
-
-allEnums = readEnumEntriesFromFile (HFILE_NAME)
-for enumType in allEnums:
-    writeEnumToJavaFile (enumType)
-
 #END

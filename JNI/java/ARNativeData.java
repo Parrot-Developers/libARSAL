@@ -9,30 +9,31 @@ package com.parrot.arsdk.arsal;
 public interface ARNativeData {
 
     /**
-     * Get the C data pointer (equivalent C type : uint8_t *)<br>
+     * Gets the C data pointer (equivalent C type : uint8_t *)<br>
      * This function must return 0 (C-NULL) if the data is not valid (i.e. disposed or uninitialized)
      * @return Native data pointer
      */
     public long getData ();
 
     /**
-     * Get the C data size (in bytes)<br>
+     * Gets the C data size (in bytes)<br>
      * This function must return 0 (no data) if the data is not valid
      * @return Size of the native data
      */
     public int getDataSize ();
 
     /**
-     * Get a byte array which is a copy of the C native data<br>
-     * This function allow Java code to access (but not modify) the content of an ARNativeData
+     * Gets a byte array which is a copy of the C native data<br>
+     * This function allow Java code to access (but not modify) the content of an <code>ARNativeData</code>
      * @note This function creates a new byte [], and thus should not be called in a loop
-     * @return A Java copy of the Native data (byte equivalent)
+     * @return A Java copy of the native data (byte equivalent)
      */
     public byte [] getByteData ();
 
     /**
-     * Mark a native data as unused (so C-allocated memory can be freed)<br>
-     * Using a disposed data leads to undefined behavior, and must be avoided !
+     * Marks a native data as unused (so C-allocated memory can be freed)<br>
+     * Using a disposed data leads to undefined behavior, and must be avoided !<br>
+     * Application MUST call <code>dispose</code> on all <code>ARNativeData</code> before they are GC'd
      */
     public void dispose ();
 

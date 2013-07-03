@@ -3,7 +3,7 @@
 #include <inttypes.h>
 
 JNIEXPORT jlong JNICALL
-Java_com_parrot_arsdk_arsal_ARGenericNativeData_allocateData (JNIEnv *env, jobject thizz, jint capacity)
+Java_com_parrot_arsdk_arsal_ARNativeData_allocateData (JNIEnv *env, jobject thizz, jint capacity)
 {
     void *ptr = 0;
     /* Alloc only if capacity is positive */
@@ -15,14 +15,14 @@ Java_com_parrot_arsdk_arsal_ARGenericNativeData_allocateData (JNIEnv *env, jobje
 }
 
 JNIEXPORT void JNICALL
-Java_com_parrot_arsdk_arsal_ARGenericNativeData_freeData (JNIEnv *env, jobject thizz, jlong data)
+Java_com_parrot_arsdk_arsal_ARNativeData_freeData (JNIEnv *env, jobject thizz, jlong data)
 {
     void *ptr = (void *)(intptr_t)data;
     free (ptr);
 }
 
 JNIEXPORT jbyteArray JNICALL
-Java_com_parrot_arsdk_arsal_ARGenericNativeData_generateByteArray (JNIEnv *env, jobject thizz, jlong data, jint capacity, jint used)
+Java_com_parrot_arsdk_arsal_ARNativeData_generateByteArray (JNIEnv *env, jobject thizz, jlong data, jint capacity, jint used)
 {
     jbyteArray retArray = NULL;
     if (used <= capacity)
@@ -37,7 +37,7 @@ Java_com_parrot_arsdk_arsal_ARGenericNativeData_generateByteArray (JNIEnv *env, 
 }
 
 JNIEXPORT jboolean JNICALL
-Java_com_parrot_arsdk_arsal_ARGenericNativeData_copyData (JNIEnv *env, jobject thizz, jlong dst, jint dstCapacity, jlong src, jint srcLen)
+Java_com_parrot_arsdk_arsal_ARNativeData_copyData (JNIEnv *env, jobject thizz, jlong dst, jint dstCapacity, jlong src, jint srcLen)
 {
     jboolean retVal = JNI_FALSE;
     if (srcLen <= dstCapacity)

@@ -1,4 +1,4 @@
-pakage com.parrot.arsdk.arsal;
+package com.parrot.arsdk.arsal;
 
 import com.parrot.arsdk.arsal.ARSAL_PRINT_LEVEL;
 import java.lang.reflect.Method;

@@ -14,7 +14,7 @@ include $(CLEAR_VARS)
 LOCAL_C_INCLUDES:= $(LOCAL_PATH)/include 
 LOCAL_LDLIBS := -llog
 LOCAL_MODULE := libarsal_android
-LOCAL_SRC_FILES := ARNativeData_JNI.c
+LOCAL_SRC_FILES := ARSAL_JNINativeData.c
 LOCAL_STATIC_LIBRARIES := LIBSAL-prebuilt
 include $(BUILD_SHARED_LIBRARY)
 

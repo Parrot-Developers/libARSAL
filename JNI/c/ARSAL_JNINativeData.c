@@ -1,6 +1,7 @@
 #include <jni.h>
 #include <stdlib.h>
 #include <inttypes.h>
+#include <string.h>
 
 JNIEXPORT jlong JNICALL
 Java_com_parrot_arsdk_arsal_ARNativeData_allocateData (JNIEnv *env, jobject thizz, jint capacity)

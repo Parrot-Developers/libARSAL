@@ -1,6 +1,6 @@
 package com.parrot.arsdk.arsal;
 
-import com.parrot.arsdk.arsal.ARSAL_PRINT_LEVEL;
+import com.parrot.arsdk.arsal.ARSAL_PRINT_LEVEL_ENUM;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,18 +32,18 @@ public class ARSALPrint {
     }
 
     public static void d (String tag, String message) {
-        print (ARSAL_PRINT_LEVEL.ARSAL_PRINT_DEBUG, tag, message);
+        print (ARSAL_PRINT_LEVEL_ENUM.ARSAL_PRINT_DEBUG, tag, message);
     }
 
     public static void w (String tag, String message) {
-        print (ARSAL_PRINT_LEVEL.ARSAL_PRINT_WARNING, tag, message);
+        print (ARSAL_PRINT_LEVEL_ENUM.ARSAL_PRINT_WARNING, tag, message);
     }
 
     public static void e (String tag, String message) {
-        print (ARSAL_PRINT_LEVEL.ARSAL_PRINT_ERROR, tag, message);
+        print (ARSAL_PRINT_LEVEL_ENUM.ARSAL_PRINT_ERROR, tag, message);
     }
 
-    public static void print (ARSAL_PRINT_LEVEL level, String tag, String message) {
+    public static void print (ARSAL_PRINT_LEVEL_ENUM level, String tag, String message) {
         if (message.endsWith ("\n")) {
             internalPrint (level, tag, message);
         } else {
@@ -51,7 +51,7 @@ public class ARSALPrint {
         }
     }
 
-    private static void internalPrint (ARSAL_PRINT_LEVEL level, String tag, String message) {
+    private static void internalPrint (ARSAL_PRINT_LEVEL_ENUM level, String tag, String message) {
         if (hasLog) {
             try {
                 switch (level) {

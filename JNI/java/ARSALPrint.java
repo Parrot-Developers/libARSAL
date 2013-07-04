@@ -1,0 +1,87 @@
+import com.parrot.arsdk.arsal.ARSAL_PRINT_LEVEL;
+
+public class ARSALPrint {
+
+    private static boolean hasLog;
+    private static Method loge;
+    private static Method logw;
+    private static Method logd;
+
+    static {
+        try {
+            Class logClass = Class.forName ("android.util.Log");
+            loge = logClass.getDeclaredMethod ("e", String.class, String.class);
+            logw = logClass.getDeclaredMethod ("w", String.class, String.class);
+            logd = logClass.getDeclaredMethod ("d", String.class, String.class);
+            hasLog = true;
+        } catch (Exception e) {
+            loge = null;
+            logw = null;
+            logd = null;
+            hasLog = false;
+        }
+    }
+
+    private ARSALPrint () {
+        // Do nothing in this constructor
+    }
+
+    public static void d (String tag, String message) {
+        print (ARSAL_PRINT_LEVEL.ARSAL_PRINT_DEBUG, tag, message);
+    }
+
+    public static void w (String tag, String message) {
+        print (ARSAL_PRINT_LEVEL.ARSAL_PRINT_WARNING, tag, message);
+    }
+
+    public static void e (String tag, String message) {
+        print (ARSAL_PRINT_LEVEL.ARSAL_PRINT_ERROR, tag, message);
+    }
+
+    public static void print (ARSAL_PRINT_LEVEL level, String tag, String message) {
+        if (message.endsWith ("\n")) {
+            internalPrint (level, tag, message);
+        } else {
+            internalPrint (level, tag, message + "\n");
+        }
+    }
+
+    private static void internalPrint (ARSAL_PRINT_LEVEL level, String tag, String message) {
+        if (hasLog) {
+            switch (level) {
+            case ARSAL_PRINT_LEVEL.ARSAL_PRINT_ERROR:
+                loge.invoke (null, tag, message);
+                break;
+            case ARSAL_PRINT_LEVEL.ARSAL_PRINT_WARNING:
+                logw.invoke (null, tag, message);
+                break;
+            case ARSAL_PRINT_LEVEL.ARSAL_PRINT_DEBUG:
+                logd.invoke (null, tag, message);
+                break;
+            default:
+                System.err.println ("Unknown print level tag : " + level);
+                loge.invoke (null, tag, message);
+                break;
+            }
+        } else {
+            Date now = new Date ();
+            SimpleDateFormat sdf = new SimpleDateFormat ("HH:mm:ss:SSS");
+            String formattedDate = sdf.format (now);
+            switch (level) {
+            case ARSAL_PRINT_LEVEL.ARSAL_PRINT_ERROR:
+                System.err.print ("[ERR] " + tag + " | " + formattedDate + " | " + message);
+                break;
+            case ARSAL_PRINT_LEVEL.ARSAL_PRINT_WARNING:
+                System.out.print ("[WNG] " + tag + " | " + formattedDate + " | " + message);
+                break;
+            case ARSAL_PRINT_LEVEL.ARSAL_PRINT_DEBUG:
+                System.out.print ("[DGB] " + tag + " | " + formattedDate + " | " + message);
+                break;
+            default:
+                System.err.println ("Unknown print level tag : " + level);
+                System.err.print ("[ERR] " + tag + " | " + formattedDate + " | " + message);
+                break;
+            }
+        }
+    }
+}

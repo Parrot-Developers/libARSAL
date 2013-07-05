@@ -12,6 +12,8 @@ public class ARSALPrint {
     private static Method logw;
     private static Method logd;
 
+    private static boolean displayDebugPrints = false;
+
     static {
         try {
             Class<?> logClass = Class.forName ("android.util.Log");
@@ -62,7 +64,9 @@ public class ARSALPrint {
                     logw.invoke (null, tag, message);
                     break;
                 case ARSAL_PRINT_DEBUG:
-                    logd.invoke (null, tag, message);
+                    if (displayDebugPrints) {
+                        logd.invoke (null, tag, message);
+                    }
                     break;
                 default:
                     System.err.println ("Unknown print level tag : " + level);
@@ -84,7 +88,9 @@ public class ARSALPrint {
                 System.out.print ("[WNG] " + tag + " | " + formattedDate + " | " + message);
                 break;
             case ARSAL_PRINT_DEBUG:
-                System.out.print ("[DGB] " + tag + " | " + formattedDate + " | " + message);
+                if (displayDebugPrints) {
+                    System.out.print ("[DGB] " + tag + " | " + formattedDate + " | " + message);
+                }
                 break;
             default:
                 System.err.println ("Unknown print level tag : " + level);
@@ -92,5 +98,13 @@ public class ARSALPrint {
                 break;
             }
         }
+    }
+
+    public static void enableDebugPrints () {
+        displayDebugPrints = true;
+    }
+
+    public static void disableDebugPrints () {
+        displayDebugPrints = false;
     }
 }

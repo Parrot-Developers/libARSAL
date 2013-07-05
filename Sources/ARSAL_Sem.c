@@ -65,7 +65,7 @@ int ARSAL_Sem_Init(ARSAL_Sem_t *sem, int shared, int value)
 
 #if __SAL_USE_POSIX_SEM
 
-    sem_t *psem = (sem_t *) malloc (sizeof (sem_t));
+    sem_t *psem = (sem_t *) calloc (1, sizeof (sem_t));
     if (NULL != psem)
     {
         result = sem_init(psem, shared, value);

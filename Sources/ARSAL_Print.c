@@ -58,6 +58,9 @@ int ARSAL_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format
     switch(level)
     {
     case ARSAL_PRINT_ERROR:
+        fprintf (stderr, "%s %s | ", cARSAL_Print_prefixTable [level], tag);
+        result = vfprintf(stderr, format, va);
+        break;
     case ARSAL_PRINT_WARNING:
     case ARSAL_PRINT_DEBUG:
         printf ("%s %s | ", cARSAL_Print_prefixTable [level], tag);

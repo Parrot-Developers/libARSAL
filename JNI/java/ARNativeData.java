@@ -6,8 +6,8 @@ package com.parrot.arsdk.arsal;
  * AR.SDK Is mainly implemented in C, and thus libs often use C structures to hold data.<br>
  * This is a wrapper class onto these kind of data, so java can pass them around libs without copy into JVM memory space.
  */
-public class ARNativeData {
-
+public class ARNativeData
+{
     /* ************** */
     /* DEFAULT VALUES */
     /* ************** */
@@ -124,8 +124,7 @@ public class ARNativeData {
 
     /**
      * Checks the object validity
-     * @return <code>true</code> if the object is valid (buffer properly alloc and usable)
-     * @return <code>false</code> if the object is invalid (alloc error, disposed object)
+     * @return <code>true</code> if the object is valid (buffer properly alloc and usable)<br><code>false</code> if the object is invalid (alloc error, disposed object)
      */
     public boolean isValid () {
         return valid;
@@ -134,8 +133,7 @@ public class ARNativeData {
     /**
      * Sets the used size of the <code>ARNativeData</code>
      * @param size New used size of the command
-     * @return <code>true</code> if the size was set
-     * @return <code>false</code> if the size was invalid (bigger than capacity) or if the <code>ARNativeData</code> is invalid
+     * @return <code>true</code> if the size was set<br><code>false</code> if the size was invalid (bigger than capacity) or if the <code>ARNativeData</code> is invalid
      */
     public boolean setUsedSize (int size) {
         if ((! valid) || (size > capacity))
@@ -179,8 +177,8 @@ public class ARNativeData {
 
     /**
      * Gets a byte array which is a copy of the C native data<br>
-     * This function allow Java code to access (but not modify) the content of the <code>ARNativeData</code>
-     * @note This function creates a new byte [], and thus should not be called in a loop
+     * This function allow Java code to access (but not modify) the content of the <code>ARNativeData</code><br>
+     * This function creates a new byte [], and thus should not be called in a loop
      * @return A Java copy of the native data (byte equivalent)
      */
     public byte [] getByteData () {
@@ -239,8 +237,7 @@ public class ARNativeData {
      * @param dstCapacity Capacity of this object's internal buffer
      * @param src C-Pointer on the initial object's internal buffer
      * @param srcLen Used bytes in the initial object's internal buffer
-     * @return <code>true</code> if the copy was done without error
-     * @return <code>false</code> if an error occured. In this case, the content of the internal buffer is undefined, so <code>used</code> should be set to zero
+     * @return <code>true</code> if the copy was done without error<br><code>false</code> if an error occured. In this case, the content of the internal buffer is undefined, so <code>used</code> should be set to zero
      */
     private native boolean copyData (long dst, int dstCapacity, long src, int srcLen);
 

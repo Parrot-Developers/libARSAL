@@ -34,8 +34,10 @@ typedef enum
     {                                                                   \
         char __nowTimeStr [9];                                          \
         struct timeval __tv;                                            \
+        struct tm __tm;                                                 \
         gettimeofday (&__tv, NULL);                                     \
-        strftime (__nowTimeStr, 9, "%H:%M:%S", localtime (&(__tv.tv_sec))); \
+        localtime_r (&(__tv.tv_sec), &__tm);                            \
+        strftime (__nowTimeStr, 9, "%H:%M:%S", &__tm);                  \
         if (format[strlen (format)-1] != '\n')                          \
         {                                                               \
             ARSAL_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, __tv.tv_usec / 1000, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
@@ -53,10 +55,12 @@ typedef enum
         {                                                               \
             char __nowTimeStr [9];                                      \
             struct timeval __tv;                                        \
+            struct tm __tm;                                             \
             gettimeofday (&__tv, NULL);                                 \
-            strftime (__nowTimeStr, 9, "%H:%M:%S", localtime (&(__tv.tv_sec))); \
+            localtime_r (&(__tv.tv_sec), &__tm);                        \
+            strftime (__nowTimeStr, 9, "%H:%M:%S", &__tm);              \
             if (format[strlen (format)-1] != '\n')                      \
-                      {                                                 \
+            {                                                           \
                 ARSAL_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, __tv.tv_usec / 1000, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             }                                                           \
             else                                                        \

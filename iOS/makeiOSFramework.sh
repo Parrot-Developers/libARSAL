@@ -107,85 +107,85 @@ STATIC_LIBS_LIST=""
 
 for ARCH in $ARCHS; do
 
-	CURRARCH_LIB_DIR=$CURDIR"/."$ARCH"_lib/"
-	mkdir -p $CURRARCH_LIB_DIR
+    CURRARCH_LIB_DIR=$CURDIR"/."$ARCH"_lib/"
+    mkdir -p $CURRARCH_LIB_DIR
 
-	COMPILER=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/llvm-gcc
-	SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/$LATEST_SDK
-	if [ x"$ARCH" == xi386 ]; then
-		COMPILER=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/llvm-gcc
-		SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/$LATEST_SIM_SDK
-	fi
+    COMPILER=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/llvm-gcc
+    SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/$LATEST_SDK
+    if [ x"$ARCH" == xi386 ]; then
+        COMPILER=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/llvm-gcc
+        SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/$LATEST_SIM_SDK
+    fi
     # Setup configure args
-	CONF_ARGS="--prefix=$PREFIX CC=$COMPILER --host=arm-apple --libdir=$CURRARCH_LIB_DIR CFLAGS="
-	CONF_CFLAGS="-arch $ARCH -isysroot $SYSROOT"
-	CURRINC_FOLDER=$LIBNAME
+    CONF_ARGS="--prefix=$PREFIX CC=$COMPILER --host=arm-apple --libdir=$CURRARCH_LIB_DIR CFLAGS="
+    CONF_CFLAGS="-arch $ARCH -isysroot $SYSROOT"
+    CURRINC_FOLDER=$LIBNAME
 
-	cd $BUILDDIR
+    cd $BUILDDIR
     # If configure file does not exist, run bootstrap
-	if [ ! -f configure ]; then
+    if [ ! -f configure ]; then
         # XCode treats some "normal" output of configure as error, so we modify them to avoid false error detection
-		./bootstrap 2>&1 | sed 's:configure\.ac\:\([0-9]*\)\::configure.ac[\1]:g' || exit 1
-	fi
+        ./bootstrap 2>&1 | sed 's:configure\.ac\:\([0-9]*\)\::configure.ac[\1]:g' || exit 1
+    fi
 
-	FORCE_MAKE="NO"
-	FORCE_CLEAN="NO"
+    FORCE_MAKE="NO"
+    FORCE_CLEAN="NO"
 
     # If config.log or Makefile does not exist, run configure
-	if [ ! -f config.log ] || [ ! -f Makefile ]; then
-		CSCRIPT=./tmp_cfscript.sh
-		echo "#!/bin/sh
+    if [ ! -f config.log ] || [ ! -f Makefile ]; then
+        CSCRIPT=./tmp_cfscript.sh
+        echo "#!/bin/sh
 ./configure $CONF_ARGS\"$CONF_CFLAGS\"$CONF_DEBUG" > $CSCRIPT
-		chmod +x $CSCRIPT
-		./$CSCRIPT || exit 1
-		rm $CSCRIPT
-		FORCE_MAKE="YES"
-		FORCE_CLEAN="YES"
-	else # config.log exist, check if args were good
-		PREV_CONF_ARGS=$(cat config.log | grep "\$ \./configure" | sed 's:[\ \t]*$[\ \t]*\./configure ::')
-		STRIP_CONF_ARGS=$(echo "$CONF_ARGS""$CONF_CFLAGS""$CONF_DEBUG" | sed 's:"::g')
+        chmod +x $CSCRIPT
+        ./$CSCRIPT || exit 1
+        rm $CSCRIPT
+        FORCE_MAKE="YES"
+        FORCE_CLEAN="YES"
+    else # config.log exist, check if args were good
+        PREV_CONF_ARGS=$(cat config.log | grep "\$ \./configure" | sed 's:[\ \t]*$[\ \t]*\./configure ::')
+        STRIP_CONF_ARGS=$(echo "$CONF_ARGS""$CONF_CFLAGS""$CONF_DEBUG" | sed 's:"::g')
         # Rerun configure if previous args were not good
-		if [ "$STRIP_CONF_ARGS" != "$PREV_CONF_ARGS" ]; then
-			CSCRIPT=./tmp_cfscript.sh
-			echo "#!/bin/sh
+        if [ "$STRIP_CONF_ARGS" != "$PREV_CONF_ARGS" ]; then
+            CSCRIPT=./tmp_cfscript.sh
+            echo "#!/bin/sh
 ./configure $CONF_ARGS\"$CONF_CFLAGS\"$CONF_DEBUG" > $CSCRIPT
-			chmod +x $CSCRIPT
-			./$CSCRIPT || exit 1
-			rm $CSCRIPT
-			FORCE_MAKE="YES"
-			FORCE_CLEAN="YES"
-		fi
-	fi
+            chmod +x $CSCRIPT
+            ./$CSCRIPT || exit 1
+            rm $CSCRIPT
+            FORCE_MAKE="YES"
+            FORCE_CLEAN="YES"
+        fi
+    fi
 
     # Run make clean only if we did a reconfigure of the project (and the Makefile file exists)
-	if [ -f Makefile ] && [ "YES" = $FORCE_CLEAN ]; then
-		make clean || exit 1
-	fi
+    if [ -f Makefile ] && [ "YES" = $FORCE_CLEAN ]; then
+        make clean || exit 1
+    fi
 
     # Run make//make install only if one of the following is true (and the Makefile file exists) :
     # - We had to run configure again
     # - We can't find lib<our_lib>[_dbg].* ($CURRLIB_PATTERN variable) in $PREFIX/lib/
     # - We can't find lib<Our_Lib>/ folder ($CURRINC_FOLDER variable) in $PREFIX/include/
-	if [ ! -d $CURRARCH_LIB_DIR ] || [ ! -d $PREFIX/include/$CURRINC_FOLDER ]; then
-		echo "Force make because directory does not exist :"
-		[ -d $CURRARCH_LIB_DIR ] || echo $CURRARCH_LIB_DIR
-		[ -d $PREFIX/include/$CURRINC_FOLDER ] || echo $PREFIX/include/$CURRINC_FOLDER
-		FORCE_MAKE="YES"
-	else
-		HAS_MY_LIB=$(ls $CURRARCH_LIB_DIR/$CURRLIB_PATTERN 2>/dev/null | wc -w | bc)
-		if [ 0 -eq $HAS_MY_LIB ]; then
-			FORCE_MAKE="YES"
-		fi
-	fi
+    if [ ! -d $CURRARCH_LIB_DIR ] || [ ! -d $PREFIX/include/$CURRINC_FOLDER ]; then
+        echo "Force make because directory does not exist :"
+        [ -d $CURRARCH_LIB_DIR ] || echo $CURRARCH_LIB_DIR
+        [ -d $PREFIX/include/$CURRINC_FOLDER ] || echo $PREFIX/include/$CURRINC_FOLDER
+        FORCE_MAKE="YES"
+    else
+        HAS_MY_LIB=$(ls $CURRARCH_LIB_DIR/$CURRLIB_PATTERN 2>/dev/null | wc -w | bc)
+        if [ 0 -eq $HAS_MY_LIB ]; then
+            FORCE_MAKE="YES"
+        fi
+    fi
 
-	if [ -f Makefile ] && [ "YES" = $FORCE_MAKE ]; then
-		make || exit 1
-		make install || exit 1
-	fi
+    if [ -f Makefile ] && [ "YES" = $FORCE_MAKE ]; then
+        make || exit 1
+        make install || exit 1
+    fi
 
-	STATIC_LIBS_LIST=$STATIC_LIBS_LIST" "$CURRARCH_LIB_DIR"/"$STATIC_LIB
+    STATIC_LIBS_LIST=$STATIC_LIBS_LIST" "$CURRARCH_LIB_DIR"/"$STATIC_LIB
 
-	cd $CURDIR
+    cd $CURDIR
 done
 
 # Create framework in current dir

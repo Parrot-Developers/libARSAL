@@ -67,6 +67,26 @@ if [ -z $LATEST_SDK ]; then
     exit 1
 fi
 
+# Get latest SDK Available to Xcode
+SIM_SDKLIST=$(ls /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/ | grep iPhoneSimulator)
+LATEST_SIM_SDK=""
+LATEST_SIM_SDK_MAJ="0"
+LATEST_SIM_SDK_MIN="0"
+for SIM_SDK in $SIM_SDKLIST; do
+    SIM_SDKNUM_MAJOR=$(echo $SIM_SDK | sed 's:iPhoneSimulator\([0-9]*\)\..*:\1:')
+    SIM_SDKNUM_MINOR=$(echo $SIM_SDK | sed 's:iPhoneSimulator[0-9]*\.\([0-9]*\).*:\1:')
+    if [ $SIM_SDKNUM_MAJOR -gt $LATEST_SIM_SDK_MAJ ]; then
+        LATEST_SIM_SDK=$SIM_SDK
+    elif [ $SIM_SDKNUM_MAJOR -eq $LATEST_SIM_SDK_MAJ ] && [ $SIM_SDKNUM_MINOR -gt $LATEST_SIM_SDK_MIN ]; then
+        LATEST_SIM_SDK=$SIM_SDK
+    fi
+done
+
+if [ -z $LATEST_SIM_SDK ]; then
+    echo "Unable to find a suitable Simulator SDK for Xcode"
+    exit 1
+fi
+
 # Add debug flag if needed
 if [ "xdebug" = "x$CONFIGURATION" ]; then
     CONF_DEBUG=" --enable-debug"
@@ -82,16 +102,23 @@ else
     FRAMEWORK_LIBNAME=$LIBNAME
 fi
 
-ARCHS="armv7 armv7s x86"
+ARCHS="armv7 armv7s i386"
 STATIC_LIBS_LIST=""
 
 for ARCH in $ARCHS; do
 
 	CURRARCH_LIB_DIR=$CURDIR"/."$ARCH"_lib/"
 	mkdir -p $CURRARCH_LIB_DIR
+
+	COMPILER=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/llvm-gcc
+	SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/$LATEST_SDK
+	if [ x"$ARCH" == xi386 ]; then
+		COMPILER=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/llvm-gcc
+		SYSROOT=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/$LATEST_SIM_SDK
+	fi
     # Setup configure args
-	CONF_ARGS="--prefix=$PREFIX CC=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/llvm-gcc --host=arm-apple --libdir=$CURRARCH_LIB_DIR CFLAGS="
-	CONF_CFLAGS="-arch $ARCH -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/$LATEST_SDK"
+	CONF_ARGS="--prefix=$PREFIX CC=$COMPILER --host=arm-apple --libdir=$CURRARCH_LIB_DIR CFLAGS="
+	CONF_CFLAGS="-arch $ARCH -isysroot $SYSROOT"
 	CURRINC_FOLDER=$LIBNAME
 
 	cd $BUILDDIR

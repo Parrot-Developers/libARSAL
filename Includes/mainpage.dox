@@ -1,18 +1,18 @@
 /**
  * @mainpage
  *
- * @section intro_sec Introduction
+ * @section SAL_intro_sec Introduction
  *
  * The ARSAL library in an abstraction layer use by almost all others ARSDK
  * libraries.
  *
  * It provides abstraction of multiple common functions.
  *
- * @section modules_sec Submodules
+ * @section SAL_modules_sec Submodules
  *
  * Here is a list and a short description of all libARSAL submodules:
  *
- * @subsection endianness_subsec Endianness conversion
+ * @subsection SAL_endianness_subsec Endianness conversion
  * @link ARSAL_Endianness.h Header file @endlink
  *
  * This submodule defines different functions used to convert endianness.
@@ -27,7 +27,7 @@
  * @ref dtohll), float (@ref htodf, @ref dothf) and double (@ref htodd,
  * @ref dtohd)
  *
- * @subsection mutex_subsec Mutexes and Conditionnal variables
+ * @subsection SAL_mutex_subsec Mutexes and Conditionnal variables
  * @link ARSAL_Mutex.h Header file @endlink
  *
  * This submodule defines mutexes and conditionnal variables structures.
@@ -39,7 +39,7 @@
  *
  * The mutexes and conditionnal variables API is based on the POSIX API.
  *
- * @subsection print_subsec Printing and Logging
+ * @subsection SAL_print_subsec Printing and Logging
  * @link ARSAL_Print.h Header file @endlink
  *
  * This submodule provides the @ref ARSAL_PRINT macro, which is a simple log
@@ -54,7 +54,7 @@
  * This behavior can change on specific operating systems. (On Android,
  * all @ref ARSAL_PRINT calls outputs the messages to the Logcat)
  *
- * @subsection sem_subsec Semaphores
+ * @subsection SAL_sem_subsec Semaphores
  * @link ARSAL_Sem.h Header file @endlink
  *
  * This submodule defines semaphores structures.
@@ -65,7 +65,7 @@
  * The semaphore API is based on the POSIX semaphore API, and can be found in
  * the file @ref ARSAL_Sem.h
  *
- * @subsection socket_subsec Sockets
+ * @subsection SAL_socket_subsec Sockets
  * @link ARSAL_Socket.h Header file @endlink
  *
  * This submodule defines wrapper functions around the POSIX Socket API.
@@ -73,12 +73,12 @@
  * Sockets are created using @ref ARSAL_Socket_Create and destroyed using
  * @ref ARSAL_Socket_Close.
  *
- * @subsection thread_subsec Threads
+ * @subsection SAL_thread_subsec Threads
  * @link ARSAL_Thread.h Header file @endlink
  *
  * This submodule defines a thread API based on the POSIX-Pthread API.
  *
- * @subsection time_subsec Time related functions
+ * @subsection SAL_time_subsec Time related functions
  * @link ARSAL_Time.h Header file @endlink
  *
  * This submodule defines many time related functions.
@@ -89,7 +89,7 @@
  * The others functions are helpers around time comparaison and delta
  * calculations.
  *
- * @section posix_sec POSIX Compliance warnings
+ * @section SAL_posix_sec POSIX Compliance warnings
  *
  * While this library is merely a POSIX wrapper on most platforms, its internal
  * data types should NOT be used directly with POSIX functions. The same

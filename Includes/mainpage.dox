@@ -24,7 +24,7 @@
  *
  * This submodule includes functions to convert short int (@ref htods,
  * @ref dtohs), long int (@ref htodl, @ref dtohl), long long int (@ref htodll,
- * @ref dtohll), float (@ref htodf, @ref dothf) and double (@ref htodd,
+ * @ref dtohll), float (@ref htodf, @ref dtohf) and double (@ref htodd,
  * @ref dtohd)
  *
  * @subsection SAL_mutex_subsec Mutexes and Conditionnal variables

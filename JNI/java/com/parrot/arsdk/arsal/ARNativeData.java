@@ -122,6 +122,24 @@ public class ARNativeData
         }
     }
 
+    /* ********* */
+    /* TO STRING */
+    /* ********* */
+
+    /**
+     * Gets a <code>String</code> representation of the <code>ARNativeData</code>
+     * @return A human-readable description of the <code>ARNativeData</code>
+     */
+    public String toString () {
+        return "ARNativeData { Valid : " + valid + " | " +
+            "Used/Capacity (bytes) : " + used + "/" + capacity + " | " +
+            "C Pointer : " + pointer + " }";
+    }
+
+    /* ************** */
+    /* IMPLEMENTATION */
+    /* ************** */
+
     /**
      * Checks the object validity
      * @return <code>true</code> if the object is valid (buffer properly alloc and usable)<br><code>false</code> if the object is invalid (alloc error, disposed object)

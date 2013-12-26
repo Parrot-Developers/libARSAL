@@ -10,7 +10,8 @@ HEADER_FILES                            =   ../Includes/libARSAL/ARSAL_Time.h   
                                             ../Includes/libARSAL/ARSAL_Sem.h        \
                                             ../Includes/libARSAL/ARSAL_Socket.h     \
                                             ../Includes/libARSAL/ARSAL_Print.h      \
-                                            ../Includes/libARSAL/ARSAL_Endianness.h
+                                            ../Includes/libARSAL/ARSAL_Endianness.h \
+                                            ../Includes/libARSAL/ARSAL.h
 
 # The sources to add to the library and to add to the source distribution
 SOURCE_FILES                            =   $(HEADER_FILES)             \

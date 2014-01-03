@@ -89,6 +89,11 @@
  * The others functions are helpers around time comparaison and delta
  * calculations.
  *
+ * @subsection SAL_ftw_subsec Ftw related functions
+ * @link ARSAL_Ftw.h Header file @endlink
+ *
+ * This submodule defines ftw/nftw like functions to recursively descends the directory hierarchy 
+ *
  * @section SAL_posix_sec POSIX Compliance warnings
  *
  * While this library is merely a POSIX wrapper on most platforms, its internal

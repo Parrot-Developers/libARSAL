@@ -54,7 +54,7 @@ CPPFLAGS="$CFLAGS"
 ##########################################################################
 # Check headers
 ##########################################################################
-AC_CHECK_HEADERS([sys/time.h time.h stdio.h stdarg.h])
+AC_CHECK_HEADERS([sys/time.h time.h stdio.h stdarg.h ftw.h])
 
 AC_CHECK_HEADERS([android/log.h], LIBS+=" -llog",)
 

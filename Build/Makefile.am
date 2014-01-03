@@ -11,6 +11,7 @@ HEADER_FILES                            =   ../Includes/libARSAL/ARSAL_Time.h   
                                             ../Includes/libARSAL/ARSAL_Socket.h     \
                                             ../Includes/libARSAL/ARSAL_Print.h      \
                                             ../Includes/libARSAL/ARSAL_Endianness.h \
+                                            ../Includes/libARSAL/ARSAL_Ftw.h        \
                                             ../Includes/libARSAL/ARSAL.h
 
 # The sources to add to the library and to add to the source distribution
@@ -20,7 +21,9 @@ SOURCE_FILES                            =   $(HEADER_FILES)             \
                                             ../Sources/ARSAL_Mutex.c    \
                                             ../Sources/ARSAL_Sem.c      \
                                             ../Sources/ARSAL_Socket.c   \
-                                            ../Sources/ARSAL_Print.c
+                                            ../Sources/ARSAL_Print.c    \
+                                            ../Sources/ARSAL_Ftw.c
+
 
 # The library names to build (note we are building static and shared libs)
 if DEBUG_MODE

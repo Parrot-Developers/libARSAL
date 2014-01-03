@@ -49,7 +49,7 @@ typedef enum
             gettimeofday (&__tv, NULL);                                 \
             localtime_r (&(__tv.tv_sec), &__tm);                        \
             strftime (__nowTimeStr, 9, "%H:%M:%S", &__tm);              \
-            if (format[strlen (format)-1] != '\n')                      \
+            if (!strlen (format) || format[strlen (format)-1] != '\n')                      \
             {                                                           \
                 ARSAL_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, __tv.tv_usec / 1000, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             }                                                           \
@@ -71,7 +71,7 @@ typedef enum
             gettimeofday (&__tv, NULL);                                 \
             localtime_r (&(__tv.tv_sec), &__tm);                        \
             strftime (__nowTimeStr, 9, "%H:%M:%S", &__tm);              \
-            if (format[strlen (format)-1] != '\n')                      \
+            if (!strlen (format) || format[strlen (format)-1] != '\n')                      \
             {                                                           \
                 ARSAL_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, __tv.tv_usec / 1000, __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             }                                                           \

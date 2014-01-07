@@ -8,9 +8,10 @@
 #ifndef _ARSAL_FTW_H_
 #define _ARSAL_FTW_H_
 
+#include <sys/stat.h>
+
 #ifdef HAVE_FTW_H
 #define __USE_XOPEN_EXTENDED    1
-#include <sys/stat.h>
 #include <ftw.h>
 
 #else

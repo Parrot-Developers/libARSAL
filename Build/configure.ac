@@ -5,6 +5,8 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_MACRO_DIR(m4)
 
+m4_include([../../ARBuildUtils/Utils/m4/ARSDK.m4])
+
 # automake initialisation and check for minimal automake API version 1.9
 AM_INIT_AUTOMAKE
 
@@ -24,10 +26,10 @@ AC_MSG_RESULT([$debugit])
 
 if test x"$debugit" = x"yes"; then
     AC_DEFINE([DEBUG],[],[Debug Mode])
-    CFLAGS+=" -g -Wall -Werror -Wno-uninitialized -O0"
+    LOCAL_CFLAGS+=" -g -Wall -Werror -Wno-uninitialized -O0"
 else
     AC_DEFINE([NDEBUG],[],[No-debug Mode])
-    CFLAGS+=" -O3"
+    LOCAL_CFLAGS+=" -O3"
 fi
 AM_CONDITIONAL([DEBUG_MODE], [test "$debugit" = "yes"])
 
@@ -47,9 +49,11 @@ AC_MSG_RESULT([$sover])
 ##########################################################################
 
 # include local headers first
-CFLAGS+=" -I$srcdir/../Includes -I$srcdir/../Sources"
+LOCAL_CFLAGS+=" -I$srcdir/../Includes -I$srcdir/../Sources"
 
-CPPFLAGS="$CFLAGS"
+CPPFLAGS+="$LOCAL_CFLAGS"
+CFLAGS+="$LOCAL_CFLAGS"
+OBJCFLAGS+="$LOCAL_CFLAGS"
 
 ##########################################################################
 # Check headers

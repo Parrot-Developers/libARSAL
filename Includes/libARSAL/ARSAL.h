@@ -8,7 +8,7 @@
 #define _ARSAL_H_
 
 #include <libARSAL/ARSAL_Endianness.h>
-//#include <libARSAL/ARSAL_Ftw.h>
+#include <libARSAL/ARSAL_Ftw.h>
 #include <libARSAL/ARSAL_Mutex.h>
 #include <libARSAL/ARSAL_Print.h>
 #include <libARSAL/ARSAL_Sem.h>

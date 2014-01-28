@@ -10,76 +10,92 @@
 
 #include <sys/stat.h>
 
-#ifdef HAVE_FTW_H
-#define __USE_XOPEN_EXTENDED    1
-#include <ftw.h>
-
-#else
-
-/**
- * @brief FTW structure
- * @param base The base 
- * @param level The level
- * @see ARSAL_Nftw
+ /**
+ * @brief ARSAL_FTW_t structure equal to "struct FTW"
+ * @param base The base is the offset of the filename
+ * @param level The level of the file
+ * @see ARSAL_Nftw (), struct FTW
  */
-struct FTW {
+typedef struct _ARSAL_FTW_t
+{
     int base;
     int level;
-};
+} ARSAL_FTW_t;
 
 /**
- * @brief FTW type enum
- * @see ARSAL_Ftw, ARSAL_Nftw
+ * @brief FTW file type enum
+ * @see ftw, nftw
  */
-enum {
-    FTW_F = 0,
-    FTW_D,
-};
+typedef enum
+{
+    ARSAL_FTW_F = 0,
+    ARSAL_FTW_D,
+} eARSAL_FTW_TYPE;
 
-/**
- * @brief ACTIONRETVAL enum
- * @see ARSAL_Nftw
- */
-enum {
-    FTW_ACTIONRETVAL = 16,
-};
- 
 /**
  * @brief ARSAL_Nftw enum flags
- * @see ARSAL_Nftw
+ * @see nftw
  */
-enum {
-    FTW_CONTINUE = 0,
-    FTW_STOP = 1,
-    FTW_SKIP_SUBTREE = 2,
-};
-
-#endif /* #ifdef HAVE_FTW_H */
+typedef enum
+{
+    ARSAL_FTW_NOFLAGS = 0,
+    ARSAL_FTW_ACTIONRETVAL = 16,
+} eARSAL_FTW_FLAG;
 
 /**
- * @brief Recursively descends the directory hierarchy 
+ * @brief ARSAL_Nftw enum callback return values
+ * @see nftw
+ */
+typedef enum
+{
+    ARSAL_FTW_CONTINUE = 0,
+    ARSAL_FTW_STOP = 1,
+    ARSAL_FTW_SKIP_SUBTREE = 2,
+} eARSAL_FTW_RETURN;
+
+
+/**
+ * @brief User Callback called for each file discover in the directory hierarchy
+ * @param fpath The path of the file
+ * @param sb The stat structure returned by a call to stat()
+ * @param typeflag The type of file found
+ * @retval On success, returns 0. Otherwise, it returns user value
+ * @see ARSAL_Ftw (), ftw standard documentation
+ */
+typedef int (*ARSAL_FtwCallback) (const char *fpath, const struct stat *sb, eARSAL_FTW_TYPE typeflag);
+
+/**
+ * @brief User Callback called for each file discover in the directory hierarchy
+ * @param fpath The path of the file
+ * @param sb The stat structure returned by a call to stat()
+ * @param typeflag The type of file found
+ * @param ftwbuf The 
+ * @retval On success, returns 0. Otherwise, it returns user value
+ * @see ARSAL_Nftw (), nftw standard documentation
+ */
+typedef int (*ARSAL_NftwCallback) (const char *fpath, const struct stat *sb, eARSAL_FTW_TYPE typeflag, ARSAL_FTW_t *ftwbuf);
+
+/**
+ * @brief Recursively descends the directory hierarchy
  * @param dirpath The directory to descend
- * @param fn The callback recursively on each element of run through the directories
+ * @param cb The callback recursively on each element of run through the directories
  * @param nopenfd The maximum number of directories depth
+ * @retval On success, returns 0. Otherwise, it returns -1, or callack user value
  * @see ftw standard documentation
  */
-int ARSAL_Ftw(const char *dirpath,
-    int (*fn) (const char *fpath, const struct stat *sb, int typeflag),
-    int nopenfd);
+int ARSAL_Ftw(const char *dirpath, ARSAL_FtwCallback cb, int nopenfd);
 
 /**
- * @brief Recursively descends the directory hierarchy 
+ * @brief Recursively descends the directory hierarchy
  * @param dirpath The directory to descend
- * @param fn The callback recursively on each element of run through the directories
+ * @param cb The callback recursively on each element of run through the directories
  * @param nopenfd The maximum number of directories depth
  * @param flags The flag of the type of tree explore
+ * @retval On success, returns 0. Otherwise, it returns -1, or callack user value
  * @see nftw standard documentation
  */
-int ARSAL_Nftw(const char *dirpath,
-    int (*fn) (const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf),
-    int nopenfd, 
-    int flags);
-        
+int ARSAL_Nftw(const char *dirpath, ARSAL_NftwCallback cb, int nopenfd, eARSAL_FTW_FLAG flags);
+
 #endif /* _ARSAL_FTW_H_ */
 
 

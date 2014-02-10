@@ -15,6 +15,18 @@ Java_com_parrot_arsdk_arsal_ARNativeData_allocateData (JNIEnv *env, jobject thiz
     return (jlong)(intptr_t)ptr;
 }
 
+JNIEXPORT jlong JNICALL
+Java_com_parrot_arsdk_arsal_ARNativeData_reallocateData (JNIEnv *env, jobject thizz, jlong pointer, jint capacity)
+{
+    void *ptr = 0;
+    /* Realloc only if capacity is positive */
+    if (capacity > 0)
+    {
+        ptr = realloc (pointer, capacity);
+    }
+    return (jlong)(intptr_t)ptr;
+}
+
 JNIEXPORT void JNICALL
 Java_com_parrot_arsdk_arsal_ARNativeData_freeData (JNIEnv *env, jobject thizz, jlong data)
 {

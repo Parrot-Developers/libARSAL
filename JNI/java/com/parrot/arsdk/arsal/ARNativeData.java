@@ -217,6 +217,37 @@ public class ARNativeData
         this.capacity = 0;
         this.used = 0;
     }
+    
+    /**
+     * Ensures the capacity is at least the minimum capacity set.
+     * @warning if the capacity is least of minimumCapacity, the buffer will try to be re-allocated  
+     * @param minimumCapacity minimum capacity to ensure
+     * @return <code>true</code> if the capacity is at least minimumCapacity <br><code>false</code> if the reallocation of the buffer with at least the minimum capacity has failed
+     * 
+     */
+    public boolean ensureCapacityIsAtLeast (int minimumCapacity)
+    {
+        boolean retVal = false;
+        long newPointer = 0;
+        
+        if (this.capacity >= minimumCapacity)
+        {
+            retVal = true;
+        }
+        else
+        {
+            newPointer = reallocateData (this.pointer, minimumCapacity);
+            if (newPointer != 0)
+            {
+                this.capacity = minimumCapacity;
+                this.pointer = newPointer;
+                retVal = true;
+            }
+            /* else retVal = false */
+        }
+        
+        return retVal;
+    }
 
     /* **************** */
     /* NATIVE FUNCTIONS */
@@ -229,6 +260,15 @@ public class ARNativeData
      * @return C-Pointer on the buffer, or 0 (C-NULL) if the alloc failed
      */
     private native long allocateData (int capacity);
+    
+    /**
+     * Memory reallocation in native memory space<br>
+     * Reallocates a memory buffer of size <code>capacity</code> and return its C-Pointer
+     * @param pointer native pointer to reallocate
+     * @param capacity Size, in bytes, of the new buffer to reallocated
+     * @return C-Pointer on the new buffer, or 0 (C-NULL) if the realloc failed
+     */
+    private native long reallocateData (long pointer, int capacity);
 
     /**
      * Memory release in native memory space<br>

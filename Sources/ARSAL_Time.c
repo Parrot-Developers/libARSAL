@@ -17,10 +17,10 @@
   uint64_t useconds;
 
   mach_timebase_info(&sTimebaseInfo);
-  useconds = (mtime * (sTimebaseInfo.numer / sTimebaseInfo.denom) / 1000);
+  useconds = NSEC_TO_USEC(mtime * (sTimebaseInfo.numer / sTimebaseInfo.denom));
 
-  tp->tv_sec = (long)(useconds / 1000000);
-  tp->tv_usec = (long)(useconds % 1000000);
+  tp->tv_sec = (long) USEC_TO_SEC(useconds);
+  tp->tv_usec = (long)(useconds % SEC_TO_USEC(1));
 
   return 0;
   }
@@ -57,14 +57,14 @@ int32_t ARSAL_Time_ComputeMsTimeDiff (struct timeval *start, struct timeval *end
     if (start->tv_usec > end->tv_usec)
     {
         diff.tv_sec--;
-        diff.tv_usec = 1000000 - (start->tv_usec - end->tv_usec);
+        diff.tv_usec = SEC_TO_USEC(1) - (start->tv_usec - end->tv_usec);
     }
     else
     {
         diff.tv_usec = end->tv_usec - start->tv_usec;
     }
 
-    result = (diff.tv_sec * 1000) + (diff.tv_usec / 1000);
+    result = SEC_TO_MSEC(diff.tv_sec) + USEC_TO_MSEC(diff.tv_usec);
 
     return result;
 }

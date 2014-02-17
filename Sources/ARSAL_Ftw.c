@@ -53,6 +53,7 @@ static eARSAL_FTW_TYPE ARSAL_Ftw_typeFlagGet (struct stat *sb)
     {
         return ARSAL_FTW_D;
     }
+    // No else --> We only handle files or directories
     return ARSAL_FTW_F;
 }
 
@@ -66,25 +67,28 @@ int ARSAL_Ftw_internal(const char *dirPath, ARSAL_FtwCallback cb, int nopenfd)
     int retVal = 0;
 
     ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "%s", dirPath ? dirPath : "null");
-    
+
     if (dirPath == NULL)
     {
         ARSAL_PRINT (ARSAL_PRINT_ERROR, ARSAL_FTW_TAG, "dirPath is NULL !");
         retVal = -1;
     }
+    // No else --> Args check (setting retVal to -1 stops the processing)
 
     if (cb == NULL)
     {
         ARSAL_PRINT (ARSAL_PRINT_ERROR, ARSAL_FTW_TAG, "Callback is NULL !");
         retVal = -1;
     }
-    
+    // No else --> Args check (setting retVal to -1 stops the processing)
+
     if (nopenfd <= 0)
     {
         ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Not enough FD");
         retVal = -1;
-    }  
-    
+    }
+    // No else --> Args check (setting retVal to -1 stops the processing)
+
     if (retVal == 0)
     {
         // Call stat and the callback
@@ -96,7 +100,7 @@ int ARSAL_Ftw_internal(const char *dirPath, ARSAL_FtwCallback cb, int nopenfd)
         else
         {
             typeFlag = ARSAL_Ftw_typeFlagGet(&sb);
-            
+
             if (typeFlag != ARSAL_FTW_D)
             {
                 retVal = cb (dirPath, &sb, typeFlag);
@@ -104,9 +108,12 @@ int ARSAL_Ftw_internal(const char *dirPath, ARSAL_FtwCallback cb, int nopenfd)
                 {
                     ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Callback said stop");
                 }
+                // No else --> Print only when the callback returns a non-zero status
             }
+            // No else --> Directory handling is done afterwards
         }
     }
+    // No else --> Processing block
 
     // If we're searching a directory, call this on all this directory entries
     if ((retVal == 0) && (typeFlag == ARSAL_FTW_D))
@@ -125,7 +132,8 @@ int ARSAL_Ftw_internal(const char *dirPath, ARSAL_FtwCallback cb, int nopenfd)
             ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Unable to alloc buffer for filename");
             retVal = -1;
         }
-        
+        // No else --> Alloc check (setting retVal to -1 stops the processing)
+
         if (retVal == 0)
         {
             strncpy (newName, dirPath, nameSize);
@@ -135,8 +143,10 @@ int ARSAL_Ftw_internal(const char *dirPath, ARSAL_FtwCallback cb, int nopenfd)
                 ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Unable to open dir");
                 retVal = -1;
             }
+            // No else --> Open check (setting retVal to -1 stops the processing)
         }
-        
+        // No else --> Processing block
+
         if (retVal == 0)
         {
             retVal = cb (dirPath, &sb, typeFlag);
@@ -144,7 +154,9 @@ int ARSAL_Ftw_internal(const char *dirPath, ARSAL_FtwCallback cb, int nopenfd)
             {
                 ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Callback said stop");
             }
+            // No else --> Print only when the callback returns a non-zero status
         }
+        // No else --> Processing block
 
         while ((retVal == 0) && ((ent = readdir (dir)) != NULL))
         {
@@ -159,6 +171,7 @@ int ARSAL_Ftw_internal(const char *dirPath, ARSAL_FtwCallback cb, int nopenfd)
                 // Skip "." and ".."
                 continue;
             }
+            // No else --> continue processing the current directory
             l_nameSize = rootSize + strlen (ent->d_name) + 2;
             if (nameSize < l_nameSize)
             {
@@ -173,8 +186,10 @@ int ARSAL_Ftw_internal(const char *dirPath, ARSAL_FtwCallback cb, int nopenfd)
                     dir = NULL;
                     ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Unable to realloc buffer");
                 }
+                // No else --> Realloc error handling (setting retVal to -1 stops the processing)
             }
-            
+            // No else --> No need to realloc in this case
+
             if (retVal == 0)
             {
                 strncpy (&newName[rootSize + 1], ent->d_name, strlen (ent->d_name) + 1);
@@ -187,28 +202,33 @@ int ARSAL_Ftw_internal(const char *dirPath, ARSAL_FtwCallback cb, int nopenfd)
                     newName = NULL;
                     ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Callback said stop");
                 }
+                // No else --> Recursive call error handling (stops the processing if the child stopped with an error code)
             }
+            // No else --> Processing block
         }
-        
+
         if (newName != NULL)
         {
             free (newName);
             newName = NULL;
         }
+        // No else --> Free only if non-null
         if (dir != NULL)
         {
             closedir (dir);
             dir = NULL;
         }
+        // No else --> Close only if non-null
     }
-    
+    // No else --> End of directory processing, files were processed before
+
     return retVal;
 }
 
 static eARSAL_FTW_RESULT ARSAL_Ftw_Nftw_retValTest (int retVal, eARSAL_FTW_FLAG flags, int isDir)
 {
     eARSAL_FTW_RESULT testVal = ARSAL_FTW_FAIL;
-    
+
     if (flags == ARSAL_FTW_ACTIONRETVAL)
     {
         switch(retVal)
@@ -251,12 +271,14 @@ int ARSAL_Nftw_internal(const char *dirPath, ARSAL_NftwCallback cb, int nopenfd,
         ARSAL_PRINT (ARSAL_PRINT_ERROR, ARSAL_FTW_TAG, "dirPath is NULL !");
         retVal = -1;
     }
-    
+    // No else --> Args check (setting retVal to -1 stops the processing)
+
     if (cb == NULL)
     {
         ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Callback is NULL !");
         retVal = -1;
-    }    
+    }
+    // No else --> Args check (setting retVal to -1 stops the processing)
 
     if (flags != ARSAL_FTW_NOFLAGS &&
         flags != ARSAL_FTW_ACTIONRETVAL)
@@ -264,13 +286,15 @@ int ARSAL_Nftw_internal(const char *dirPath, ARSAL_NftwCallback cb, int nopenfd,
         ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Unsupported flag !");
         retVal = -1;
     }
+    // No else --> Args check (setting retVal to -1 stops the processing)
 
     if (nopenfd <= 0)
     {
         ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Not enough FD");
         retVal = -1;
     }
-    
+    // No else --> Args check (setting retVal to -1 stops the processing)
+
     if (retVal == 0)
     {
         // Call stat and the callback
@@ -282,11 +306,11 @@ int ARSAL_Nftw_internal(const char *dirPath, ARSAL_NftwCallback cb, int nopenfd,
         else
         {
             typeFlag = ARSAL_Ftw_typeFlagGet(&sb);
-            
+
             if (typeFlag != ARSAL_FTW_D)
             {
                 retVal = cb (dirPath, &sb, typeFlag, &cbStruct);
-                
+
                 if (ARSAL_Ftw_Nftw_retValTest(retVal, flags, typeFlag == ARSAL_FTW_D) == ARSAL_FTW_FAIL)
                 {
                     ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Callback said stop");
@@ -296,8 +320,10 @@ int ARSAL_Nftw_internal(const char *dirPath, ARSAL_NftwCallback cb, int nopenfd,
                     retVal = 0;
                 }
             }
+            // No else --> Directory handling is done afterwards
         }
     }
+    // No else --> Processing block
 
     // If we're searching a directory, call this on all this directory entries
     if ((retVal == 0) && (typeFlag == ARSAL_FTW_D))
@@ -316,9 +342,10 @@ int ARSAL_Nftw_internal(const char *dirPath, ARSAL_NftwCallback cb, int nopenfd,
             retVal = -1;
             ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Unable to alloc buffer for filename");
         }
-        
+        // No else --> Alloc check (setting retVal to -1 stops the processing)
+
         if (retVal == 0)
-        { 
+        {
             strncpy (newName, dirPath, nameSize);
             newName[rootSize] = '/';
             if ((dir = opendir (dirPath)) == NULL)
@@ -326,8 +353,10 @@ int ARSAL_Nftw_internal(const char *dirPath, ARSAL_NftwCallback cb, int nopenfd,
                 retVal = -1;
                 ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Unable to open dir");
             }
+            // No else --> Open check (setting retVal to -1 stops the processing)
         }
-        
+        // No else --> Processing block
+
         if (retVal == 0)
         {
             retVal = cb (dirPath, &sb, typeFlag, &cbStruct);
@@ -340,6 +369,7 @@ int ARSAL_Nftw_internal(const char *dirPath, ARSAL_NftwCallback cb, int nopenfd,
                 retVal = 0;
             }
         }
+        // No else --> Processing block
 
         while ((retVal == 0) && (ent = readdir (dir)) != NULL)
         {
@@ -354,6 +384,7 @@ int ARSAL_Nftw_internal(const char *dirPath, ARSAL_NftwCallback cb, int nopenfd,
                 // Skip "." and ".."
                 continue;
             }
+            // No else --> Continue processing the current directory
             l_nameSize = rootSize + strlen (ent->d_name) + 2;
             if (nameSize < l_nameSize)
             {
@@ -368,13 +399,15 @@ int ARSAL_Nftw_internal(const char *dirPath, ARSAL_NftwCallback cb, int nopenfd,
                     dir = NULL;
                     ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Unable to realloc buffer");
                 }
+                // No else --> Realloc error handling (setting retVal to -1 stops the processing)
             }
-            
+            // No else --> No need to realloc in this case
+
             if (retVal == 0)
             {
                 strncpy (&newName[rootSize + 1], ent->d_name, strlen (ent->d_name) + 1);
                 retVal = ARSAL_Nftw_internal (newName, cb, nopenfd - 1, flags, currentLevel + 1, strlen (dirPath) + 1);
-                
+
                 if (ARSAL_Ftw_Nftw_retValTest (retVal, flags, 0) == ARSAL_FTW_FAIL)
                 {
                     closedir (dir);
@@ -388,16 +421,21 @@ int ARSAL_Nftw_internal(const char *dirPath, ARSAL_NftwCallback cb, int nopenfd,
                     retVal = 0;
                 }
             }
+            // No else --> Processing block
         }
         if (newName != NULL)
         {
             free (newName);
         }
+        // No else --> Free only if non-null
         if (dir != NULL)
         {
             closedir (dir);
         }
+        // No else --> Close only if non-null
     }
+    // No else --> End of directory processing, files were processed before
+
     return retVal;
 }
 

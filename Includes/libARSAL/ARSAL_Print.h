@@ -60,6 +60,7 @@ typedef enum
                 ARSAL_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, USEC_TO_MSEC(__tv.tv_usec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             }                                                           \
         }                                                               \
+        /* NO ELSE : enum value can't be > level */                     \
     } while (0)
 #else
 #define ARSAL_PRINT(level, tag, format, ...)                            \
@@ -82,6 +83,7 @@ typedef enum
                 ARSAL_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, USEC_TO_MSEC(__tv.tv_usec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             }                                                           \
         }                                                               \
+        /* NO ELSE : no print in debug mode */                          \
     } while (0)
 #endif
 

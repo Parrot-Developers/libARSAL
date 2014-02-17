@@ -35,11 +35,15 @@ int ARSAL_Time_TimevalEquals (struct timeval *t1, struct timeval *t2)
     {
         return result;
     }
+    /* No else --> Args check (return 0) */
+    
     if ((t1->tv_sec == t2->tv_sec) &&
         (t1->tv_usec == t2->tv_usec))
     {
         result = 1;
     }
+    /* Else the Timevals are not equal ; result = 0 */
+    
     return result;
 }
 
@@ -52,6 +56,7 @@ int32_t ARSAL_Time_ComputeMsTimeDiff (struct timeval *start, struct timeval *end
     {
         return result;
     }
+    /* No else --> Args check (return -1) */
 
     diff.tv_sec = end->tv_sec - start->tv_sec;
     if (start->tv_usec > end->tv_usec)

@@ -44,6 +44,7 @@
             errno = __res;                      \
             (RESBUF) = -1;                      \
         }                                       \
+        /* No else: no error so no need to set errno. */ \
     } while (0)
 
 typedef struct {
@@ -62,6 +63,7 @@ int ARSAL_Sem_Init(ARSAL_Sem_t *sem, int shared, int value)
         errno = EINVAL;
         return result;
     }
+    /* No else. */
 
 #if __SAL_USE_POSIX_SEM
 
@@ -79,6 +81,7 @@ int ARSAL_Sem_Init(ARSAL_Sem_t *sem, int shared, int value)
             psem = NULL;
         }
     }
+    /* No else: if calloc failed, return default value -1. */
 
 #else
 
@@ -103,7 +106,9 @@ int ARSAL_Sem_Init(ARSAL_Sem_t *sem, int shared, int value)
             ARSAL_SEM_ERRNO_TRANSFORM (result);
             psem->count = value;
         }
+        /* No else. */
     }
+    /* No else. */
 
     if (0 == result)
     {
@@ -115,10 +120,12 @@ int ARSAL_Sem_Init(ARSAL_Sem_t *sem, int shared, int value)
         {
             ARSAL_Mutex_Destroy (&(psem->lock));
         }
+        /* No else: no need to destroy a mutex that wasn't created. */
         if (1 == isMalloc)
         {
             free (psem);
         }
+        /* No else: no need to free memory that wasn't allocated. */
     }
 
 #endif
@@ -135,6 +142,7 @@ int ARSAL_Sem_Destroy(ARSAL_Sem_t *sem)
         errno = EINVAL;
         return result;
     }
+    /* No else. It's kinda obvious why. */
 
 #if __SAL_USE_POSIX_SEM
 
@@ -160,12 +168,14 @@ int ARSAL_Sem_Destroy(ARSAL_Sem_t *sem)
         result = ARSAL_Cond_Destroy (&(psem->cond));
         ARSAL_SEM_ERRNO_TRANSFORM (result);
     }
+    /* No else. */
 
     if (0 == result)
     {
         result = ARSAL_Mutex_Destroy (&(psem->lock));
         ARSAL_SEM_ERRNO_TRANSFORM (result);
     }
+    /* No else. */
 
     free (*sem);
     *sem = NULL;
@@ -184,6 +194,7 @@ int ARSAL_Sem_Wait(ARSAL_Sem_t *sem)
         errno = EINVAL;
         return result;
     }
+    /* No else: arguments are all good so just go on. */
 
 #if __SAL_USE_POSIX_SEM
 
@@ -213,6 +224,7 @@ int ARSAL_Sem_Wait(ARSAL_Sem_t *sem)
         result = ARSAL_Cond_Wait (&(psem->cond), &(psem->lock));
         ARSAL_SEM_ERRNO_TRANSFORM (result);
     }
+    /* No else. */
 
     if (0 == result)
     {
@@ -220,7 +232,9 @@ int ARSAL_Sem_Wait(ARSAL_Sem_t *sem)
         {
             (psem->count)--;
         }
+        /* No else: don't decrement count below 0. */
     }
+    /* No else. */
 
     unlockRes = ARSAL_Mutex_Unlock (&(psem->lock));
     if (0 != unlockRes)
@@ -228,6 +242,7 @@ int ARSAL_Sem_Wait(ARSAL_Sem_t *sem)
         errno = unlockRes;
         result = -1;
     }
+    /* No else. */
 
 #endif
 
@@ -243,6 +258,7 @@ int ARSAL_Sem_Trywait(ARSAL_Sem_t *sem)
         errno = EINVAL;
         return result;
     }
+    /* No else. */
 
 #if __SAL_USE_POSIX_SEM
 
@@ -269,12 +285,14 @@ int ARSAL_Sem_Trywait(ARSAL_Sem_t *sem)
     {
         errno = EAGAIN;
     }
+    /* No else. */
 
     if (0 == result && 0 >= psem->count)
     {
         result = -1;
         errno = EAGAIN;
     }
+    /* No else. */
 
     if (0 == result)
     {
@@ -282,7 +300,9 @@ int ARSAL_Sem_Trywait(ARSAL_Sem_t *sem)
         {
             (psem->count)--;
         }
+        /* No else: don't decrement count below 0. */
     }
+    /* No else. */
 
     unlockRes = ARSAL_Mutex_Unlock (&(psem->lock));
     if (0 != unlockRes)
@@ -290,6 +310,7 @@ int ARSAL_Sem_Trywait(ARSAL_Sem_t *sem)
         result = -1;
         errno = unlockRes;
     }
+    /* No else. */
 
 #endif
 
@@ -305,7 +326,8 @@ int ARSAL_Sem_Timedwait(ARSAL_Sem_t *sem, const struct timespec *timeout)
         errno = EINVAL;
         return result;
     } /* MUST BE INIT TO -1 */
-
+    /* No else. */
+    
 #if __SAL_USE_POSIX_SEM
 
     struct timeval currentTime = {0};
@@ -349,6 +371,7 @@ int ARSAL_Sem_Timedwait(ARSAL_Sem_t *sem, const struct timespec *timeout)
         result = ARSAL_Cond_Timedwait (&(psem->cond), &(psem->lock), msToWait);
         ARSAL_SEM_ERRNO_TRANSFORM (result);
     }
+    /* No else. */
 
     if (0 == result)
     {
@@ -356,7 +379,9 @@ int ARSAL_Sem_Timedwait(ARSAL_Sem_t *sem, const struct timespec *timeout)
         {
             (psem->count)--;
         }
+        /* No else: don't decrement count below 0. */
     }
+    /* No else. */
 
     unlockRes = ARSAL_Mutex_Unlock (&(psem->lock));
     if (0 != unlockRes)
@@ -364,6 +389,7 @@ int ARSAL_Sem_Timedwait(ARSAL_Sem_t *sem, const struct timespec *timeout)
         result = -1;
         errno = unlockRes;
     }
+    /* No else. */
 
 #endif
 
@@ -379,6 +405,7 @@ int ARSAL_Sem_Post(ARSAL_Sem_t *sem)
         errno = EINVAL;
         return result;
     }
+    /* No else. */
 
 #if __SAL_USE_POSIX_SEM
 
@@ -411,6 +438,7 @@ int ARSAL_Sem_Post(ARSAL_Sem_t *sem)
             (psem->count)++;
         }
     }
+    /* No else. */
 
     unlockRes = ARSAL_Mutex_Unlock (&(psem->lock));
     if (0 != unlockRes)
@@ -418,12 +446,14 @@ int ARSAL_Sem_Post(ARSAL_Sem_t *sem)
         result = -1;
         errno = unlockRes;
     }
+    /* No else. */
 
     if (0 == result)
     {
         result = ARSAL_Cond_Signal (&(psem->cond));
         ARSAL_SEM_ERRNO_TRANSFORM (result);
     }
+    /* No else. */
 
 #endif
 
@@ -439,6 +469,7 @@ int ARSAL_Sem_Getvalue(ARSAL_Sem_t *sem, int *value)
         errno = EINVAL;
         return result;
     }
+    /* No else. */
 
 #if __SAL_USE_POSIX_SEM
 
@@ -462,6 +493,7 @@ int ARSAL_Sem_Getvalue(ARSAL_Sem_t *sem, int *value)
     {
         *value = psem->count;
     }
+    /* No else. */
 
     unlockRes = ARSAL_Mutex_Unlock (&(psem->lock));
     if (0 != unlockRes)
@@ -469,6 +501,7 @@ int ARSAL_Sem_Getvalue(ARSAL_Sem_t *sem, int *value)
         result = -1;
         errno = unlockRes;
     }
+    /* No else. */
 
 #endif
 

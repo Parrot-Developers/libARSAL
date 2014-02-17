@@ -116,10 +116,10 @@ int ARSAL_Cond_Timedwait(ARSAL_Cond_t *cond, ARSAL_Mutex_t *mutex, int time_in_m
     struct timeval tv;
     gettimeofday(&tv, NULL);
     TIMEVAL_TO_TIMESPEC(&tv, &ts);
-    ts.tv_nsec += (time_in_ms % 1000) * 1000000;
-    ts.tv_sec  += (time_in_ms / 1000);
-    ts.tv_sec += ts.tv_nsec / 1000000000;
-    ts.tv_nsec %= 1000000000;
+    ts.tv_nsec += MSEC_TO_NSEC(time_in_ms % SEC_TO_MSEC(1));
+    ts.tv_sec  += MSEC_TO_SEC(time_in_ms);
+    ts.tv_sec  += NSEC_TO_SEC(ts.tv_nsec);
+    ts.tv_nsec %= SEC_TO_NSEC(1);
 
 #if defined(HAVE_PTHREAD_H)
     result = pthread_cond_timedwait((pthread_cond_t *)*cond, (pthread_mutex_t *)*mutex, &ts);

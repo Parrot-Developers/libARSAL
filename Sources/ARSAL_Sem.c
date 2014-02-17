@@ -335,10 +335,8 @@ int ARSAL_Sem_Timedwait(ARSAL_Sem_t *sem, const struct timespec *timeout)
     gettimeofday (&currentTime, NULL);
     TIMEVAL_TO_TIMESPEC (&currentTime, &finalTime);
     finalTime.tv_nsec += timeout->tv_nsec;
-#define NSEC_TO_SEC (1000000000)
-    finalTime.tv_sec += timeout->tv_sec + (finalTime.tv_nsec / NSEC_TO_SEC);
-    finalTime.tv_nsec %= NSEC_TO_SEC;
-#undef NSEC_TO_SEC
+    finalTime.tv_sec += timeout->tv_sec + NSEC_TO_SEC(finalTime.tv_nsec);
+    finalTime.tv_nsec %= SEC_TO_NSEC(1);
     result = sem_timedwait((sem_t *)*sem, &finalTime);
 
 #else
@@ -363,11 +361,7 @@ int ARSAL_Sem_Timedwait(ARSAL_Sem_t *sem, const struct timespec *timeout)
 
     if (0 == result && 0 >= psem->count)
     {
-#define SEC_TO_MSEC (1000)
-#define NSEC_TO_MSEC (1000000)
-        int msToWait = (timeout->tv_sec * SEC_TO_MSEC) + (timeout->tv_nsec / NSEC_TO_MSEC);
-#undef SEC_TO_MSEC
-#undef NSEC_TO_MSEC
+        int msToWait = SEC_TO_MSEC(timeout->tv_sec) + NSEC_TO_MSEC(timeout->tv_nsec);
         result = ARSAL_Cond_Timedwait (&(psem->cond), &(psem->lock), msToWait);
         ARSAL_SEM_ERRNO_TRANSFORM (result);
     }

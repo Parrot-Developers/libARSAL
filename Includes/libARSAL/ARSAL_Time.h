@@ -121,15 +121,4 @@ int ARSAL_Time_TimevalEquals (struct timeval *t1, struct timeval *t2);
  */
 int32_t ARSAL_Time_ComputeMsTimeDiff (struct timeval *start, struct timeval *end);
 
-#if 0 // Disable Doxygen comment while function is not implemented
-/**
- * @brief Get the time as well as a timezone.
- *
- * @param tv The timeval structure pointer
- * @param tz The timezone structure pointer
- * @retval On success, sal_gettimeofday() returns 0. Otherwise returns -1 (in which case errno is set apprpriately).
- */
-// int gettimeofday(struct timeval *tv, struct timezone *tz);
-#endif // 0
-
 #endif // _ARSAL_TIME_H_

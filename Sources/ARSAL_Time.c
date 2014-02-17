@@ -7,26 +7,6 @@
 #include <config.h>
 #include <libARSAL/ARSAL_Time.h>
 
-// TO CHECK
-/*#if defined(HAVE_MACH_MACH_TIME_H)
-  #include <mach/mach_time.h>
-  int gettimeofday (struct timeval *tp, void *tz)
-  {
-  mach_timebase_info_data_t sTimebaseInfo;
-  uint64_t mtime = mach_absolute_time();
-  uint64_t useconds;
-
-  mach_timebase_info(&sTimebaseInfo);
-  useconds = NSEC_TO_USEC(mtime * (sTimebaseInfo.numer / sTimebaseInfo.denom));
-
-  tp->tv_sec = (long) USEC_TO_SEC(useconds);
-  tp->tv_usec = (long)(useconds % SEC_TO_USEC(1));
-
-  return 0;
-  }
-  #endif
-*/
-
 int ARSAL_Time_TimevalEquals (struct timeval *t1, struct timeval *t2)
 {
     int result = 0;

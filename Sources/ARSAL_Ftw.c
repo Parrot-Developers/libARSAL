@@ -160,7 +160,7 @@ int ARSAL_Ftw_internal(const char *dirPath, ARSAL_FtwCallback cb, int nopenfd)
 
         while ((retVal == 0) && ((ent = readdir (dir)) != NULL))
         {
-            int l_nameSize;
+            int newNameSize;
 
             ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Working on file %s for dir %s", ent->d_name, dirPath);
             if ((ent->d_name[0] == '.') && // first char is .
@@ -172,10 +172,10 @@ int ARSAL_Ftw_internal(const char *dirPath, ARSAL_FtwCallback cb, int nopenfd)
                 continue;
             }
             // No else --> continue processing the current directory
-            l_nameSize = rootSize + strlen (ent->d_name) + 2;
-            if (nameSize < l_nameSize)
+            newNameSize = rootSize + strlen (ent->d_name) + 2;
+            if (nameSize < newNameSize)
             {
-                nameSize = l_nameSize;
+                nameSize = newNameSize;
                 char *prevNewName = newName;
                 newName = (char*) realloc (newName, nameSize);
                 if (newName == NULL)
@@ -373,7 +373,7 @@ int ARSAL_Nftw_internal(const char *dirPath, ARSAL_NftwCallback cb, int nopenfd,
 
         while ((retVal == 0) && (ent = readdir (dir)) != NULL)
         {
-            int l_nameSize;
+            int newNameSize;
 
             ARSAL_PRINT (ARSAL_PRINT_DEBUG, ARSAL_FTW_TAG, "Working on file %s for dir %s", ent->d_name, dirPath);
             if ((ent->d_name[0] == '.') && // first char is .
@@ -385,10 +385,10 @@ int ARSAL_Nftw_internal(const char *dirPath, ARSAL_NftwCallback cb, int nopenfd,
                 continue;
             }
             // No else --> Continue processing the current directory
-            l_nameSize = rootSize + strlen (ent->d_name) + 2;
-            if (nameSize < l_nameSize)
+            newNameSize = rootSize + strlen (ent->d_name) + 2;
+            if (nameSize < newNameSize)
             {
-                nameSize = l_nameSize;
+                nameSize = newNameSize;
                 char *prevNewName = newName;
                 newName = (char*)realloc (newName, nameSize);
                 if (newName == NULL)

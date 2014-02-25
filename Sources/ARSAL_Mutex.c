@@ -109,15 +109,15 @@ int ARSAL_Cond_Wait(ARSAL_Cond_t *cond, ARSAL_Mutex_t *mutex)
     return result;
 }
 
-int ARSAL_Cond_Timedwait(ARSAL_Cond_t *cond, ARSAL_Mutex_t *mutex, int time_in_ms)
+int ARSAL_Cond_Timedwait(ARSAL_Cond_t *cond, ARSAL_Mutex_t *mutex, int timeout)
 {
     int result = 0;
     struct timespec ts;
     struct timeval tv;
     gettimeofday(&tv, NULL);
     TIMEVAL_TO_TIMESPEC(&tv, &ts);
-    ts.tv_nsec += MSEC_TO_NSEC(time_in_ms % SEC_TO_MSEC(1));
-    ts.tv_sec  += MSEC_TO_SEC(time_in_ms);
+    ts.tv_nsec += MSEC_TO_NSEC(timeout % SEC_TO_MSEC(1));
+    ts.tv_sec  += MSEC_TO_SEC(timeout);
     ts.tv_sec  += NSEC_TO_SEC(ts.tv_nsec);
     ts.tv_nsec %= SEC_TO_NSEC(1);
 

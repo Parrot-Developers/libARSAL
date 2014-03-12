@@ -148,4 +148,35 @@
     }
 }
 
+- (void)connectPeripheral:(CBPeripheral *)peripheral options:(NSDictionary *)options
+{
+    [_centralManager connectPeripheral:peripheral options:options];
+}
+
+- (void)cancelPeripheralConnection:(CBPeripheral *)peripheral
+{
+    [_centralManager cancelPeripheralConnection:peripheral];
+}
+
+- (void)scanForPeripheralsWithServices:(NSArray *)serviceUUIDs options:(NSDictionary *)options
+{
+    [_centralManager scanForPeripheralsWithServices:serviceUUIDs options:options];
+}
+
+- (void)stopScan
+{
+    [_centralManager stopScan];
+}
+
+
+- (NSArray *)retrieveConnectedPeripheralsWithServices:(NSArray *)serviceUUIDs
+{
+    return [_centralManager retrieveConnectedPeripheralsWithServices:serviceUUIDs];
+}
+
+- (NSArray *)retrievePeripheralsWithIdentifiers:(NSArray *)identifiers
+{
+    return [_centralManager retrievePeripheralsWithIdentifiers:identifiers];
+}
+
 @end

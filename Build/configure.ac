@@ -90,6 +90,7 @@ AC_CHECK_HEADERS([sys/socket.h netinet/in.h], , AC_MSG_ERROR(The socket header i
 ##########################################################################
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_OBJC
 AC_PROG_LIBTOOL
 
 AC_CHECK_PROGS([DOXYGEN], [doxygen])
@@ -116,6 +117,16 @@ AM_COND_IF([PYTHON_RUN_OK], , AC_MSG_ERROR(Python processing failed))
 # Checks for header files.
 AC_HEADER_STDC
 
+# Check for CoreBluetooth.h
+AC_LANG_PUSH([Objective C])
+if test x$ac_cv_objc_compiler_gnu = xyes; then
+    AC_CHECK_HEADERS([CoreBluetooth/CoreBluetooth.h], ,
+        AC_MSG_WARN(The CoreBluetooth headers are required to use bluetooth features ! ))
+fi
+
+AM_CONDITIONAL([HAVE_COREBLUETOOTH], [test x"$ac_cv_header_CoreBluetooth_CoreBluetooth_h" = x"yes"])
+AC_LANG_POP([Objective C])
+
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_SIZE_T
 
@@ -132,7 +143,6 @@ AC_SUBST([CFLAGS])
 AC_SUBST([LDFLAGS])
 
 # Checks for library functions.
-
 
 # Generates Makefile
 AC_CONFIG_FILES([Makefile])

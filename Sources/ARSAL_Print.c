@@ -21,7 +21,7 @@ const char* cARSAL_Print_prefixTable[ARSAL_PRINT_MAX] =
 };
 
 #ifdef HAVE_ANDROID_LOG_H
-int ARSAL_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...)
+int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...)
 {
     int result = -1;
 
@@ -48,7 +48,7 @@ int ARSAL_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format
     return result;
 }
 #else
-int ARSAL_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...)
+int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...)
 {
     int result = -1;
 

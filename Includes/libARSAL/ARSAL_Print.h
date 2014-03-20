@@ -53,11 +53,11 @@ typedef enum
             strftime (__nowTimeStr, ARSAL_PRINT_DATE_STRING_LENGTH, "%H:%M:%S", &__tm); \
             if (!strlen (format) || format[strlen (format)-1] != '\n')  \
             {                                                           \
-                ARSAL_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, USEC_TO_MSEC(__tv.tv_usec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, USEC_TO_MSEC(__tv.tv_usec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             }                                                           \
             else                                                        \
             {                                                           \
-                ARSAL_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, USEC_TO_MSEC(__tv.tv_usec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, USEC_TO_MSEC(__tv.tv_usec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             }                                                           \
         }                                                               \
         /* NO ELSE : enum value can't be > level */                     \
@@ -76,11 +76,11 @@ typedef enum
             strftime (__nowTimeStr, ARSAL_PRINT_DATE_STRING_LENGTH, "%H:%M:%S", &__tm); \
             if (!strlen (format) || format[strlen (format)-1] != '\n')  \
             {                                                           \
-                ARSAL_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, USEC_TO_MSEC(__tv.tv_usec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, USEC_TO_MSEC(__tv.tv_usec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             }                                                           \
             else                                                        \
             {                                                           \
-                ARSAL_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, USEC_TO_MSEC(__tv.tv_usec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, USEC_TO_MSEC(__tv.tv_usec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             }                                                           \
         }                                                               \
         /* NO ELSE : no print in debug mode */                          \
@@ -95,8 +95,8 @@ typedef enum
  * @param level The level of output
  * @param tag The tag of the output
  * @param format output format
- * @retval On success, ARSAL_PrintRaw() returns the number of characters printed. Otherwise, it returns a negative value.
+ * @retval On success, ARSAL_Print_PrintRaw() returns the number of characters printed. Otherwise, it returns a negative value.
  */
-int ARSAL_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...);
+int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...);
 
 #endif // _ARSAL_PRINT_H_

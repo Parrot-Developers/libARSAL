@@ -22,7 +22,7 @@ Java_com_parrot_arsdk_arsal_ARNativeData_reallocateData (JNIEnv *env, jobject th
     /* Realloc only if capacity is positive */
     if (capacity > 0)
     {
-        ptr = realloc (pointer, capacity);
+      ptr = realloc ((void *)(intptr_t)pointer, capacity);
     }
     return (jlong)(intptr_t)ptr;
 }

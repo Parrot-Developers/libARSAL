@@ -14,62 +14,62 @@
 /**
  * @brief Convert second to millisecond
  */
-#define SEC_TO_MSEC(sec)    (sec * 1000)
+#define SEC_TO_MSEC(sec)    ((sec) * 1000)
 
 /**
  * @brief Convert second to microsecond
  */
-#define SEC_TO_USEC(sec)    (sec * 1000000)
+#define SEC_TO_USEC(sec)    ((sec) * 1000000)
 
 /**
  * @brief Convert second to nanosecond
  */
-#define SEC_TO_NSEC(sec)    (sec * 1000000000)
+#define SEC_TO_NSEC(sec)    ((sec) * 1000000000)
 
 /**
  * @brief Convert millisecond to second
  */
-#define MSEC_TO_SEC(msec)    (msec / 1000)
+#define MSEC_TO_SEC(msec)    ((msec) / 1000)
 
 /**
  * @brief Convert millisecond to microsecond
  */
-#define MSEC_TO_USEC(msec)    (msec * 1000)
+#define MSEC_TO_USEC(msec)    ((msec) * 1000)
 
 /**
  * @brief Convert millisecond to nanosecond
  */
-#define MSEC_TO_NSEC(msec)    (msec * 1000000)
+#define MSEC_TO_NSEC(msec)    ((msec) * 1000000)
 
 /**
  * @brief Convert microsecond to second
  */
-#define USEC_TO_SEC(usec)    (usec / 1000000)
+#define USEC_TO_SEC(usec)    ((usec) / 1000000)
 
 /**
  * @brief Convert microsecond to millisecond
  */
-#define USEC_TO_MSEC(usec)    (usec / 1000)
+#define USEC_TO_MSEC(usec)    ((usec) / 1000)
 
 /**
  * @brief Convert microsecond to nanosecond
  */
-#define USEC_TO_NSEC(usec)    (usec * 1000)
+#define USEC_TO_NSEC(usec)    ((usec) * 1000)
 
 /**
  * @brief Convert nanosecond to second
  */
-#define NSEC_TO_SEC(nsec)    (nsec / 1000000000)
+#define NSEC_TO_SEC(nsec)    ((nsec) / 1000000000)
 
 /**
  * @brief Convert nanosecond to millisecond
  */
-#define NSEC_TO_MSEC(nsec)    (nsec / 1000000)
+#define NSEC_TO_MSEC(nsec)    ((nsec) / 1000000)
 
 /**
  * @brief Convert nanosecond to microsecond
  */
-#define NSEC_TO_USEC(nsec)    (nsec / 1000)
+#define NSEC_TO_USEC(nsec)    ((nsec) / 1000)
 
 
 #ifndef TIMEVAL_TO_TIMESPEC

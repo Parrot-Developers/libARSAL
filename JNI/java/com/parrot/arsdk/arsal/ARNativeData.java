@@ -13,6 +13,11 @@ public class ARNativeData
     /* ************** */
 
     /**
+     * Tag for ARSALPrint prints
+     */
+    private static final String TAG = ARNativeData.class.getSimpleName();
+
+    /**
      * Default size for native data
      */
     public static final int DEFAULT_SIZE = 128;
@@ -113,8 +118,8 @@ public class ARNativeData
     protected void finalize () throws Throwable {
         try {
             if (valid) {
+                ARSALPrint.w (TAG, this + ": Finalize error -> dispose () was not called !");
                 dispose ();
-                System.err.println (this + ": Finalize error -> dispose () was not called !");
             }
         }
         finally {
@@ -131,7 +136,7 @@ public class ARNativeData
      * @return A human-readable description of the <code>ARNativeData</code>
      */
     public String toString () {
-        return "ARNativeData { Valid : " + valid + " | " +
+        return "" + this.getClass().getSimpleName() + " { Valid : " + valid + " | " +
             "Used/Capacity (bytes) : " + used + "/" + capacity + " | " +
             "C Pointer : " + pointer + " }";
     }

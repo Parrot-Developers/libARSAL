@@ -8,6 +8,8 @@ typedef enum
 {
     ARSAL_OK = 0,                              /**< No error */
 
+    ARSAL_ERROR = -1000,                       /**< ARSAL Generic error */
+
     ARSAL_ERROR_BLE_CONNECTION = -5000,        /**< BLE connection generic error */
     ARSAL_ERROR_BLE_NOT_CONNECTED,             /**< BLE is not connected */
     ARSAL_ERROR_BLE_DISCONNECTION,             /**< BLE disconnection error */

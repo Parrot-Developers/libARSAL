@@ -17,6 +17,9 @@ char* ARSAL_Error_ToString (eARSAL_ERROR error)
     case ARSAL_OK:
         return "No error";
         break;
+    case ARSAL_ERROR:
+        return "ARSAL Generic error";
+        break;
     case ARSAL_ERROR_BLE_CONNECTION:
         return "BLE connection generic error";
         break;

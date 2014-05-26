@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
@@ -46,16 +47,17 @@ public class ARSALBLEManager
     
     //boolean gattConnected = false;
     
-    private List<BluetoothGattCharacteristic> characteristicNotifications;
+    //private List<BluetoothGattCharacteristic> characteristicNotifications;
+    private HashMap<String, ARSALManagerNotification> registeredNotificationCharacteristics = new HashMap<String, ARSALManagerNotification>();
     
     private Semaphore connectionSem;
     private Semaphore disconnectionSem;
     private Semaphore discoverServicesSem;
     private Semaphore discoverCharacteristicsSem;
-    private Semaphore readCharacteristicSem;
+    //private Semaphore readCharacteristicSem;
     private Semaphore configurationSem;
     
-    private Lock readCharacteristicMutex;
+    //private Lock readCharacteristicMutex;
     
     private ARSAL_ERROR_ENUM discoverServicesError;
     private ARSAL_ERROR_ENUM discoverCharacteristicsError;
@@ -66,6 +68,84 @@ public class ARSALBLEManager
     private boolean isDiscoveringCharacteristics;
     private boolean isConfiguringCharacteristics;
     
+    public class ARSALManagerNotificationData
+    {
+    	public BluetoothGattCharacteristic characteristic = null;
+    	public byte[] value = null;
+    	
+    	public ARSALManagerNotificationData(BluetoothGattCharacteristic _characteristic, byte[] _value)
+    	{
+    		this.characteristic = _characteristic;
+    		this.value = _value;
+    	}
+    }
+    
+    public class ARSALManagerNotification
+    {
+    	private Semaphore readCharacteristicSem = new Semaphore(0);
+    	private Lock readCharacteristicMutex = new ReentrantLock();
+    	//ArrayList<BluetoothGattCharacteristic> characteristics = null;
+    	List<BluetoothGattCharacteristic> characteristics = null;
+    	ArrayList<ARSALManagerNotificationData> notificationsArray = new ArrayList<ARSALManagerNotificationData>();
+    	
+    	//public ARSALManagerNotification(ArrayList<BluetoothGattCharacteristic> characteristicsArray)
+    	public ARSALManagerNotification(List<BluetoothGattCharacteristic> characteristicsArray)
+    	{
+    		this.characteristics = characteristicsArray;
+    	}
+    	
+    	void addNotification(ARSALManagerNotificationData notificationData)
+    	{
+    		readCharacteristicMutex.lock();
+    		
+    		notificationsArray.add(notificationData);
+    		
+    		readCharacteristicMutex.unlock();
+    		
+    		readCharacteristicSem.notify();
+    	}
+    	
+    	int getAllNotification(List<ARSALManagerNotificationData> getNoticationsArray, int maxCount)
+    	{
+    		ArrayList<ARSALManagerNotificationData> removeNotifications = new ArrayList<ARSALManagerNotificationData>(); 
+    		
+    		readCharacteristicMutex.lock();
+    		
+    		for (int i=0; (i < maxCount) && (i < notificationsArray.size()); i++)
+    		{
+    			ARSALManagerNotificationData notificationData = notificationsArray.get(i);
+    			
+    			getNoticationsArray.add(notificationData);
+    			removeNotifications.add(notificationData);
+    		}
+    		
+    		notificationsArray.remove(removeNotifications);
+    		
+    		readCharacteristicMutex.unlock();
+    		
+    		return getNoticationsArray.size();
+    	}
+    	
+    	boolean waitNotification()
+    	{
+    		boolean ret = true;
+    		try
+    		{
+    			readCharacteristicSem.acquire();
+    		}
+    		catch (InterruptedException e)
+    		{
+    			ret = false;
+    		}
+    		return ret;
+    	}
+    	
+    	void signalNotification()
+    	{
+    		readCharacteristicSem.release();
+    	}
+    }
+    
     /**
      * Constructor
      */
@@ -75,7 +155,7 @@ public class ARSALBLEManager
         this.deviceBLEService =  null;
         this.activeGatt = null;
         
-        characteristicNotifications = new ArrayList<BluetoothGattCharacteristic> ();
+        //characteristicNotifications = new ArrayList<BluetoothGattCharacteristic> ();
         
         listener = null;
         
@@ -83,7 +163,7 @@ public class ARSALBLEManager
         disconnectionSem = new Semaphore (0);
         discoverServicesSem = new Semaphore (0);
         discoverCharacteristicsSem = new Semaphore (0);
-        readCharacteristicSem = new Semaphore (0);
+        //readCharacteristicSem = new Semaphore (0);
         configurationSem = new Semaphore (0);
 
         askDisconnection = false;
@@ -95,7 +175,7 @@ public class ARSALBLEManager
         discoverCharacteristicsError = ARSAL_ERROR_ENUM.ARSAL_OK;
         configurationCharacteristicError = ARSAL_ERROR_ENUM.ARSAL_OK;
         
-        readCharacteristicMutex = new ReentrantLock ();
+        //readCharacteristicMutex = new ReentrantLock ();
     }
     
     /**
@@ -111,6 +191,21 @@ public class ARSALBLEManager
         {
             super.finalize ();
         }
+    }
+    
+    public boolean isDeviceConnected()
+    {
+    	boolean ret = false;
+    	
+    	synchronized (this) 
+    	{
+    		if (activeGatt != null)
+    		{
+    			ret = true;
+    		}
+		}
+    	
+    	return ret;
     }
     
     @TargetApi(18)
@@ -342,14 +437,55 @@ public class ARSALBLEManager
         
         @Override
         /* Characteristic notification */
-        public void onCharacteristicChanged (BluetoothGatt gatt, BluetoothGattCharacteristic characteristic)
+        /*public void onCharacteristicChanged (BluetoothGatt gatt, BluetoothGattCharacteristic characteristic)
         {
             readCharacteristicMutex.lock();
             characteristicNotifications.add(characteristic);
             readCharacteristicMutex.unlock();
             
-            /* post a readCharacteristic Semaphore */
+            // post a readCharacteristic Semaphore 
             readCharacteristicSem.release();
+        }*/
+        public void onCharacteristicChanged (BluetoothGatt gatt, BluetoothGattCharacteristic characteristic)
+        {
+        	ARSALManagerNotification foundNotification = null;
+        	
+        	Set<String> keys = registeredNotificationCharacteristics.keySet();
+        	for (String key : keys) 
+        	{
+        		ARSALManagerNotification notification = registeredNotificationCharacteristics.get(key);
+
+        		for (BluetoothGattCharacteristic characteristicItem : notification.characteristics)
+        		{
+        			if (characteristicItem.getUuid().toString().contentEquals(characteristic.getUuid().toString()))
+        			{
+        				foundNotification = notification;
+        				break;
+        			}
+        		}
+        		
+        		if (foundNotification != null)
+        		{
+        			break;
+        		}
+        	}
+        	
+        	if (foundNotification != null)
+        	{
+        		byte[] value = characteristic.getValue();
+        		byte[] newValue = null;
+        		if (value != null)
+        		{
+	        		newValue = new byte[value.length];
+	        		System.arraycopy(value, 0, newValue, 0, value.length);
+        		}
+        		else
+        		{
+        			newValue = new byte[0];
+        		}
+        		ARSALManagerNotificationData notificationData = new ARSALManagerNotificationData(characteristic, newValue);
+        		foundNotification.addNotification(notificationData);
+        	}
         }
     };
     
@@ -409,11 +545,40 @@ public class ARSALBLEManager
         return result;
     }
     
-    public boolean readData (List<BluetoothGattCharacteristic> characteristicArray)
+    //public void registerNotificationCharacteristics(ArrayList<BluetoothGattCharacteristic> characteristicsArray, String readCharacteristicKey)
+    public void registerNotificationCharacteristics(List<BluetoothGattCharacteristic> characteristicsArray, String readCharacteristicKey)
+    {
+    	this.registeredNotificationCharacteristics.put(readCharacteristicKey, new ARSALManagerNotification(characteristicsArray));
+    }
+    
+    public boolean readData(BluetoothGattCharacteristic characteristic)
+    {
+    	return activeGatt.readCharacteristic(characteristic);
+    }
+        
+    public boolean readDataNotificationData (List<ARSALManagerNotificationData> notificationsArray, int maxCount, String readCharacteristicKey)
+    {
+    	boolean result = false;
+    	ARSALManagerNotification notification =  this.registeredNotificationCharacteristics.get(readCharacteristicKey);
+    	if (notification != null)
+    	{
+    		notification.waitNotification();
+    		
+    		if (notification.notificationsArray.size() > 0)
+    		{
+    			notification.getAllNotification(notificationsArray, maxCount);
+    			result = true;
+    		}
+    	}
+    	
+    	return result;
+    }
+    
+    /*public boolean readData (List<BluetoothGattCharacteristic> characteristicArray)
     {
         boolean result = false;
         
-        /* wait the readCharacteristic semaphore*/
+        // wait the readCharacteristic semaphore
         try
         {
             readCharacteristicSem.acquire ();
@@ -436,19 +601,28 @@ public class ARSALBLEManager
         }
         
         return result;
-    }
+    }*/
     
     public void unlock ()
     {
         /* post all Semaphore to unlock the all the functions */
         connectionSem.release();
         configurationSem.release();
-        readCharacteristicSem.release();
+        //readCharacteristicSem.release();
+        
+        for (String key : registeredNotificationCharacteristics.keySet())
+        {
+        	ARSALManagerNotification notification = registeredNotificationCharacteristics.get(key);
+        	notification.signalNotification();
+        }
+        
         /* disconnectionSem is not post because:
          * if the connection is fail, disconnect is not call.
          * if the connection is successful, the BLE callback is always called.
          * the disconnect function is called after the join of the network threads.
          */
+        
+        //TODO
     }
     
     public void reset ()
@@ -478,15 +652,19 @@ public class ARSALBLEManager
                 /* Do nothing*/
             }
             
-            while (readCharacteristicSem.tryAcquire() == true)
-            {
+            /*while (readCharacteristicSem.tryAcquire() == true)
+            {*/
                 /* Do nothing*/
-            }
+            /*}*/
             
             while (configurationSem.tryAcquire() == true)
             {
                 /* Do nothing*/
             }
+            
+            registeredNotificationCharacteristics.clear();
+            
+            //TODO
         }
     }
 }

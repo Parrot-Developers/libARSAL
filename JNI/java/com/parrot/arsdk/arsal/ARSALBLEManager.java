@@ -145,13 +145,38 @@ public class ARSALBLEManager
     		readCharacteristicSem.release();
     	}
     }
+
+    private static class ARSALBLEManagerHolder 
+    {
+        private final static ARSALBLEManager instance = new ARSALBLEManager();
+    }
+
+    public static ARSALBLEManager getInstance(Context context) 
+    {
+        ARSALBLEManager manager = ARSALBLEManagerHolder.instance;
+        manager.setContext(context);
+        return manager;
+    }
+
+    private synchronized void setContext(Context context)
+    {
+        if (this.context == null) 
+        {
+            if (context == null)
+            {
+                throw new IllegalArgumentException("Context must not be null");
+            }
+            this.context = context;    
+        }
+        
+    }
     
     /**
      * Constructor
      */
-    public ARSALBLEManager (Context context)
+    private ARSALBLEManager ()
     {
-        this.context = context;
+        this.context = null;
         this.deviceBLEService =  null;
         this.activeGatt = null;
         

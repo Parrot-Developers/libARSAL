@@ -102,7 +102,11 @@ public class ARSALBLEManager
     		
     		readCharacteristicMutex.unlock();
     		
-    		readCharacteristicSem.notify();
+    		synchronized (readCharacteristicSem) 
+    		{
+                readCharacteristicSem.notify();
+            }
+    		
     	}
     	
     	int getAllNotification(List<ARSALManagerNotificationData> getNoticationsArray, int maxCount)
@@ -510,6 +514,7 @@ public class ARSALBLEManager
         		}
         		ARSALManagerNotificationData notificationData = new ARSALManagerNotificationData(characteristic, newValue);
         		foundNotification.addNotification(notificationData);
+        		foundNotification.signalNotification();
         	}
         }
     };

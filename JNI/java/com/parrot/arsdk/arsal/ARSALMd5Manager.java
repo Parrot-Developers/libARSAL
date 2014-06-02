@@ -6,7 +6,7 @@ class ARSALMd5Manager
 {
     /* Native Functions */
     private native static boolean nativeStaticInit();
-    private native long nativeNew() throws ARUtilsException;
+    private native long nativeNew() throws ARSALException;
     private native int nativeDelete(long jManager);
     private native int nativeInit(long jManager, ARSALMd5 md5);
     private native int nativeClose(long jManager);
@@ -51,9 +51,14 @@ class ARSALMd5Manager
         }
     }
     
-    //ARSAL_ERROR_ENUM check(String filePath, String md5)
+    /*ARSAL_ERROR_ENUM check(String filePath, String md5)
+    {
+    }
     
-    //void compute(String filePath) throws ARSALException
+    void compute(String filePath) throws ARSALException
+    {
+    
+    }*/
 }
     
 

@@ -127,6 +127,16 @@ fi
 AM_CONDITIONAL([HAVE_COREBLUETOOTH], [test x"$ac_cv_header_CoreBluetooth_CoreBluetooth_h" = x"yes"])
 AC_LANG_POP([Objective C])
 
+# Check for CommonDigest.h
+AC_LANG_PUSH([Objective C])
+if test x$ac_cv_objc_compiler_gnu = xyes; then
+    AC_CHECK_HEADERS([CommonCrypto/CommonDigest.h], ,
+        AC_MSG_WARN(The CommonDigest headers are required to use md5 features ! ))
+fi
+
+AM_CONDITIONAL([HAVE_COMMONDIGEST], [test x"$ac_cv_header_CommonCrypto_CommonDigest_h" = x"yes"])
+AC_LANG_POP([Objective C])
+
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_SIZE_T
 

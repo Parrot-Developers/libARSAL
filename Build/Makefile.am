@@ -14,11 +14,16 @@ HEADER_FILES                            =   ../Includes/libARSAL/ARSAL_Time.h   
                                             ../Includes/libARSAL/ARSAL_Ftw.h        \
                                             ../Includes/libARSAL/ARSAL_Error.h      \
                                             ../Includes/libARSAL/ARSAL_Singleton.h  \
+                                            ../Includes/libARSAL/ARSAL_MD5_Manager.h \
                                             ../Includes/libARSAL/ARSAL.h
 
 if HAVE_COREBLUETOOTH
 HEADER_FILES                           +=  ../Includes/libARSAL/ARSAL_CentralManager.h \
                                            ../Includes/libARSAL/ARSAL_BLEManager.h
+endif
+
+if HAVE_COMMONDIGEST
+
 endif
 
 # The sources to add to the library and to add to the source distribution
@@ -30,11 +35,17 @@ SOURCE_FILES                            =   $(HEADER_FILES)             \
                                             ../Sources/ARSAL_Socket.c   \
                                             ../Sources/ARSAL_Print.c    \
                                             ../Sources/ARSAL_Ftw.c      \
+                                            ../Sources/ARSAL_MD5_Manager.c      \
                                             ../Sources/ARSAL_Error.c
 
 if HAVE_COREBLUETOOTH
 SOURCE_FILES                           +=  ../Sources/ARSAL_CentralManager.m \
                                            ../Sources/ARSAL_BLEManager.m
+endif
+
+if HAVE_COMMONDIGEST
+SOURCE_FILES                           +=  ../Sources/ARSAL_MD5.m \
+                                           ../Sources/ARSAL_MD5.h
 endif
 
 # The library names to build (note we are building static and shared libs)

@@ -80,6 +80,12 @@ AC_CHECK_FUNCS([sem_init sem_destroy sem_wait sem_trywait sem_timedwait sem_post
 	AC_MSG_WARN(Your semaphore implmentation does not support all needed functions --> Using custom one)
 )
 
+# Checks for time functions
+AC_CHECK_FUNCS([time], , AC_MSG_ERROR(Your platform does not support time))
+AC_CHECK_FUNCS([gettimeofday], , AC_MSG_WARN(Your platform does not support gettimeofday))
+AC_CHECK_FUNCS([clock_gettime], , AC_MSG_WARN(Your platform does not support clock_gettime))
+AC_CHECK_DECLS([CLOCK_MONOTONIC, CLOCK_REALTIME], , AC_MSG_WARN(Your platform does not support clock_gettime monotonic or realtime clock), [[#include <time.h>]])
+
 # Checks for socket.h
 AC_CHECK_HEADERS([sys/socket.h netinet/in.h], , AC_MSG_ERROR(The socket header is required in order to build the library!))
 

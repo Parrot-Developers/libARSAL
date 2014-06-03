@@ -35,16 +35,16 @@
  * functions
  */
 
-#define ARSAL_SEM_ERRNO_TRANSFORM(RESBUF)       \
-    do                                          \
-    {                                           \
-        int __res = (RESBUF);                   \
-        if (0 < __res)                          \
-        {                                       \
-            errno = __res;                      \
-            (RESBUF) = -1;                      \
-        }                                       \
-        /* No else: no error so no need to set errno. */ \
+#define ARSAL_SEM_ERRNO_TRANSFORM(RESBUF)                   \
+    do                                                      \
+    {                                                       \
+        int __res = (RESBUF);                               \
+        if (0 < __res)                                      \
+        {                                                   \
+            errno = __res;                                  \
+            (RESBUF) = -1;                                  \
+        }                                                   \
+        /* No else: no error so no need to set errno. */    \
     } while (0)
 
 typedef struct {
@@ -327,13 +327,11 @@ int ARSAL_Sem_Timedwait(ARSAL_Sem_t *sem, const struct timespec *timeout)
         return result;
     } /* MUST BE INIT TO -1 */
     /* No else. */
-    
+
 #if __SAL_USE_POSIX_SEM
 
-    struct timeval currentTime = {0};
     struct timespec finalTime = {0};
-    gettimeofday (&currentTime, NULL);
-    TIMEVAL_TO_TIMESPEC (&currentTime, &finalTime);
+    ARSAL_Time_GetTime(&finalTime);
     finalTime.tv_nsec += timeout->tv_nsec;
     finalTime.tv_sec += timeout->tv_sec + NSEC_TO_SEC(finalTime.tv_nsec);
     finalTime.tv_nsec %= SEC_TO_NSEC(1);

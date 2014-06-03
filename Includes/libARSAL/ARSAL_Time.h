@@ -96,6 +96,28 @@
     } while(0)
 #endif
 
+/**
+ * @brief Gets the current system time as a timespec
+ *
+ * @param res Pointer to a timespec struct which will be filled with the current time
+ *
+ * @note This function may return a non meaningful date, but is suitable for time interval calculations
+ *
+ * @return 0 if no error occured, -1 if any error occured
+ */
+int ARSAL_Time_GetTime(struct timespec *res);
+
+/**
+ * @brief Gets the current local time both as a struct timespec and as a struct tm.
+ * This function is typically used for displaying a date to the user, where @ref{ARSAL_Time_GetTime}
+ * may yield a non meaningful date.
+ * @param res Pointer to a timespec struct which will hold the local time (optionnal, may be NULL)
+ * @param localTime Pointer to a tm struct which will hold the local time (optionnal, may be NULL)
+ * @warning The returned value is affected by discontinuous jumps in the system time (e.g., if the system administrator manually changes the clock), and by the incremental adjustments performed by adjtime(3) and NTP.
+ * @return 0 if no error occures, -1 if any error occured
+ */
+int ARSAL_Time_GetLocalTime(struct timespec *res, struct tm *localTime);
+
 
 /**
  * @brief Checks the equality of two timeval
@@ -108,6 +130,18 @@
  */
 int ARSAL_Time_TimevalEquals (struct timeval *t1, struct timeval *t2);
 
+
+/**
+ * @brief Checks the equality of two timespec
+ *
+ * @param t1 First time to compare
+ * @param t2 Second time to compare
+ *
+ * @return 1 if t1 and t2 represent the same value
+ * @return 0 in all other cases
+ */
+int ARSAL_Time_TimespecEquals (struct timespec *t1, struct timespec *t2);
+
 /**
  * @brief Computes the difference between two timeval
  *
@@ -119,6 +153,21 @@ int ARSAL_Time_TimevalEquals (struct timeval *t1, struct timeval *t2);
  * @return The number of ms between the two timeval. A negative number is an error
  * @warning Make sure that "end" is after "start"
  */
-int32_t ARSAL_Time_ComputeMsTimeDiff (struct timeval *start, struct timeval *end);
+int32_t ARSAL_Time_ComputeTimecalMsTimeDiff (struct timeval *start, struct timeval *end);
+
+/**
+ * @brief Computes the difference between two timespec
+ *
+ * This function returns the time, in miliseconds, between the two
+ * given timespecs.
+ *
+ * @param start Start of the time interval to compute
+ * @param end End of the time interval to compute
+ * @return The number of ms between the two timespec. A negative number is an error
+ * @warning Make sure that "end" is after "start"
+ */
+int32_t ARSAL_Time_ComputeTimespecMsTimeDiff (struct timespec *start, struct timespec *end);
+
+#define gettimeofday __do_not_use_gettimeofday
 
 #endif // _ARSAL_TIME_H_

@@ -25,7 +25,7 @@ typedef enum
     ARSAL_PRINT_MAX,      /**< The maximum of enum, do not use !*/
 } eARSAL_PRINT_LEVEL;
 
-#define	ARSAL_PRINT_DATE_STRING_LENGTH 9        // HH:MM:SS\0
+#define     ARSAL_PRINT_DATE_STRING_LENGTH 9        // HH:MM:SS\0
 
 /**
  * @brief Prints a specific output
@@ -46,18 +46,17 @@ typedef enum
         if (ARSAL_PRINT_MAX > level)                                    \
         {                                                               \
             char __nowTimeStr [ARSAL_PRINT_DATE_STRING_LENGTH];         \
-            struct timeval __tv;                                        \
+            struct timespec __ts;                                       \
             struct tm __tm;                                             \
-            gettimeofday (&__tv, NULL);                                 \
-            localtime_r (&(__tv.tv_sec), &__tm);                        \
+            ARSAL_Time_GetLocalTime(&__ts, &__tm);                      \
             strftime (__nowTimeStr, ARSAL_PRINT_DATE_STRING_LENGTH, "%H:%M:%S", &__tm); \
             if (!strlen (format) || format[strlen (format)-1] != '\n')  \
             {                                                           \
-                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, USEC_TO_MSEC(__tv.tv_usec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             }                                                           \
             else                                                        \
             {                                                           \
-                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, USEC_TO_MSEC(__tv.tv_usec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             }                                                           \
         }                                                               \
         /* NO ELSE : enum value can't be > level */                     \
@@ -69,18 +68,17 @@ typedef enum
         if (ARSAL_PRINT_DEBUG > level)                                  \
         {                                                               \
             char __nowTimeStr [ARSAL_PRINT_DATE_STRING_LENGTH];         \
-            struct timeval __tv;                                        \
+            struct timespec __ts;                                       \
             struct tm __tm;                                             \
-            gettimeofday (&__tv, NULL);                                 \
-            localtime_r (&(__tv.tv_sec), &__tm);                        \
+            ARSAL_Time_GetLocalTime(&__ts, &__tm);                      \
             strftime (__nowTimeStr, ARSAL_PRINT_DATE_STRING_LENGTH, "%H:%M:%S", &__tm); \
             if (!strlen (format) || format[strlen (format)-1] != '\n')  \
             {                                                           \
-                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, USEC_TO_MSEC(__tv.tv_usec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             }                                                           \
             else                                                        \
             {                                                           \
-                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, USEC_TO_MSEC(__tv.tv_usec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
             }                                                           \
         }                                                               \
         /* NO ELSE : no print in debug mode */                          \

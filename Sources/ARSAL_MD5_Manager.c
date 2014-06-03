@@ -52,28 +52,28 @@ void ARSAL_MD5_Manager_Delete(ARSAL_MD5_Manager_t **managerAddr)
     }
 }
 
-eARSAL_ERROR ARSAL_MD5_Manager_Check(ARSAL_MD5_Manager_t *manager, const char *filePath, const char *md5, int md5Len)
+eARSAL_ERROR ARSAL_MD5_Manager_Check(ARSAL_MD5_Manager_t *manager, const char *filePath, const char *md5Txt, int md5TxtLen)
 {
     eARSAL_ERROR result = ARSAL_OK;
     
-    if (manager == NULL)
+    if ((manager == NULL) || (manager->md5Check == NULL))
     {
         result = ARSAL_ERROR_BAD_PARAMETER;
     }
     
     if (result == ARSAL_OK)
     {
-        result = manager->md5Check(filePath, md5, md5Len);
+        result = manager->md5Check(filePath, md5Txt, md5TxtLen);
     }
     
     return result;
 }
 
-eARSAL_ERROR ARSAL_MD5_Manager_Compute(ARSAL_MD5_Manager_t *manager, const char *filePath, char *md5, int md5Len)
+eARSAL_ERROR ARSAL_MD5_Manager_Compute(ARSAL_MD5_Manager_t *manager, const char *filePath, uint8_t *md5, int md5Len)
 {
     eARSAL_ERROR result = ARSAL_OK;
     
-    if (manager == NULL)
+    if ((manager == NULL) || (manager->md5Compute == NULL))
     {
         result = ARSAL_ERROR_BAD_PARAMETER;
     }

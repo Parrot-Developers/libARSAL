@@ -40,18 +40,32 @@ void ARSAL_MD5_Manager_Close(ARSAL_MD5_Manager_t *manager)
     ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "");
 }
 
-eARSAL_ERROR ARSAL_MD5_Check(const char *filePath, const char *md5, int md5Len)
+eARSAL_ERROR ARSAL_MD5_Check(const char *filePath, const char *md5Txt, int md5TxtLen)
 {
     eARSAL_ERROR result = ARSAL_OK;
-    char md5Txt[(CC_MD5_DIGEST_LENGTH * 2) + 1];
+    uint8_t md5[CC_MD5_DIGEST_LENGTH];
+    char md5Src[(CC_MD5_DIGEST_LENGTH * 2) + 1];
     
     ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "");
     
-    result = ARSAL_MD5_Compute(filePath, md5Txt, sizeof(md5Txt));
+    if ((filePath == NULL) || (md5Txt == NULL) || (md5TxtLen < ((CC_MD5_DIGEST_LENGTH *2) + 1)))
+    {
+        result = ARSAL_ERROR_BAD_PARAMETER;
+    }
     
     if (result == ARSAL_OK)
     {
-        if (strcmp(md5Txt, md5) != 0)
+        result = ARSAL_MD5_Compute(filePath, md5, sizeof(md5));
+    }
+    
+    if (result == ARSAL_OK)
+    {
+        result = ARSAL_MD5_GetMd5AsTxt(md5, sizeof(md5), md5Src, sizeof(md5Src));
+    }
+    
+    if (result == ARSAL_OK)
+    {
+        if (strcmp(md5Txt, md5Src) != 0)
         {
             result = ARSAL_ERROR_MD5;
         }
@@ -60,19 +74,17 @@ eARSAL_ERROR ARSAL_MD5_Check(const char *filePath, const char *md5, int md5Len)
     return result;
 }
 
-eARSAL_ERROR ARSAL_MD5_Compute(const char *filePath, char *md5, int md5Len)
+eARSAL_ERROR ARSAL_MD5_Compute(const char *filePath, uint8_t *md5, int md5Len)
 {
     eARSAL_ERROR result = ARSAL_OK;
-    uint8_t md5Hex[CC_MD5_DIGEST_LENGTH];
     uint8_t block[1024];
     CC_MD5_CTX ctx;
     FILE *file;
     size_t count;
-    int i;
     
     ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "");
     
-    if ((filePath == NULL) || (md5 == NULL) || (md5Len < ((CC_MD5_DIGEST_LENGTH * 2) + 1)))
+    if ((filePath == NULL) || (md5 == NULL) || (md5Len < CC_MD5_DIGEST_LENGTH))
     {
         result = ARSAL_ERROR_BAD_PARAMETER;
     }
@@ -94,20 +106,33 @@ eARSAL_ERROR ARSAL_MD5_Compute(const char *filePath, char *md5, int md5Len)
             CC_MD5_Update(&ctx, block, count);
         }
         
-        CC_MD5_Final(md5Hex, &ctx);
-        
-        for (i= 0; i<CC_MD5_DIGEST_LENGTH; i++)
-        {
-            sprintf(&md5[i * 2], "%02x", md5Hex[i]);
-        }
-        
-        md5[CC_MD5_DIGEST_LENGTH * 2] = '\0';
+        CC_MD5_Final(md5, &ctx);
     }
     
     if (file != NULL)
     {
         fclose(file);
     }
+    
+    return result;
+}
+
+eARSAL_ERROR ARSAL_MD5_GetMd5AsTxt(const uint8_t *md5, int md5Len, char *md5Txt, int md5TxtLen)
+{
+    eARSAL_ERROR result = ARSAL_OK;
+    int i;
+    
+    if ((md5 == NULL) || (md5Len < CC_MD5_DIGEST_LENGTH) || (md5Txt == NULL) || (md5TxtLen < ((CC_MD5_DIGEST_LENGTH *2) + 1)))
+    {
+        result = ARSAL_ERROR_BAD_PARAMETER;
+    }
+    
+    for (i= 0; i<CC_MD5_DIGEST_LENGTH; i++)
+    {
+        sprintf(&md5Txt[i * 2], "%02x", md5[i]);
+    }
+        
+    md5Txt[CC_MD5_DIGEST_LENGTH * 2] = '\0';
     
     return result;
 }

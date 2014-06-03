@@ -10,9 +10,11 @@
 
 
 
-eARSAL_ERROR ARSAL_MD5_Check(const char *filePath, const char *md5, int md5Len);
+eARSAL_ERROR ARSAL_MD5_Check(const char *filePath, const char *md5Txt, int md5TxtLen);
 
-eARSAL_ERROR ARSAL_MD5_Compute(const char *filePath, char *md5, int md5Len);
+eARSAL_ERROR ARSAL_MD5_Compute(const char *filePath, uint8_t *md5, int md5Len);
+
+eARSAL_ERROR ARSAL_MD5_GetMd5AsTxt(const uint8_t *md5, int md5Len, char *md5Txt, int md5TxtLen);
 
 #endif /* _ARSAL_MD5_PRIVATE_H_ */
 

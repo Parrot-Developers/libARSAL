@@ -55,7 +55,7 @@ eARSAL_ERROR ARSAL_MD5_Check(void *md5Object, const char *filePath, const char *
     
     if (result == ARSAL_OK)
     {
-        result = ARSAL_MD5_Compute(filePath, md5, sizeof(md5));
+        result = ARSAL_MD5_Compute(md5Object, filePath, md5, sizeof(md5));
     }
     
     if (result == ARSAL_OK)

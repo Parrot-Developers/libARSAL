@@ -10,6 +10,7 @@ typedef enum
 
     ARSAL_ERROR = -1000,                       /**< ARSAL Generic error */
     ARSAL_ERROR_ALLOC,                         /**< ARSAL alloc error */
+    ARSAL_ERROR_SYSTEM,                        /**< ARSAL system error */
     ARSAL_ERROR_BAD_PARAMETER,                 /**< ARSAL bad parameter error */
     ARSAL_ERROR_FILE,                          /**< ARSAL file error */
     

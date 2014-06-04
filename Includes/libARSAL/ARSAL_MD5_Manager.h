@@ -8,6 +8,8 @@
 #ifndef _ARSAL_MD5_H_
 #define _ARSAL_MD5_H_
 
+#include "libARSAL/ARSAL_Error.h"
+
 #define ARSAL_MD5_LENGTH        16
 
 /**
@@ -18,7 +20,7 @@
  * @retval On success, returns ARSAL_OK. Otherwise, it returns an error number of eARSAL_ERROR
  * @see ARSAL_MD5_Manager_Init ()
  */
-typedef eARSAL_ERROR (*ARSAL_MD5_Check_t)(const char *filePath, const char *md5, int md5Len);
+typedef eARSAL_ERROR (*ARSAL_MD5_Check_t)(void *md5Object, const char *filePath, const char *md5);
 
 /**
  * @brief Compute an MD5
@@ -28,7 +30,7 @@ typedef eARSAL_ERROR (*ARSAL_MD5_Check_t)(const char *filePath, const char *md5,
  * @retval On success, returns ARSAL_OK. Otherwise, it returns an error number of eARSAL_ERROR
  * @see ARSAL_MD5_Manager_Init ()
  */
-typedef eARSAL_ERROR (*ARSAL_MD5_Compute_t)(const char *filePath, uint8_t *md5, int md5Len);
+typedef eARSAL_ERROR (*ARSAL_MD5_Compute_t)(void *md5Object, const char *filePath, uint8_t *md5, int md5Len);
 
 /**
  * @brief MD5 Manager structure
@@ -87,7 +89,7 @@ void ARSAL_MD5_Manager_Close(ARSAL_MD5_Manager_t *manager);
  * @retval On success, returns ARSAL_OK. Otherwise, it returns an error number of eARSAL_ERROR
  * @see ARSAL_MD5_Manager_New ()
  */
-eARSAL_ERROR ARSAL_MD5_Manager_Check(ARSAL_MD5_Manager_t *manager, const char *filePath, const char *md5, int md5Len);
+eARSAL_ERROR ARSAL_MD5_Manager_Check(ARSAL_MD5_Manager_t *manager, const char *filePath, const char *md5Txt);
 
 /**
  * @brief Compute an MD5

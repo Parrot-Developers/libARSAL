@@ -2,17 +2,17 @@
 package com.parrot.arsdk.arsal;
 
 
-class ARSALMd5Manager
+public class ARSALMd5Manager
 {
     /* Native Functions */
     private native static boolean nativeStaticInit();
     private native long nativeNew() throws ARSALException;
-    private native int nativeDelete(long jManager);
+    private native void nativeDelete(long jManager);
     private native int nativeInit(long jManager, ARSALMd5 md5);
     private native int nativeClose(long jManager);
     
-    private native int nativeCheck(String filePath, String md5);
-    private native String nativeCompute(String filePath) throws ARSALException;
+    private native int nativeCheck(long jManager, String filePath, String md5Txt);
+    private native byte[] nativeCompute(long jManager, String filePath) throws ARSALException;
     
     private long m_managerPtr;
     private boolean m_initOk;
@@ -37,6 +37,31 @@ class ARSALMd5Manager
             m_initOk = true;
         }
     }
+    
+    public long getNativeManager()
+    {
+        return m_managerPtr;
+    }
+    
+    public void init() throws ARSALException
+    {
+        int resultCode = nativeInit(m_managerPtr, new ARSALMd5());
+        
+        ARSAL_ERROR_ENUM result = ARSAL_ERROR_ENUM.getFromValue(resultCode);
+        if (result != ARSAL_ERROR_ENUM.ARSAL_OK)
+        {
+            throw new ARSALException(result);        
+        }
+    }
+    
+    public ARSAL_ERROR_ENUM close()
+    {
+        int resultCode = nativeClose(m_managerPtr);
+        
+        ARSAL_ERROR_ENUM result = ARSAL_ERROR_ENUM.getFromValue(resultCode);
+        
+        return result;
+    }
 
     /**
      * Dispose
@@ -51,14 +76,19 @@ class ARSALMd5Manager
         }
     }
     
-    /*ARSAL_ERROR_ENUM check(String filePath, String md5)
+    public ARSAL_ERROR_ENUM check(String filePath, String md5Txt)
     {
+        int resultCode = nativeCheck(m_managerPtr, filePath, md5Txt);
+        
+        ARSAL_ERROR_ENUM result = ARSAL_ERROR_ENUM.getFromValue(resultCode);
+
+        return result;
     }
     
-    void compute(String filePath) throws ARSALException
+    public byte[] compute(String filePath) throws ARSALException
     {
-    
-    }*/
+        return nativeCompute(m_managerPtr, filePath);
+    }
 }
     
 

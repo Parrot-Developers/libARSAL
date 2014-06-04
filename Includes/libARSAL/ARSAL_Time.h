@@ -168,6 +168,4 @@ int32_t ARSAL_Time_ComputeTimecalMsTimeDiff (struct timeval *start, struct timev
  */
 int32_t ARSAL_Time_ComputeTimespecMsTimeDiff (struct timespec *start, struct timespec *end);
 
-#define gettimeofday __do_not_use_gettimeofday
-
 #endif // _ARSAL_TIME_H_

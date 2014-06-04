@@ -7,8 +7,6 @@
 #include <config.h>
 #include <libARSAL/ARSAL_Time.h>
 
-#undef gettimeofday
-
 int ARSAL_Time_GetTime (struct timespec *res)
 {
     int result = -1;

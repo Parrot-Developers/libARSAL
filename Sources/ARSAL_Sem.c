@@ -331,7 +331,7 @@ int ARSAL_Sem_Timedwait(ARSAL_Sem_t *sem, const struct timespec *timeout)
 #if __SAL_USE_POSIX_SEM
 
     struct timespec finalTime = {0};
-    ARSAL_Time_GetTime(&finalTime);
+    ARSAL_Time_GetLocalTime(&finalTime, NULL);
     finalTime.tv_nsec += timeout->tv_nsec;
     finalTime.tv_sec += timeout->tv_sec + NSEC_TO_SEC(finalTime.tv_nsec);
     finalTime.tv_nsec %= SEC_TO_NSEC(1);

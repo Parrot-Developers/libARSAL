@@ -654,6 +654,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
             /* Do nothing*/
         }
         
+        for (ARSALBLEManagerNotification *notification in [_registeredNotificationCharacteristics allValues])
+        {
+            [notification signalNotification];
+        }
         [_registeredNotificationCharacteristics removeAllObjects];
     }
 }

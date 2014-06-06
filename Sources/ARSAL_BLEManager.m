@@ -595,26 +595,29 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
 
 - (void)unlock
 {
-    /* post all Semaphore to unlock the all the functions */
-#if ARSAL_BLEMANAGER_ENABLE_DEBUG
-    NSLog(@"%s:%d", __FUNCTION__, __LINE__);
-#endif
-    
-    ARSAL_Sem_Post(&connectionSem);
-    ARSAL_Sem_Post(&discoverServicesSem);
-    ARSAL_Sem_Post(&discoverCharacteristicsSem);
-    ARSAL_Sem_Post(&configurationSem);
-    
-    for (ARSALBLEManagerNotification *notification in _registeredNotificationCharacteristics)
+    @synchronized (self)
     {
-        [notification signalNotification];
+        /* post all Semaphore to unlock the all the functions */
+    #if ARSAL_BLEMANAGER_ENABLE_DEBUG
+        NSLog(@"%s:%d", __FUNCTION__, __LINE__);
+    #endif
+        
+        ARSAL_Sem_Post(&connectionSem);
+        ARSAL_Sem_Post(&discoverServicesSem);
+        ARSAL_Sem_Post(&discoverCharacteristicsSem);
+        ARSAL_Sem_Post(&configurationSem);
+        
+        for (ARSALBLEManagerNotification *notification in [_registeredNotificationCharacteristics allObjects])
+        {
+            [notification signalNotification];
+        }
+        
+        /* disconnectionSem is not post because:
+         * if the connection is fail, disconnect is not call.
+         * if the connection is successful, the BLE callback is always called.
+         * the disconnect function is called after the join of the network threads.
+         */
     }
-    
-    /* disconnectionSem is not post because:
-     * if the connection is fail, disconnect is not call.
-     * if the connection is successful, the BLE callback is always called.
-     * the disconnect function is called after the join of the network threads.
-     */
 }
 
 - (void)reset

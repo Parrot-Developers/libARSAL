@@ -607,7 +607,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
         ARSAL_Sem_Post(&discoverCharacteristicsSem);
         ARSAL_Sem_Post(&configurationSem);
         
-        for (ARSALBLEManagerNotification *notification in [_registeredNotificationCharacteristics allObjects])
+        for (ARSALBLEManagerNotification *notification in [_registeredNotificationCharacteristics allValues])
         {
             [notification signalNotification];
         }

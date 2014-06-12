@@ -5,7 +5,12 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ARSALPrint {
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.UnknownHostException;
+
+public class ARSALPrint
+{
 
     private static boolean hasLog;
     private static Method loge;
@@ -14,14 +19,18 @@ public class ARSALPrint {
 
     private static boolean displayDebugPrints = false;
 
-    static {
-        try {
+    static
+    {
+        try
+        {
             Class<?> logClass = Class.forName ("android.util.Log");
             loge = logClass.getDeclaredMethod ("e", String.class, String.class);
             logw = logClass.getDeclaredMethod ("w", String.class, String.class);
             logd = logClass.getDeclaredMethod ("d", String.class, String.class);
             hasLog = true;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             loge = null;
             logw = null;
             logd = null;
@@ -29,34 +38,86 @@ public class ARSALPrint {
         }
     }
 
-    private ARSALPrint () {
+    private ARSALPrint ()
+    {
         // Do nothing in this constructor
     }
 
-    public static void d (String tag, String message) {
+    private static String getStackTraceString(Throwable tr)
+    {
+        if (tr == null)
+        {
+            return "";
+        }
+
+        // This is to reduce the amount of log spew that apps do in the non-error
+        // condition of the network being unavailable.
+        Throwable t = tr;
+        while (t != null)
+        {
+            if (t instanceof UnknownHostException)
+            {
+                return "";
+            }
+            t = t.getCause();
+        }
+
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        tr.printStackTrace(pw);
+        return sw.toString();
+    }
+
+    public static void d (String tag, String message, Throwable t)
+    {
+        print (ARSAL_PRINT_LEVEL_ENUM.ARSAL_PRINT_DEBUG, tag, message + '\n' + getStackTraceString(t));
+    }
+
+    public static void w (String tag, String message, Throwable t)
+    {
+        print (ARSAL_PRINT_LEVEL_ENUM.ARSAL_PRINT_WARNING, tag, message + '\n' + getStackTraceString(t));
+    }
+
+    public static void e (String tag, String message, Throwable t)
+    {
+        print (ARSAL_PRINT_LEVEL_ENUM.ARSAL_PRINT_ERROR, tag, message + '\n' + getStackTraceString(t));
+    }
+
+    public static void d (String tag, String message)
+    {
         print (ARSAL_PRINT_LEVEL_ENUM.ARSAL_PRINT_DEBUG, tag, message);
     }
 
-    public static void w (String tag, String message) {
+    public static void w (String tag, String message)
+    {
         print (ARSAL_PRINT_LEVEL_ENUM.ARSAL_PRINT_WARNING, tag, message);
     }
 
-    public static void e (String tag, String message) {
+    public static void e (String tag, String message)
+    {
         print (ARSAL_PRINT_LEVEL_ENUM.ARSAL_PRINT_ERROR, tag, message);
     }
 
-    public static void print (ARSAL_PRINT_LEVEL_ENUM level, String tag, String message) {
-        if (message.endsWith ("\n")) {
+    public static void print (ARSAL_PRINT_LEVEL_ENUM level, String tag, String message)
+    {
+        if (message.endsWith ("\n"))
+        {
             internalPrint (level, tag, message);
-        } else {
+        }
+        else
+        {
             internalPrint (level, tag, message + "\n");
         }
     }
 
-    private static void internalPrint (ARSAL_PRINT_LEVEL_ENUM level, String tag, String message) {
-        if (hasLog) {
-            try {
-                switch (level) {
+    private static void internalPrint (ARSAL_PRINT_LEVEL_ENUM level, String tag, String message)
+    {
+        if (hasLog)
+        {
+            try
+            {
+                switch (level)
+                {
                 case ARSAL_PRINT_ERROR:
                     loge.invoke (null, tag, message);
                     break;
@@ -64,7 +125,8 @@ public class ARSALPrint {
                     logw.invoke (null, tag, message);
                     break;
                 case ARSAL_PRINT_DEBUG:
-                    if (displayDebugPrints) {
+                    if (displayDebugPrints)
+                    {
                         logd.invoke (null, tag, message);
                     }
                     break;
@@ -73,14 +135,19 @@ public class ARSALPrint {
                     loge.invoke (null, tag, message);
                     break;
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace ();
             }
-        } else {
+        }
+        else
+        {
             Date now = new Date ();
             SimpleDateFormat sdf = new SimpleDateFormat ("HH:mm:ss:SSS");
             String formattedDate = sdf.format (now);
-            switch (level) {
+            switch (level)
+            {
             case ARSAL_PRINT_ERROR:
                 System.err.print ("[ERR] " + tag + " | " + formattedDate + " | " + message);
                 break;
@@ -88,7 +155,8 @@ public class ARSALPrint {
                 System.out.print ("[WNG] " + tag + " | " + formattedDate + " | " + message);
                 break;
             case ARSAL_PRINT_DEBUG:
-                if (displayDebugPrints) {
+                if (displayDebugPrints)
+                {
                     System.out.print ("[DGB] " + tag + " | " + formattedDate + " | " + message);
                 }
                 break;
@@ -100,11 +168,13 @@ public class ARSALPrint {
         }
     }
 
-    public static void enableDebugPrints () {
+    public static void enableDebugPrints ()
+    {
         displayDebugPrints = true;
     }
 
-    public static void disableDebugPrints () {
+    public static void disableDebugPrints ()
+    {
         displayDebugPrints = false;
     }
 }

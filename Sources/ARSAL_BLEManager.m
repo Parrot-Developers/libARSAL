@@ -425,6 +425,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
 
     case CBCentralManagerStatePoweredOff:
         NSLog(@"CBCentralManagerStatePoweredOff");
+            if (_activePeripheral != nil)
+            {
+                [self onDisconnectPeripheral];
+            }
         break;
 
     default:
@@ -462,43 +466,52 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     
     if((_activePeripheral != nil) && (_activePeripheral == peripheral))
     {
-        _activePeripheral.delegate = nil;
-        _activePeripheral = nil;
-        
-        /* Post disconnectionSem only if the disconnect is asked */
-        if(_askDisconnection)
+        [self onDisconnectPeripheral];
+    }
+}
+
+- (void) onDisconnectPeripheral
+{
+#if ARSAL_BLEMANAGER_ENABLE_DEBUG
+    NSLog(@"%s:%d : %@", __FUNCTION__, __LINE__, peripheral);
+#endif
+    
+    _activePeripheral.delegate = nil;
+    _activePeripheral = nil;
+    
+    /* Post disconnectionSem only if the disconnect is asked */
+    if(_askDisconnection)
+    {
+        ARSAL_Sem_Post(&disconnectionSem);
+    }
+    
+    /* if activePeripheral is discovering services */
+    if(_isDiscoveringServices)
+    {
+        _discoverServicesError = ARSAL_ERROR_BLE_NOT_CONNECTED;
+        ARSAL_Sem_Post(&discoverServicesSem);
+    }
+    
+    /* if activePeripheral is discovering Characteristics */
+    if(_isDiscoveringCharacteristics)
+    {
+        _discoverCharacteristicsError = ARSAL_ERROR_BLE_NOT_CONNECTED;
+        ARSAL_Sem_Post(&discoverCharacteristicsSem);
+    }
+    
+    /* if activePeripheral is configuring Characteristics */
+    if(_isConfiguringCharacteristics)
+    {
+        _configurationCharacteristicError = ARSAL_ERROR_BLE_NOT_CONNECTED;
+        ARSAL_Sem_Post(&configurationSem);
+    }
+    
+    /* Notify delegate */
+    if(!_askDisconnection)
+    {
+        if ((_delegate != nil) && ([_delegate respondsToSelector:@selector(onBLEDisconnect)]))
         {
-            ARSAL_Sem_Post(&disconnectionSem);
-        }
-        
-        /* if activePeripheral is discovering services */
-        if(_isDiscoveringServices)
-        {
-            _discoverServicesError = ARSAL_ERROR_BLE_NOT_CONNECTED;
-            ARSAL_Sem_Post(&discoverServicesSem);
-        }
-        
-        /* if activePeripheral is discovering Characteristics */
-        if(_isDiscoveringCharacteristics)
-        {
-            _discoverCharacteristicsError = ARSAL_ERROR_BLE_NOT_CONNECTED;
-            ARSAL_Sem_Post(&discoverCharacteristicsSem);
-        }
-        
-        /* if activePeripheral is configuring Characteristics */
-        if(_isConfiguringCharacteristics)
-        {
-            _configurationCharacteristicError = ARSAL_ERROR_BLE_NOT_CONNECTED;
-            ARSAL_Sem_Post(&configurationSem);
-        }
-        
-        /* Notify delegate */
-        if(!_askDisconnection)
-        {
-            if ((_delegate != nil) && ([_delegate respondsToSelector:@selector(onBLEDisconnect)]))
-            {
-                [_delegate onBLEDisconnect];
-            }
+            [_delegate onBLEDisconnect];
         }
     }
 }

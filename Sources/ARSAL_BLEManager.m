@@ -367,6 +367,40 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     [_registeredNotificationCharacteristics setObject:notification forKey:readCharacteristicsKey];
 }
 
+- (BOOL)unregisterNotificationCharacteristics:(NSString*)readCharacteristicsKey
+{
+    BOOL result = NO;
+#if ARSAL_BLEMANAGER_ENABLE_DEBUG
+    NSLog(@"%s:%d", __FUNCTION__, __LINE__);
+#endif
+    
+    ARSALBLEManagerNotification *notification = [_registeredNotificationCharacteristics objectForKey:readCharacteristicsKey];
+    if (notification != nil)
+    {
+        result = YES;
+        [_registeredNotificationCharacteristics removeObjectForKey:readCharacteristicsKey];
+    }
+    return result;
+}
+
+- (BOOL)cancelReadNotification:(NSString *)readCharacteristicsKey
+{
+    BOOL result = NO;
+#if ARSAL_BLEMANAGER_ENABLE_DEBUG
+    NSLog(@"%s:%d", __FUNCTION__, __LINE__);
+#endif
+    
+    ARSALBLEManagerNotification *notification = [_registeredNotificationCharacteristics objectForKey:readCharacteristicsKey];
+    
+    if (notification != nil)
+    {
+        [notification signalNotification];
+        result = YES;
+    }
+    
+    return result;
+}
+
 - (BOOL)readNotificationData:(NSMutableArray *)notificationArray maxCount:(int)maxCount toKey:(NSString *)readCharacteristicsKey
 {
     BOOL result = NO;

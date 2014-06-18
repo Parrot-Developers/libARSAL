@@ -153,7 +153,7 @@ int ARSAL_Time_TimespecEquals (struct timespec *t1, struct timespec *t2);
  * @return The number of ms between the two timeval. A negative number is an error
  * @warning Make sure that "end" is after "start"
  */
-int32_t ARSAL_Time_ComputeTimecalMsTimeDiff (struct timeval *start, struct timeval *end);
+int32_t ARSAL_Time_ComputeTimevalMsTimeDiff (struct timeval *start, struct timeval *end);
 
 /**
  * @brief Computes the difference between two timespec

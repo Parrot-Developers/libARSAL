@@ -123,7 +123,10 @@ public class ARSALBLEManager
     			removeNotifications.add(notificationData);
     		}
     		
-    		notificationsArray.remove(removeNotifications);
+    		for (int i=0; (i < removeNotifications.size()); i++)
+    		{
+    		    notificationsArray.remove(removeNotifications.get(i));
+    		}
     		
     		readCharacteristicMutex.unlock();
     		

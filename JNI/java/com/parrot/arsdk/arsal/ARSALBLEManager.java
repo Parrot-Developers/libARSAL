@@ -55,7 +55,6 @@ public class ARSALBLEManager
     private Semaphore discoverServicesSem;
     private Semaphore discoverCharacteristicsSem;
     //private Semaphore readCharacteristicSem;
-    private Semaphore writeCharacteristicSem;
     private Semaphore configurationSem;
     
     //private Lock readCharacteristicMutex;
@@ -198,7 +197,6 @@ public class ARSALBLEManager
         discoverServicesSem = new Semaphore (0);
         discoverCharacteristicsSem = new Semaphore (0);
         //readCharacteristicSem = new Semaphore (0);
-        writeCharacteristicSem = new Semaphore (0);
         configurationSem = new Semaphore (0);
 
         askDisconnection = false;
@@ -524,17 +522,12 @@ public class ARSALBLEManager
         	}
         }
         
+        //Characteristic.WRITE_TYPE_NO_RESPONSE dosen't have reply 
+        /*@Override
         public void onCharacteristicWrite (BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status)
         {
         	 //ARSALPrint.d(TAG, "onCharacteristicWrite " + status);
-        	 if (status != BluetoothGatt.GATT_SUCCESS)
-             {
-                 writeCharacteristicError = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_CONNECTION;
-             }
-             
-             /* post a configuration Semaphore */
-             writeCharacteristicSem.release();
-        }
+        }*/
     };
     
     public ARSAL_ERROR_ENUM setCharacteristicNotification (BluetoothGattService service, BluetoothGattCharacteristic characteristic)
@@ -586,17 +579,8 @@ public class ARSALBLEManager
         if ((localActiveGatt != null) && (characteristic != null) && (data != null))
         {
             characteristic.setValue(data);
+            characteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
             result = localActiveGatt.writeCharacteristic(characteristic);
-            
-            try
-            {
-            	writeCharacteristicSem.acquire ();
-            }
-            catch (InterruptedException e)
-            {
-                e.printStackTrace();
-                //result = ARSAL_ERROR_ENUM.ARSAL_ERROR;
-            }
         }
         
         return result;

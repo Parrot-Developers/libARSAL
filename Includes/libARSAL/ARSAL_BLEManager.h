@@ -19,6 +19,7 @@
 
 @interface CBUUID (StringExtraction)
 - (NSString *)representativeString;
+- (NSString *)shortUUID;
 @end
 
 @interface ARSALBLEManagerNotificationData : NSObject

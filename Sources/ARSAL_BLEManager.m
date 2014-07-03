@@ -42,6 +42,16 @@
 
     return outputString;
 }
+
+- (NSString *)shortUUID
+{
+    NSString *uuid = [self representativeString];
+    if (uuid.length > 4)
+    {
+        uuid = [uuid substringWithRange:NSMakeRange(4, 4)];
+    }
+    return uuid;
+}
 @end
 
 

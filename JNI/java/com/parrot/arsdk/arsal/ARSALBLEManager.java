@@ -592,6 +592,32 @@ public class ARSALBLEManager
     	this.registeredNotificationCharacteristics.put(readCharacteristicKey, new ARSALManagerNotification(characteristicsArray));
     }
     
+    public boolean unregisterNotificationCharacteristics(String readCharacteristicKey)
+    {
+    	boolean result = false;
+    	ARSALManagerNotification notification =  this.registeredNotificationCharacteristics.get(readCharacteristicKey);
+    	if (notification != null)
+    	{
+    		result = true;
+    		registeredNotificationCharacteristics.remove(notification);
+    	}
+    	
+    	return result;
+    }
+    
+    public boolean cancelReadNotification(String readCharacteristicKey)
+    {
+    	boolean result = false;
+    	ARSALManagerNotification notification =  this.registeredNotificationCharacteristics.get(readCharacteristicKey);
+    	if (notification != null)
+    	{
+    		result = true;
+    		notification.signalNotification();
+    	}
+    	
+    	return result;
+    }
+    
     public boolean readData(BluetoothGattCharacteristic characteristic)
     {
     	return activeGatt.readCharacteristic(characteristic);
@@ -703,6 +729,11 @@ public class ARSALBLEManager
                 /* Do nothing*/
             }
             
+            for (String key : registeredNotificationCharacteristics.keySet())
+            {
+            	ARSALManagerNotification notification = registeredNotificationCharacteristics.get(key);
+            	notification.signalNotification();
+            }
             registeredNotificationCharacteristics.clear();
             
             //TODO

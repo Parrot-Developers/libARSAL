@@ -404,9 +404,14 @@ public class ARSALBLEManager
             }
             else if (newState == BluetoothProfile.STATE_DISCONNECTED)
             {
-                if ((activeGatt != null) && (activeGatt == activeGatt))
+                if ((activeGatt != null) && (gatt == activeGatt))
                 {
                     onDisconectGatt();
+                }
+                else
+                {
+                    ARSALPrint.w(TAG, "Disconnection of another gatt");
+                    gatt.close();
                 }
             }
         }

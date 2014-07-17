@@ -12,6 +12,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import android.annotation.TargetApi;
+import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
@@ -40,6 +41,9 @@ public class ARSALBLEManager
     private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics;
     
     private Context context;
+    private BluetoothManager bluetoothManager;
+    private BluetoothAdapter bluetoothAdapter;
+    
     private BluetoothDevice deviceBLEService;
     private BluetoothGatt activeGatt;
     
@@ -169,7 +173,34 @@ public class ARSALBLEManager
             this.context = context;    
         }
         
+        initialize();
     }
+    
+    public boolean initialize()
+    {
+        boolean result = true;
+        
+        if (bluetoothManager == null)
+        {
+            bluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
+            if (bluetoothManager == null)
+            {
+                ARSALPrint.e(TAG, "Unable to initialize BluetoothManager.");
+                ARSALPrint.e(TAG, "initialize: Unable to initialize BluetoothManager.");
+                result = false;
+            }
+        }
+        
+        bluetoothAdapter = bluetoothManager.getAdapter();
+        if (bluetoothAdapter == null)
+        {
+            ARSALPrint.e(TAG, "Unable to obtain a BluetoothAdapter.");
+            ARSALPrint.e(TAG, "initialize: Unable to obtain a BluetoothAdapter.");
+            result = false;
+        }
+        
+        return result;
+     }
     
     /**
      * Constructor
@@ -241,9 +272,9 @@ public class ARSALBLEManager
             }
             
             /* connection to the new activeGatt */
-            this.deviceBLEService = deviceBLEService;
+            ARSALBLEManager.this.deviceBLEService = bluetoothAdapter.getRemoteDevice(deviceBLEService.getAddress());
             
-            BluetoothGatt gatt = deviceBLEService.connectGatt (context, false, gattCallback);
+            BluetoothGatt gatt = ARSALBLEManager.this.deviceBLEService.connectGatt (context, false, gattCallback);
             
             /* wait the connect semaphore*/
             try

@@ -37,6 +37,7 @@ public class ARSALBLEManager
     private static final UUID ARSALBLEMANAGER_CHARACTERISTIC_UPDATE_NOTIFICATION_DESCRIPTOR_UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
     
     private static final int ARSALBLEMANAGER_CONNECTION_TIMEOUT_SEC  = 5;
+    private static final int GATT_INTERNAL_ERROR = 133;
     
     private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics;
     
@@ -57,6 +58,7 @@ public class ARSALBLEManager
     private Semaphore discoverCharacteristicsSem;
     private Semaphore configurationSem;
     
+    private ARSAL_ERROR_ENUM connectionError;
     private ARSAL_ERROR_ENUM discoverServicesError;
     private ARSAL_ERROR_ENUM discoverCharacteristicsError;
     private ARSAL_ERROR_ENUM configurationCharacteristicError;
@@ -224,6 +226,7 @@ public class ARSALBLEManager
         isDiscoveringCharacteristics = false;
         isConfiguringCharacteristics = false;
         
+        connectionError = ARSAL_ERROR_ENUM.ARSAL_OK;
         discoverServicesError = ARSAL_ERROR_ENUM.ARSAL_OK;
         discoverCharacteristicsError = ARSAL_ERROR_ENUM.ARSAL_OK;
         configurationCharacteristicError = ARSAL_ERROR_ENUM.ARSAL_OK;
@@ -271,6 +274,8 @@ public class ARSALBLEManager
                 disconnect();
             }
             
+            connectionError = ARSAL_ERROR_ENUM.ARSAL_OK;
+            
             /* connection to the new activeGatt */
             ARSALBLEManager.this.deviceBLEService = bluetoothAdapter.getRemoteDevice(deviceBLEService.getAddress());
             
@@ -279,7 +284,17 @@ public class ARSALBLEManager
             /* wait the connect semaphore*/
             try
             {
-                connectionSem.tryAcquire (ARSALBLEMANAGER_CONNECTION_TIMEOUT_SEC, TimeUnit.SECONDS);
+                boolean aquired = connectionSem.tryAcquire (ARSALBLEMANAGER_CONNECTION_TIMEOUT_SEC, TimeUnit.SECONDS);
+                
+                if (aquired)
+                {
+                    result = connectionError;
+                }
+                else
+                {
+                    /* Connection failed */
+                    result = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_STACK;
+                }
             }
             catch (InterruptedException e)
             {
@@ -294,9 +309,6 @@ public class ARSALBLEManager
             {
                 /* Connection failed */
                 gatt.close();
-                
-                /* Connection failed */
-                result = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_CONNECTION;
             }
         }
         
@@ -393,26 +405,49 @@ public class ARSALBLEManager
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState)
         {
-            String intentAction;
-            if (newState == BluetoothProfile.STATE_CONNECTED)
+            if (status == BluetoothGatt.GATT_SUCCESS)
             {
-                ARSALPrint.d(TAG, "Connected to GATT server.");
-                activeGatt = gatt;
+                if (newState == BluetoothProfile.STATE_CONNECTED)
+                {
+                    ARSALPrint.d(TAG, "Connected to GATT server.");
+                    activeGatt = gatt;
+                    
+                    connectionError = ARSAL_ERROR_ENUM.ARSAL_OK;
+                    
+                    /* post a connect Semaphore */
+                    connectionSem.release();
+                }
+                else if (newState == BluetoothProfile.STATE_DISCONNECTED)
+                {
+                    if ((activeGatt != null) && (gatt == activeGatt))
+                    {
+                        onDisconectGatt();
+                    }
+                    else
+                    {
+                        ARSALPrint.w(TAG, "Disconnection of another gatt");
+                        gatt.close();
+                    }
+                }
+            }
+            else if (status == GATT_INTERNAL_ERROR)
+            {
+                ARSALPrint.e(TAG, "On connection state change: GATT_INTERNAL_ERROR (133 status) newState:" + newState);
+                
+                connectionError = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_STACK;
                 
                 /* post a connect Semaphore */
                 connectionSem.release();
             }
-            else if (newState == BluetoothProfile.STATE_DISCONNECTED)
+            else if (status == BluetoothGatt.GATT_FAILURE)
             {
-                if ((activeGatt != null) && (gatt == activeGatt))
-                {
-                    onDisconectGatt();
-                }
-                else
-                {
-                    ARSALPrint.w(TAG, "Disconnection of another gatt");
-                    gatt.close();
-                }
+                ARSALPrint.w(TAG, "On connection state change: GATT_FAILURE newState:" + newState);
+                /* post a connect Semaphore */
+                connectionSem.release();
+            }
+            else
+            {
+                ARSALPrint.e(TAG, "status not known");
             }
         }
         
@@ -422,6 +457,8 @@ public class ARSALBLEManager
         {
             if (status != BluetoothGatt.GATT_SUCCESS)
             {
+                ARSALPrint.w(TAG, "On services discovered state:" + status);
+                
                 /* the discovery is not successes */
                 discoverServicesError = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_SERVICES_DISCOVERING;
             }

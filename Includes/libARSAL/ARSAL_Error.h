@@ -21,7 +21,8 @@ typedef enum
     ARSAL_ERROR_BLE_DISCONNECTION,             /**< BLE disconnection error */
     ARSAL_ERROR_BLE_SERVICES_DISCOVERING,      /**< BLE network services discovering error */
     ARSAL_ERROR_BLE_CHARACTERISTICS_DISCOVERING,    /**< BLE network characteristics discovering error */
-    ARSAL_ERROR_BLE_CHARACTERISTIC_CONFIGURING     /**< BLE network characteristic configuring error */
+    ARSAL_ERROR_BLE_CHARACTERISTIC_CONFIGURING,     /**< BLE network characteristic configuring error */
+    ARSAL_ERROR_BLE_STACK,                          /**< BLE stack generic error */
 
 } eARSAL_ERROR;
 

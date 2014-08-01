@@ -23,7 +23,6 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Looper;
 import android.os.Handler;
 
 import android.bluetooth.BluetoothAdapter;
@@ -70,8 +69,6 @@ public class ARSALBLEManager
     private boolean isDiscoveringServices;
     private boolean isDiscoveringCharacteristics;
     private boolean isConfiguringCharacteristics;
-    
-    private BluetoothGatt connectionGatt;
     
     public class ARSALManagerNotificationData
     {
@@ -285,10 +282,7 @@ public class ARSALBLEManager
             /* connection to the new activeGatt */
             ARSALBLEManager.this.deviceBLEService = bluetoothAdapter.getRemoteDevice(deviceBLEService.getAddress());
             
-            /*reset connectionGatt*/
-            connectionGatt = null;
-            
-            connectionGatt = ARSALBLEManager.this.deviceBLEService.connectGatt (context, false, gattCallback);
+            BluetoothGatt connectionGatt = ARSALBLEManager.this.deviceBLEService.connectGatt (context, false, gattCallback);
             if(connectionGatt == null)
             {
                 ARSALPrint.e(TAG, "connect (connectionGatt == null)");
@@ -325,15 +319,8 @@ public class ARSALBLEManager
                 /* Connection failed */
                 if(connectionGatt != null)
                 {
-                    new Handler(Looper.getMainLooper()).post(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            connectionGatt.close();
-                            connectionGatt = null;
-                        }
-                    });
+                    connectionGatt.close();
+                    connectionGatt = null;
                 }
             }
         }

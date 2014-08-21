@@ -44,6 +44,11 @@ public class ARNativeData
      */
     protected boolean valid;
 
+    /**
+     * Dummy throwable to keep the constructors call stack
+     */
+    private Throwable constructorCallStack;
+
     /* ************ */
     /* CONSTRUCTORS */
     /* ************ */
@@ -62,6 +67,7 @@ public class ARNativeData
             this.valid = true;
         }
         this.used = 0;
+        this.constructorCallStack = new Throwable();
     }
 
     /**
@@ -106,6 +112,7 @@ public class ARNativeData
             this.valid = true;
         }
         this.used = 0;
+        this.constructorCallStack = new Throwable();
         if (! copyData (this.pointer, this.capacity, data.getData (), data.getDataSize ())) {
             dispose ();
         }
@@ -118,7 +125,7 @@ public class ARNativeData
     protected void finalize () throws Throwable {
         try {
             if (valid) {
-                ARSALPrint.w (TAG, this + ": Finalize error -> dispose () was not called !");
+                ARSALPrint.w (TAG, this + ": Finalize error -> dispose () was not called !", this.constructorCallStack);
                 dispose ();
             }
         }

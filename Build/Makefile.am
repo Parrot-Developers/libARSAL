@@ -26,6 +26,10 @@ if HAVE_COMMONDIGEST
 
 endif
 
+if HAVE_OPENSSL
+
+endif
+
 # The sources to add to the library and to add to the source distribution
 SOURCE_FILES                            =   $(HEADER_FILES)             \
                                             ../Sources/ARSAL_Time.c     \
@@ -46,6 +50,10 @@ endif
 if HAVE_COMMONDIGEST
 SOURCE_FILES                           +=  ../Sources/ARSAL_MD5.m \
                                            ../Sources/ARSAL_MD5.h
+endif
+
+if HAVE_OPENSSL
+SOURCE_FILES                           +=  ../Sources/ARSAL_MD5_OpenSSL.c
 endif
 
 # The library names to build (note we are building static and shared libs)

@@ -123,6 +123,14 @@ AM_COND_IF([PYTHON_RUN_OK], , AC_MSG_ERROR(Python processing failed))
 # Checks for header files.
 AC_HEADER_STDC
 
+crypto_lib=none
+
+# Check for OpenSSL support.
+AC_CHECK_HEADERS([openssl/evp.h])
+if test x$ac_cv_header_openssl_evp_h = xyes; then
+    crypto_lib=openssl
+fi
+
 # Check for CoreBluetooth.h
 AC_LANG_PUSH([Objective C])
 if test x$ac_cv_objc_compiler_gnu = xyes; then
@@ -138,10 +146,22 @@ AC_LANG_PUSH([Objective C])
 if test x$ac_cv_objc_compiler_gnu = xyes; then
     AC_CHECK_HEADERS([CommonCrypto/CommonDigest.h], ,
         AC_MSG_WARN(The CommonDigest headers are required to use md5 features ! ))
+    # Do not use OpenSSL if iOS crypto lib is used.
+    if test x"$ac_cv_header_CommonCrypto_CommonDigest_h" = x"yes"; then
+        crypto_lib=ios_common_crypto
+    fi
 fi
 
-AM_CONDITIONAL([HAVE_COMMONDIGEST], [test x"$ac_cv_header_CommonCrypto_CommonDigest_h" = x"yes"])
 AC_LANG_POP([Objective C])
+
+# Set automake conditionals according to crypto_lib
+AC_MSG_CHECKING([crypto lib to use])
+AM_CONDITIONAL([HAVE_COMMONDIGEST], [test x"$crypto_lib" = x"ios_common_crypto"])
+AM_CONDITIONAL([HAVE_OPENSSL], [test x"$crypto_lib" = x"openssl"])
+if test x"$crypto_lib" = x"openssl"; then
+    LIBS+=" -lssl"
+fi
+AC_MSG_RESULT([$crypto_lib])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_SIZE_T

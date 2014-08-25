@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <libARSAL/ARSAL_Socket.h>
+#include <errno.h>
 
 int ARSAL_Socket_Create(int domain, int type, int protocol)
 {
@@ -26,7 +27,18 @@ ssize_t ARSAL_Socket_Sendto(int sockfd, const void *buf, size_t buflen, int flag
 
 ssize_t ARSAL_Socket_Send(int sockfd, const void *buf, size_t buflen, int flags)
 {
-    return send(sockfd, buf, buflen, flags);
+    ssize_t res;
+    int tries = 10;
+    int i;
+    for (i = 0; i < tries; i++)
+    {
+        res = send(sockfd, buf, buflen, flags);
+        if (res >= 0 || errno != ECONNREFUSED)
+        {
+            break;
+        }
+    }
+    return res;
 }
 
 ssize_t ARSAL_Socket_Recvfrom(int sockfd, void *buf, size_t buflen, int flags, struct sockaddr *src_addr, socklen_t *addrlen)

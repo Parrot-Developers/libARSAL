@@ -101,6 +101,16 @@ public class ARSALMd5
         
         return md5;
     }
+
+    public byte [] compute(byte[] data)
+    {
+        byte[] md5 = null;
+        initialize();
+        digest.update(data);
+        md5 = digest.digest();
+        //Log.d("DBG", "ARSALMd5.compute: " + getTextDigest(md5, 0, md5.length));
+        return md5;
+    }
 }
 
 

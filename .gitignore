@@ -1,0 +1,14 @@
+Sources/ARSAL_Error.c
+JNI/java/com/parrot/arsdk/arsal/ARSAL_PRINT_LEVEL_ENUM.java
+JNI/java/com/parrot/arsdk/arsal/ARSAL_FTW_TYPE_ENUM.java
+JNI/java/com/parrot/arsdk/arsal/ARSAL_FTW_RETURN_ENUM.java
+JNI/java/com/parrot/arsdk/arsal/ARSAL_FTW_FLAG_ENUM.java
+JNI/java/com/parrot/arsdk/arsal/ARSAL_ERROR_ENUM.java
+Build/m4/
+Build/configure
+Build/config/
+Build/config.h.in
+Build/autom4te.cache/
+Build/aclocal.m4
+Build/Makefile.in
+Build/INSTALL

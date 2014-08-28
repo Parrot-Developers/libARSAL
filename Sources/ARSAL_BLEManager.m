@@ -455,14 +455,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
         error = [notification waitNotification:timeout];
         if (error == ARSAL_OK)
         {
-            NSLog(@"%s FIRST ARSAL_OK ",__FUNCTION__);
             if ([notification.notificationsArray count] > 0)
             {
                 [notification getAllNotifications:notificationArray maxCount:maxCount];
             }
             else
             {
-                NSLog(@"%s ARSAL_ERROR_BLE_NO_DATA ",__FUNCTION__);
                 error = ARSAL_ERROR_BLE_NO_DATA;
             }
         }

@@ -68,7 +68,7 @@ DECLARE_SINGLETON_FOR_CLASS(ARSAL_BLEManager);
 - (void)registerNotificationCharacteristics:(NSArray *)characteristicsArray toKey:(NSString*)readCharacteristicsKey;
 - (BOOL)unregisterNotificationCharacteristics:(NSString*)readCharacteristicsKey;
 - (BOOL)cancelReadNotification:(NSString *)readCharacteristicsKey;
-- (BOOL)readNotificationData:(NSMutableArray *)notificationsArray maxCount:(int)maxCount toKey:(NSString *)readCharacteristicsKey;
+- (eARSAL_ERROR)readNotificationData:(NSMutableArray *)notificationArray maxCount:(int)maxCount timeout:(NSNumber *)timeout toKey:(NSString *)readCharacteristicsKey;   
 - (void)readData:(CBCharacteristic *)characteristic;
 - (void)unlock;
 - (void)reset;

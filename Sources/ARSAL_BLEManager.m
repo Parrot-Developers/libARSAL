@@ -126,10 +126,41 @@
     return (int)[notificationsArray count];
 }
 
-- (BOOL)waitNotification
+- (eARSAL_ERROR)waitNotification:(NSNumber *)timeout
 {
-    int ret = ARSAL_Sem_Wait(&readCharacteristicsSem);
-    return (ret == 0) ? YES : NO;
+    eARSAL_ERROR retVal = ARSAL_OK;
+    const struct timespec connectionTimeout = {
+        .tv_sec = [timeout doubleValue],
+        .tv_nsec = 0,
+    };
+    
+    if (timeout == nil)
+    {
+        int ret = ARSAL_Sem_Wait(&readCharacteristicsSem);
+        if (ret != 0)
+        {
+            retVal = ARSAL_ERROR_SYSTEM;
+        }
+        // NO ELSE
+    }
+    else
+    {
+        int ret = ARSAL_Sem_Timedwait(&readCharacteristicsSem,&connectionTimeout);
+        if (ret != 0)
+        {
+            if (errno == ETIMEDOUT)
+            {
+                retVal = ARSAL_ERROR_BLE_TIMEOUT;
+                NSLog(@"TIMEOUT ===> %@",timeout);
+            }
+            else
+            {
+                retVal = ARSAL_ERROR_SYSTEM;
+            }
+        }
+        // NO ELSE
+    }
+    return retVal;
 }
 
 - (BOOL)signalNotification
@@ -411,9 +442,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     return result;
 }
 
-- (BOOL)readNotificationData:(NSMutableArray *)notificationArray maxCount:(int)maxCount toKey:(NSString *)readCharacteristicsKey
+- (eARSAL_ERROR)readNotificationData:(NSMutableArray *)notificationArray maxCount:(int)maxCount timeout:(NSNumber *)timeout toKey:(NSString *)readCharacteristicsKey
 {
-    BOOL result = NO;
+    eARSAL_ERROR error = ARSAL_OK;
 #if ARSAL_BLEMANAGER_ENABLE_DEBUG
     NSLog(@"%s:%d", __FUNCTION__, __LINE__);
 #endif
@@ -421,16 +452,23 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     ARSALBLEManagerNotification *notification = [_registeredNotificationCharacteristics objectForKey:readCharacteristicsKey];
     if (notification != nil)
     {
-        [notification waitNotification];
-        
-        if ([notification.notificationsArray count] > 0)
+        error = [notification waitNotification:timeout];
+        if (error == ARSAL_OK)
         {
-            [notification getAllNotifications:notificationArray maxCount:maxCount];
-            result = YES;
+            NSLog(@"%s FIRST ARSAL_OK ",__FUNCTION__);
+            if ([notification.notificationsArray count] > 0)
+            {
+                [notification getAllNotifications:notificationArray maxCount:maxCount];
+            }
+            else
+            {
+                NSLog(@"%s ARSAL_ERROR_BLE_NO_DATA ",__FUNCTION__);
+                error = ARSAL_ERROR_BLE_NO_DATA;
+            }
         }
     }
-    
-    return result;
+
+    return error;
 }
 
 - (void)readData:(CBCharacteristic *)characteristic
@@ -517,7 +555,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
 - (void) onDisconnectPeripheral
 {
 #if ARSAL_BLEMANAGER_ENABLE_DEBUG
-    NSLog(@"%s:%d : %@", __FUNCTION__, __LINE__, peripheral);
+    NSLog(@"%s:%d", __FUNCTION__, __LINE__);
 #endif
     
     _activePeripheral.delegate = nil;

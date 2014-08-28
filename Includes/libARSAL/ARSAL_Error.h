@@ -23,6 +23,8 @@ typedef enum
     ARSAL_ERROR_BLE_CHARACTERISTICS_DISCOVERING,    /**< BLE network characteristics discovering error */
     ARSAL_ERROR_BLE_CHARACTERISTIC_CONFIGURING,     /**< BLE network characteristic configuring error */
     ARSAL_ERROR_BLE_STACK,                          /**< BLE stack generic error */
+    ARSAL_ERROR_BLE_TIMEOUT,                       /**< BLE timeout */
+    ARSAL_ERROR_BLE_NO_DATA,                       /**< BLE no data */
 
 } eARSAL_ERROR;
 

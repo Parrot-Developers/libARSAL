@@ -151,7 +151,6 @@
             if (errno == ETIMEDOUT)
             {
                 retVal = ARSAL_ERROR_BLE_TIMEOUT;
-                NSLog(@"TIMEOUT ===> %@",timeout);
             }
             else
             {

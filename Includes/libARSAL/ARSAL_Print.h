@@ -97,4 +97,8 @@ typedef enum
  */
 int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...);
 
+#include <stdarg.h>
+typedef int (*ARSAL_Print_Callback_t) (eARSAL_PRINT_LEVEL level, const char *tag, const char *format, va_list va);
+void ARSAL_Set_Print_Callback( ARSAL_Print_Callback_t callback);
+
 #endif // _ARSAL_PRINT_H_

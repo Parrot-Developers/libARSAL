@@ -21,12 +21,9 @@ const char* cARSAL_Print_prefixTable[ARSAL_PRINT_MAX] =
 };
 
 #ifdef HAVE_ANDROID_LOG_H
-int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...)
+static int ARSAL_Print_PrintRaw_VA(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, va_list va)
 {
     int result = -1;
-
-    va_list va;
-    va_start(va, format);
 
     switch(level)
     {
@@ -44,16 +41,13 @@ int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *
         break;
     }
 
-    va_end(va);
     return result;
 }
 #else
-int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...)
+
+static int ARSAL_Print_PrintRaw_VA(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, va_list va)
 {
     int result = -1;
-
-    va_list va;
-    va_start(va, format);
 
     switch(level)
     {
@@ -71,7 +65,30 @@ int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *
         break;
     }
 
-    va_end(va);
     return result;
 }
 #endif
+
+ARSAL_Print_Callback_t ARSAL_Print_Callback = NULL;
+void ARSAL_Set_Print_Callback( ARSAL_Print_Callback_t callback)
+{
+    ARSAL_Print_Callback = callback;
+}
+
+int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...)
+{
+    int result = -1;
+    va_list va;
+
+    va_start(va, format);
+    {
+        if ( ARSAL_Print_Callback == NULL )
+            result = ARSAL_Print_PrintRaw_VA(level, tag, format, va);
+        else
+            result = ARSAL_Print_Callback(level, tag, format, va);
+    }
+    va_end(va);
+
+    return result;
+}
+

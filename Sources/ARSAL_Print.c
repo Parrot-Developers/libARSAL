@@ -15,9 +15,12 @@
 
 const char* cARSAL_Print_prefixTable[ARSAL_PRINT_MAX] =
 {
+    [ARSAL_PRINT_FATAL]   = "[FTL]",
     [ARSAL_PRINT_ERROR]   = "[ERR]",
     [ARSAL_PRINT_WARNING] = "[WNG]",
-    [ARSAL_PRINT_DEBUG]   = "[DBG]"
+    [ARSAL_PRINT_INFO]    = "[INF]",
+    [ARSAL_PRINT_DEBUG]   = "[DBG]",
+    [ARSAL_PRINT_VERBOSE] = "[VRB]",
 };
 
 #ifdef HAVE_ANDROID_LOG_H
@@ -27,14 +30,23 @@ static int ARSAL_Print_PrintRaw_VA(eARSAL_PRINT_LEVEL level, const char *tag, co
 
     switch(level)
     {
+    case ARSAL_PRINT_FATAL:
+        result = __android_log_vprint (ANDROID_LOG_FATAL, tag, format, va);
+        break;
     case ARSAL_PRINT_ERROR:
         result = __android_log_vprint (ANDROID_LOG_ERROR, tag, format, va);
         break;
     case ARSAL_PRINT_WARNING:
         result = __android_log_vprint (ANDROID_LOG_WARN, tag, format, va);
         break;
+    case ARSAL_PRINT_INFO:
+        result = __android_log_vprint (ANDROID_LOG_INFO, tag, format, va);
+        break;
     case ARSAL_PRINT_DEBUG:
         result = __android_log_vprint (ANDROID_LOG_DEBUG, tag, format, va);
+        break;
+    case ARSAL_PRINT_VERBOSE:
+        result = __android_log_vprint (ANDROID_LOG_VERBOSE, tag, format, va);
         break;
 
     default:
@@ -52,11 +64,14 @@ static int ARSAL_Print_PrintRaw_VA(eARSAL_PRINT_LEVEL level, const char *tag, co
     switch(level)
     {
     case ARSAL_PRINT_ERROR:
+    case ARSAL_PRINT_FATAL:
         fprintf (stderr, "%s %s | ", cARSAL_Print_prefixTable [level], tag);
         result = vfprintf(stderr, format, va);
         break;
     case ARSAL_PRINT_WARNING:
+    case ARSAL_PRINT_INFO:
     case ARSAL_PRINT_DEBUG:
+    case ARSAL_PRINT_VERBOSE:
         printf ("%s %s | ", cARSAL_Print_prefixTable [level], tag);
         result = vprintf(format, va);
         break;

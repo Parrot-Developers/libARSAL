@@ -19,9 +19,13 @@
  */
 typedef enum
 {
+    ARSAL_PRINT_FATAL,    /**< The fatal level, print on release and debug mode */
     ARSAL_PRINT_ERROR,    /**< The error level, print on release and debug mode */
-    ARSAL_PRINT_WARNING,  /**< The error level, print on release and debug mode */
-    ARSAL_PRINT_DEBUG,    /**< The error level, print on debug mode only */
+    ARSAL_PRINT_WARNING,  /**< The warning level, print on release and debug mode */
+    ARSAL_PRINT_INFO,     /**< The info level, print on release and debug mode */
+    ARSAL_PRINT_DEBUG,    /**< The debug level, print on debug mode only */
+    ARSAL_PRINT_VERBOSE,  /**< The verbose level, print on debug mode only */
+
     ARSAL_PRINT_MAX,      /**< The maximum of enum, do not use !*/
 } eARSAL_PRINT_LEVEL;
 

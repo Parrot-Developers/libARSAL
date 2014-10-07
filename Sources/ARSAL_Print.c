@@ -15,7 +15,7 @@
 
 const char* cARSAL_Print_prefixTable[ARSAL_PRINT_MAX] =
 {
-    [ARSAL_PRINT_FATAL]   = "[FTL]",
+    [ARSAL_PRINT_FATAL]   = "[WTF]",
     [ARSAL_PRINT_ERROR]   = "[ERR]",
     [ARSAL_PRINT_WARNING] = "[WNG]",
     [ARSAL_PRINT_INFO]    = "[INF]",
@@ -85,7 +85,7 @@ static int ARSAL_Print_PrintRaw_VA(eARSAL_PRINT_LEVEL level, const char *tag, co
 #endif
 
 ARSAL_Print_Callback_t ARSAL_Print_Callback = NULL;
-void ARSAL_Set_Print_Callback( ARSAL_Print_Callback_t callback)
+void ARSAL_Print_SetCallback( ARSAL_Print_Callback_t callback)
 {
     ARSAL_Print_Callback = callback;
 }
@@ -106,4 +106,3 @@ int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *
 
     return result;
 }
-

@@ -10,6 +10,7 @@
 #include <libARSAL/ARSAL_Time.h>
 #include <libARSAL/ARSAL_Print.h>
 #include <sys/syscall.h>
+#include <errno.h>
 
 #if defined(HAVE_PTHREAD_H)
 #include <pthread.h>
@@ -53,6 +54,13 @@ int ARSAL_Mutex_Lock(ARSAL_Mutex_t *mutex)
 
 #if defined(HAVE_PTHREAD_H)
     result = pthread_mutex_lock((pthread_mutex_t *)*mutex);
+    if (result != 0)
+    {
+        ARSAL_PRINT(ARSAL_PRINT_FATAL, ARSAL_MUTEX_TAG, "Mutex operation failed! errno = %d , %s ; thread_id = %d",
+                result,
+                strerror(result),
+                syscall(SYS_gettid));
+    }
 #endif
 
     return result;
@@ -64,6 +72,13 @@ int ARSAL_Mutex_Trylock(ARSAL_Mutex_t *mutex)
 
 #if defined(HAVE_PTHREAD_H)
     result = pthread_mutex_trylock((pthread_mutex_t *)*mutex);
+    if ( (result != 0) && (result != EBUSY) )
+    {
+        ARSAL_PRINT(ARSAL_PRINT_FATAL, ARSAL_MUTEX_TAG, "Mutex operation failed! errno = %d , %s ; thread_id = %d",
+                result,
+                strerror(result),
+                syscall(SYS_gettid));
+    }
 #endif
 
     return result;
@@ -118,6 +133,13 @@ int ARSAL_Cond_Wait(ARSAL_Cond_t *cond, ARSAL_Mutex_t *mutex)
 
 #if defined(HAVE_PTHREAD_H)
     result = pthread_cond_wait((pthread_cond_t *)*cond, (pthread_mutex_t *)*mutex);
+    if (result != 0)
+    {
+        ARSAL_PRINT(ARSAL_PRINT_FATAL, ARSAL_MUTEX_TAG, "Mutex/Cond operation failed! errno = %d , %s ; thread_id = %d",
+                result,
+                strerror(result),
+                syscall(SYS_gettid));
+    }
 #endif
 
     return result;
@@ -135,6 +157,13 @@ int ARSAL_Cond_Timedwait(ARSAL_Cond_t *cond, ARSAL_Mutex_t *mutex, int timeout)
 
 #if defined(HAVE_PTHREAD_H)
     result = pthread_cond_timedwait((pthread_cond_t *)*cond, (pthread_mutex_t *)*mutex, &ts);
+    if ( (result != 0) && (result != ETIMEDOUT) )
+    {
+        ARSAL_PRINT(ARSAL_PRINT_FATAL, ARSAL_MUTEX_TAG, "Mutex/Cond operation failed! errno = %d , %s ; thread_id = %d",
+                result,
+                strerror(result),
+                syscall(SYS_gettid));
+    }
 #endif
 
     return result;
@@ -146,6 +175,13 @@ int ARSAL_Cond_Signal(ARSAL_Cond_t *cond)
 
 #if defined(HAVE_PTHREAD_H)
     result = pthread_cond_signal((pthread_cond_t *)*cond);
+    if (result != 0)
+    {
+        ARSAL_PRINT(ARSAL_PRINT_FATAL, ARSAL_MUTEX_TAG, "Mutex/Cond operation failed! errno = %d , %s ; thread_id = %d",
+                result,
+                strerror(result),
+                syscall(SYS_gettid));
+    }
 #endif
 
     return result;
@@ -157,6 +193,13 @@ int ARSAL_Cond_Broadcast(ARSAL_Cond_t *cond)
 
 #if defined(HAVE_PTHREAD_H)
     result = pthread_cond_broadcast((pthread_cond_t *)*cond);
+    if (result != 0)
+    {
+        ARSAL_PRINT(ARSAL_PRINT_FATAL, ARSAL_MUTEX_TAG, "Mutex/Cond operation failed! errno = %d , %s ; thread_id = %d",
+                result,
+                strerror(result),
+                syscall(SYS_gettid));
+    }
 #endif
 
     return result;

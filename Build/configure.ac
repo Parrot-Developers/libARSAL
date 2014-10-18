@@ -60,6 +60,8 @@ OBJCFLAGS+="$LOCAL_CFLAGS"
 ##########################################################################
 AC_CHECK_HEADERS([sys/time.h time.h stdio.h stdarg.h ftw.h])
 
+AC_CHECK_DECLS([SYS_gettid],[],[],[[#include <sys/syscall.h>]])
+
 AC_CHECK_HEADERS([android/log.h], LIBS+=" -llog",)
 
 AC_CHECK_HEADERS([sys/uio.h], , AC_MSG_ERROR(The sys/uio.h header is required to build the library!))

@@ -92,6 +92,20 @@ public class ARNativeData
     }
 
     /**
+     * Copy constructor (from native)<br>
+     * This constructor creates a new <code>ARNativeData</code> with a capacity<br>
+     * equal to the original data size
+     * @param data The original data buffer to copy
+     * @param dataSize The original data buffer length
+     */
+    public ARNativeData(long data, int dataSize) {
+        this (dataSize);
+        if (! copyData (pointer, capacity, data, dataSize)) {
+            dispose ();
+        }
+    }
+
+    /**
      * Copy constructor, with specified allocation size<br>
      * This constructor creates a new <code>ARNativeData</code> with a capacity<br>
      * equal to the greatest value between the specified <code>capacity</code> and the original<br>

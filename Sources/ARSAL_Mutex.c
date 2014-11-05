@@ -8,19 +8,12 @@
 #include <config.h>
 #include <libARSAL/ARSAL_Mutex.h>
 #include <libARSAL/ARSAL_Time.h>
-#include <libARSAL/ARSAL_Print.h>
-#include <sys/syscall.h>
 
 #if defined(HAVE_PTHREAD_H)
 #include <pthread.h>
 #else
 #error The pthread.h header is required in order to build the library
 #endif
-
-/**
- * Tag for ARSAL_PRINT
- */
-#define ARSAL_MUTEX_TAG "ARSAL_Mutex"
 
 int ARSAL_Mutex_Init(ARSAL_Mutex_t *mutex)
 {
@@ -75,13 +68,6 @@ int ARSAL_Mutex_Unlock(ARSAL_Mutex_t *mutex)
 
 #if defined(HAVE_PTHREAD_H)
     result = pthread_mutex_unlock((pthread_mutex_t *)*mutex);
-    if (result != 0)
-    {
-        ARSAL_PRINT(ARSAL_PRINT_FATAL, ARSAL_MUTEX_TAG, "Mutex operation failed! errno = %d , %s ; thread_id = %d",
-                result,
-                strerror(result),
-                syscall(SYS_gettid));
-    }
 #endif
 
     return result;

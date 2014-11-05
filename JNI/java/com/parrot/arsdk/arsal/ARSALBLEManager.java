@@ -301,7 +301,7 @@ public class ARSALBLEManager
                 else
                 {
                     /* Connection failed */
-                    result = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_STACK;
+                    result = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_NOT_CONNECTED;
                 }
             }
             catch (InterruptedException e)

@@ -161,7 +161,7 @@ AC_MSG_CHECKING([crypto lib to use])
 AM_CONDITIONAL([HAVE_COMMONDIGEST], [test x"$crypto_lib" = x"ios_common_crypto"])
 AM_CONDITIONAL([HAVE_OPENSSL], [test x"$crypto_lib" = x"openssl"])
 if test x"$crypto_lib" = x"openssl"; then
-    LIBS+=" -lssl"
+    LIBS+=" -lssl -lcrypto"
 fi
 AC_MSG_RESULT([$crypto_lib])
 

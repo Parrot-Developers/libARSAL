@@ -162,18 +162,33 @@ public class ARSALBLEManager
             return getNoticationsArray.size();
         }
         
-        boolean waitNotification()
+        /** Waits for a notification to occur, unless timeout expires first.
+         * @param timeout timeout value in milliseconds. 0 means no timeout. 
+         */
+        boolean waitNotification(long timeout)
         {
             boolean ret = true;
             try
             {
-                readCharacteristicSem.acquire();
+                if (timeout == 0)
+                {
+                    readCharacteristicSem.acquire();
+                }
+                else
+                {
+                    readCharacteristicSem.tryAcquire(timeout, TimeUnit.MILLISECONDS);
+                }
             }
             catch (InterruptedException e)
             {
                 ret = false;
             }
             return ret;
+        }
+        
+        boolean waitNotification()
+        {
+            return waitNotification(0);
         }
         
         void signalNotification()
@@ -703,13 +718,20 @@ public class ARSALBLEManager
         return activeGatt.readCharacteristic(characteristic);
     }
         
-    public boolean readDataNotificationData (List<ARSALManagerNotificationData> notificationsArray, int maxCount, String readCharacteristicKey)
+    /** Read notification data. Block until data is received or timeout occurs.
+     * @param notificationsArray a list where the received data will be put.
+     * @param maxCount maximum number of notifications to receive.
+     * @param readCharacteristicKey the characteristic to read notifications from.
+     * @param timeout the maximum time in milliseconds to wait for data before failing.
+     * 0 means infinite timeout.
+     */
+    public boolean readDataNotificationData (List<ARSALManagerNotificationData> notificationsArray, int maxCount, String readCharacteristicKey, long timeout)
     {
         boolean result = false;
         ARSALManagerNotification notification =  this.registeredNotificationCharacteristics.get(readCharacteristicKey);
         if (notification != null)
         {
-            notification.waitNotification();
+            notification.waitNotification(timeout);
             
             if (notification.notificationsArray.size() > 0)
             {
@@ -721,6 +743,11 @@ public class ARSALBLEManager
         return result;
     }
     
+    public boolean readDataNotificationData (List<ARSALManagerNotificationData> notificationsArray, int maxCount, String readCharacteristicKey)
+    {
+        return readDataNotificationData(notificationsArray, maxCount, readCharacteristicKey, 0);
+    }
+
     /*public boolean readData (List<BluetoothGattCharacteristic> characteristicArray)
     {
         boolean result = false;

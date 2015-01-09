@@ -133,11 +133,22 @@ if test x$ac_cv_header_openssl_evp_h = xyes; then
     crypto_lib=openssl
 fi
 
+# Check for CoreServices.h #not indispensable
+#AC_LANG_PUSH([Objective C])
+#if test x$ac_cv_objc_compiler_gnu = xyes; then
+#   AC_CHECK_HEADERS([CoreFoundation/CoreFoundation.h, CoreServices/CoreServices.h],
+#       [LDFLAGS="$LDFLAGS -framework CoreFoundation -framework CoreServices" ],,
+#   )
+#fi
+#AC_LANG_POP([Objective C])
+
 # Check for CoreBluetooth.h
 AC_LANG_PUSH([Objective C])
 if test x$ac_cv_objc_compiler_gnu = xyes; then
-    AC_CHECK_HEADERS([CoreBluetooth/CoreBluetooth.h], ,
-        AC_MSG_WARN(The CoreBluetooth headers are required to use bluetooth features ! ))
+    AC_CHECK_HEADERS([CoreBluetooth/CoreBluetooth.h],
+        [LDFLAGS="$LDFLAGS -framework CoreBluetooth"],
+        AC_MSG_WARN(The CoreBluetooth headers are required to use bluetooth features ! )
+    )
 fi
 
 AM_CONDITIONAL([HAVE_COREBLUETOOTH], [test x"$ac_cv_header_CoreBluetooth_CoreBluetooth_h" = x"yes"])

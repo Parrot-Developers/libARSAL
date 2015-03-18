@@ -130,6 +130,7 @@ crypto_lib=none
 # Check for OpenSSL support.
 AC_CHECK_HEADERS([openssl/evp.h])
 if test x$ac_cv_header_openssl_evp_h = xyes; then
+    LDFLAGS=$LDFLAGS -lssl
     crypto_lib=openssl
 fi
 

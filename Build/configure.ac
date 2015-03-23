@@ -55,6 +55,9 @@ CPPFLAGS+="$LOCAL_CFLAGS"
 CFLAGS+="$LOCAL_CFLAGS"
 OBJCFLAGS+="$LOCAL_CFLAGS"
 
+AR_DEPENDS([ssl], [Y], [openssl/ssl.h], [N])
+AR_DEPENDS([crypto], [Y], [openssl/crypto.h], [N])
+
 ##########################################################################
 # Check headers
 ##########################################################################
@@ -130,7 +133,6 @@ crypto_lib=none
 # Check for OpenSSL support.
 AC_CHECK_HEADERS([openssl/evp.h])
 if test x$ac_cv_header_openssl_evp_h = xyes; then
-    LDFLAGS=$LDFLAGS -lssl
     crypto_lib=openssl
 fi
 
@@ -172,9 +174,6 @@ AC_LANG_POP([Objective C])
 AC_MSG_CHECKING([crypto lib to use])
 AM_CONDITIONAL([HAVE_COMMONDIGEST], [test x"$crypto_lib" = x"ios_common_crypto"])
 AM_CONDITIONAL([HAVE_OPENSSL], [test x"$crypto_lib" = x"openssl"])
-if test x"$crypto_lib" = x"openssl"; then
-    LIBS+=" -lssl -lcrypto"
-fi
 AC_MSG_RESULT([$crypto_lib])
 
 # Checks for typedefs, structures, and compiler characteristics.

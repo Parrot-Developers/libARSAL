@@ -9,6 +9,7 @@ LOCAL_CATEGORY_PATH := dragon/libs
 LOCAL_MODULE := libARSAL
 LOCAL_DESCRIPTION := ARSDK Software Abstraction Layer
 
+LOCAL_LIBRARIES := libcrypto
 LOCAL_EXPORT_LDLIBS := -larsal
 
 ifeq ("$(TARGET_PBUILD_FORCE_STATIC)","1")

@@ -69,6 +69,7 @@ public class ARSALBLEManager
     
     private static final int ARSALBLEMANAGER_CONNECTION_TIMEOUT_SEC  = 5;
     private static final int GATT_INTERNAL_ERROR = 133;
+    private static final int GATT_INTERRUPT_ERROR = 8;
     
     private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics;
     
@@ -477,48 +478,58 @@ public class ARSALBLEManager
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState)
         {
-            if (status == BluetoothGatt.GATT_SUCCESS)
+            ARSALPrint.w(TAG, "onConnectionStateChange : status = " + status + " newState = " + newState);
+
+            if (newState == BluetoothProfile.STATE_DISCONNECTED)
             {
-                if (newState == BluetoothProfile.STATE_CONNECTED)
+                if ((activeGatt != null) && (gatt == activeGatt))
                 {
-                    activeGatt = gatt;
-                    
-                    connectionError = ARSAL_ERROR_ENUM.ARSAL_OK;
-                    
+                    onDisconectGatt();
+                }
+                else
+                {
+                    ARSALPrint.w(TAG, "Disconnection of another gatt");
+                    gatt.close();
+                }
+            }
+
+            switch (status)
+            {
+                case BluetoothGatt.GATT_SUCCESS:
+                    if (newState == BluetoothProfile.STATE_CONNECTED)
+                    {
+                        activeGatt = gatt;
+                        
+                        connectionError = ARSAL_ERROR_ENUM.ARSAL_OK;
+                        
+                        /* post a connect Semaphore */
+                        connectionSem.release();
+                    }
+                    break;
+
+                case GATT_INTERNAL_ERROR:
+                    ARSALPrint.e(TAG, "On connection state change: GATT_INTERNAL_ERROR (133 status) newState:" + newState);
+                    connectionError = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_STACK;
+                    /* post a connect Semaphore */
+                    connectionSem.release();   
+                    break;
+
+                /* triggered when pull out the battery of delos ( special for Android 5.0+ ) */
+                case GATT_INTERRUPT_ERROR:
+                    ARSALPrint.e(TAG, "On connection state change: GATT_INTERRUPT_ERROR (8 status) newState:" + newState);
+                    connectionError = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_CONNECTION;
+                    reset();
+                    break;
+
+                case BluetoothGatt.GATT_FAILURE:
+                    ARSALPrint.w(TAG, "On connection state change: GATT_FAILURE newState:" + newState);
                     /* post a connect Semaphore */
                     connectionSem.release();
-                }
-                else if (newState == BluetoothProfile.STATE_DISCONNECTED)
-                {
-                    if ((activeGatt != null) && (gatt == activeGatt))
-                    {
-                        onDisconectGatt();
-                    }
-                    else
-                    {
-                        ARSALPrint.w(TAG, "Disconnection of another gatt");
-                        gatt.close();
-                    }
-                }
-            }
-            else if (status == GATT_INTERNAL_ERROR)
-            {
-                ARSALPrint.e(TAG, "On connection state change: GATT_INTERNAL_ERROR (133 status) newState:" + newState);
-                
-                connectionError = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_STACK;
-                
-                /* post a connect Semaphore */
-                connectionSem.release();
-            }
-            else if (status == BluetoothGatt.GATT_FAILURE)
-            {
-                ARSALPrint.w(TAG, "On connection state change: GATT_FAILURE newState:" + newState);
-                /* post a connect Semaphore */
-                connectionSem.release();
-            }
-            else
-            {
-                ARSALPrint.e(TAG, "status not known");
+                    break;
+
+                default:
+                    ARSALPrint.e(TAG, "unknown status : " + status);
+                    break;
             }
         }
         

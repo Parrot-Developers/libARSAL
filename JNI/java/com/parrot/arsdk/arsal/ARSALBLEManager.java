@@ -100,6 +100,7 @@ public class ARSALBLEManager
     private boolean isDiscoveringServices;
     private boolean isDiscoveringCharacteristics;
     private boolean isConfiguringCharacteristics;
+    private boolean isDeviceConnected = false;
     
     public class ARSALManagerNotificationData
     {
@@ -299,7 +300,7 @@ public class ARSALBLEManager
         
         synchronized (this) 
         {
-            if (activeGatt != null)
+            if (activeGatt != null && isDeviceConnected)
             {
                 ret = true;
             }
@@ -484,6 +485,7 @@ public class ARSALBLEManager
             {
                 if ((activeGatt != null) && (gatt == activeGatt))
                 {
+                    isDeviceConnected = false;
                     onDisconectGatt();
                 }
                 else
@@ -499,7 +501,7 @@ public class ARSALBLEManager
                     if (newState == BluetoothProfile.STATE_CONNECTED)
                     {
                         activeGatt = gatt;
-                        
+                        isDeviceConnected = true;
                         connectionError = ARSAL_ERROR_ENUM.ARSAL_OK;
                         
                         /* post a connect Semaphore */
@@ -518,7 +520,6 @@ public class ARSALBLEManager
                 case GATT_INTERRUPT_ERROR:
                     ARSALPrint.e(TAG, "On connection state change: GATT_INTERRUPT_ERROR (8 status) newState:" + newState);
                     connectionError = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_CONNECTION;
-                    reset();
                     break;
 
                 case BluetoothGatt.GATT_FAILURE:

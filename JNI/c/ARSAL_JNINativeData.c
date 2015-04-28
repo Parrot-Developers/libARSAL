@@ -92,3 +92,21 @@ Java_com_parrot_arsdk_arsal_ARNativeData_copyData (JNIEnv *env, jobject thizz, j
     }
     return retVal;
 }
+
+JNIEXPORT jboolean JNICALL
+Java_com_parrot_arsdk_arsal_ARNativeData_copyJavaData (JNIEnv *env, jobject thizz, jlong dst, jint dstCapacity, jbyteArray src, jint srcLen)
+{
+    jboolean retVal = JNI_FALSE;
+    if (srcLen <= dstCapacity)
+    {
+        jbyte* bufferPtr = (*env)->GetByteArrayElements(env, src, NULL);
+
+        void *srcPtr = (void *)(intptr_t)bufferPtr;
+        void *dstPtr = (void *)(intptr_t)dst;
+        memcpy (dstPtr, srcPtr, srcLen);
+        retVal = JNI_TRUE;
+
+        (*env)->ReleaseByteArrayElements(env, src, bufferPtr, 0);
+    }
+    return retVal;
+}

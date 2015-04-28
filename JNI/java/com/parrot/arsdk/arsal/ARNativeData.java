@@ -261,6 +261,22 @@ public class ARNativeData
         return null;
     }
 
+	/**
+     * Copy data from byte array into C native buffer
+     * This function allow Java code to copy into the content of the <code>ARNativeData</code><br>
+     * @param src byte buffer from java world   
+	 * @param dataSize number of bytes in the array
+     * @return <code>true</code> if the copy was done without error<br><code>false</code> if an error occured. In this case, the content of the internal buffer is undefined, so <code>used</code> should be set to zero
+     */
+    public boolean copyByteData (byte [] src, int dataSize) {
+        boolean ret = false;
+        if (valid && copyJavaData (pointer, capacity, src, dataSize)) {
+            setUsedSize (dataSize);
+            ret = true;
+        }
+        return ret;
+    }
+
     /**
      * Marks a native data as unused (so C-allocated memory can be freed)<br>
      * A disposed data is marked as invalid
@@ -354,5 +370,16 @@ public class ARNativeData
      * @return <code>true</code> if the copy was done without error<br><code>false</code> if an error occured. In this case, the content of the internal buffer is undefined, so <code>used</code> should be set to zero
      */
     private native boolean copyData (long dst, int dstCapacity, long src, int srcLen);
+
+	/**
+     * Copy data from another <code>ARNativeData</code><br>
+     * This function is used in the copy constructors.
+     * @param dst C-Pointer on this object's internal buffer
+     * @param dstCapacity Capacity of this object's internal buffer
+     * @param src byte buffer from java world
+     * @param srcLen Used bytes in the initial object's internal buffer
+     * @return <code>true</code> if the copy was done without error<br><code>false</code> if an error occured. In this case, the content of the internal buffer is undefined, so <code>used</code> should be set to zero
+     */
+    private native boolean copyJavaData (long dst, int dstCapacity, byte[] src, int srcLen);
 
 }

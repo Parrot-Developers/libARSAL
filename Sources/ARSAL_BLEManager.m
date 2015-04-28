@@ -205,11 +205,13 @@
 @property (nonatomic, assign) eARSAL_ERROR discoverServicesError;
 @property (nonatomic, assign) eARSAL_ERROR discoverCharacteristicsError;
 @property (nonatomic, assign) eARSAL_ERROR configurationCharacteristicError;
+@property (nonatomic, assign) eARSAL_ERROR writeCharacteristicError;
 
 @property (nonatomic, assign) BOOL askDisconnection;
 @property (nonatomic, assign) BOOL isDiscoveringServices;
 @property (nonatomic, assign) BOOL isDiscoveringCharacteristics;
 @property (nonatomic, assign) BOOL isConfiguringCharacteristics;
+@property (nonatomic, assign) BOOL isWritingCharacteristic;
 @property (nonatomic, strong) NSMutableDictionary *registeredNotificationCharacteristics;
 
 - (void)ARSAL_BLEManager_Init;
@@ -221,6 +223,7 @@
 @synthesize configurationCharacteristicError = _configurationCharacteristicError;
 @synthesize activePeripheral = _activePeripheral;
 @synthesize characteristicsNotifications = _characteristicsNotifications;
+@synthesize writeCharacteristicError = _writeCharacteristicError;
 @synthesize delegate = _delegate;
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
@@ -236,6 +239,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     _isDiscoveringServices = NO;
     _isDiscoveringCharacteristics = NO;
     _isConfiguringCharacteristics = NO;
+    _isWritingCharacteristic = NO;
     _registeredNotificationCharacteristics = [NSMutableDictionary dictionary];
     
     ARSAL_Sem_Init(&connectionSem, 0, 0);
@@ -243,6 +247,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     ARSAL_Sem_Init(&discoverServicesSem, 0, 0);
     ARSAL_Sem_Init(&discoverCharacteristicsSem, 0, 0);
     ARSAL_Sem_Init(&configurationSem, 0, 0);
+    ARSAL_Sem_Init(&writeCharacteristicSem, 0, 0);
 }
 
 - (void)dealloc
@@ -252,6 +257,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     ARSAL_Sem_Destroy(&discoverServicesSem);
     ARSAL_Sem_Destroy(&discoverCharacteristicsSem);
     ARSAL_Sem_Destroy(&configurationSem);
+    ARSAL_Sem_Destroy(&writeCharacteristicSem);
 }
 
 - (BOOL)isPeripheralConnected
@@ -424,6 +430,29 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
 
     return result;
 }
+
+- (eARSAL_ERROR)writeDataWithResponse:(NSData *)data toCharacteristic:(CBCharacteristic *)characteristic
+{
+    eARSAL_ERROR result = ARSAL_OK;
+    
+    if((_activePeripheral != nil) && (characteristic != nil) && (data != nil) && (_isWritingCharacteristic == NO))
+    {
+        _isWritingCharacteristic = YES;
+        _writeCharacteristicError = ARSAL_OK;
+        [_activePeripheral writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
+        
+        ARSAL_Sem_Wait(&writeCharacteristicSem);
+        _isWritingCharacteristic = NO;
+        result = _writeCharacteristicError;
+        _writeCharacteristicError = ARSAL_OK;
+    }
+    else
+    {
+        result = ARSAL_ERROR_BLE_CONNECTION;
+    }
+    return result;
+}
+
 
 - (void)registerNotificationCharacteristics:(NSArray *)characteristicsArray toKey:(NSString*)readCharacteristicsKey
 {
@@ -615,6 +644,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
         ARSAL_Sem_Post(&configurationSem);
     }
     
+    /* if activePeripheral is writing Characteristics */
+    if (_isWritingCharacteristic)
+    {
+        _writeCharacteristicError = ARSAL_ERROR_BLE_NOT_CONNECTED;
+        ARSAL_Sem_Post(&writeCharacteristicSem);
+    }
+    
     /* Notify delegate */
     if(!_askDisconnection)
     {
@@ -659,6 +695,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
 #if ARSAL_BLEMANAGER_ENABLE_DEBUG
     NSLog(@"%s:%d - %@ : %@", __FUNCTION__, __LINE__, peripheral, [error localizedDescription]);
 #endif
+    
+    if (_isWritingCharacteristic)
+    {
+        if (error != nil)
+        {
+            _writeCharacteristicError = ARSAL_ERROR_BLE_SERVICES_DISCOVERING;
+        }
+        
+        ARSAL_Sem_Post(&writeCharacteristicSem);
+    }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
@@ -728,6 +774,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
         ARSAL_Sem_Post(&discoverServicesSem);
         ARSAL_Sem_Post(&discoverCharacteristicsSem);
         ARSAL_Sem_Post(&configurationSem);
+        ARSAL_Sem_Post(&writeCharacteristicSem);
         
         for (ARSALBLEManagerNotification *notification in [_registeredNotificationCharacteristics allValues])
         {
@@ -772,6 +819,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
         }
         
         while (ARSAL_Sem_Trywait(&configurationSem) == 0)
+        {
+            /* Do nothing*/
+        }
+        
+        while (ARSAL_Sem_Trywait(&writeCharacteristicSem) == 0)
         {
             /* Do nothing*/
         }

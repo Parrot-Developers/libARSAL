@@ -78,6 +78,7 @@
     ARSAL_Sem_t disconnectionSem;
     ARSAL_Sem_t discoverServicesSem;
     ARSAL_Sem_t discoverCharacteristicsSem;
+    ARSAL_Sem_t writeCharacteristicSem;
 
     ARSAL_Sem_t configurationSem;
 }
@@ -94,6 +95,7 @@ DECLARE_SINGLETON_FOR_CLASS(ARSAL_BLEManager);
 - (eARSAL_ERROR)discoverNetworkCharacteristics:(NSArray *)characteristicsUUIDs forService:(CBService *)service;
 - (eARSAL_ERROR)setNotificationCharacteristic:(CBCharacteristic *)characteristic;
 - (BOOL)writeData:(NSData *)data toCharacteristic:(CBCharacteristic *)characteristic;
+- (eARSAL_ERROR)writeDataWithResponse:(NSData *)data toCharacteristic:(CBCharacteristic *)characteristic;
 - (BOOL)isPeripheralConnected;
 - (void)registerNotificationCharacteristics:(NSArray *)characteristicsArray toKey:(NSString*)readCharacteristicsKey;
 - (BOOL)unregisterNotificationCharacteristics:(NSString*)readCharacteristicsKey;

@@ -115,3 +115,8 @@ int ARSAL_Socket_Setsockopt(int sockfd, int level, int optname, const void *optv
 {
     return setsockopt(sockfd, level, optname, optval, optlen);
 }
+
+int ARSAL_Socket_Getsockopt(int sockfd, int level, int optname, const void *optval, socklen_t *optlen)
+{
+    return getsockopt(sockfd, level, optname, optval, optlen);
+}

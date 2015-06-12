@@ -49,14 +49,14 @@
  */
 typedef enum
 {
-    ARSAL_PRINT_FATAL,    /**< The fatal level, print on release and debug mode */
-    ARSAL_PRINT_ERROR,    /**< The error level, print on release and debug mode */
-    ARSAL_PRINT_WARNING,  /**< The warning level, print on release and debug mode */
-    ARSAL_PRINT_INFO,     /**< The info level, print on release and debug mode */
-    ARSAL_PRINT_DEBUG,    /**< The debug level, print on debug mode only */
-    ARSAL_PRINT_VERBOSE,  /**< The verbose level, print on debug mode only */
+    ARSAL_PRINT_FATAL,    /**< The fatal level. The highest level, always printed */
+    ARSAL_PRINT_ERROR,    /**< The error level. */
+    ARSAL_PRINT_WARNING,  /**< The warning level. */
+    ARSAL_PRINT_INFO,     /**< The info level. */
+    ARSAL_PRINT_DEBUG,    /**< The debug level. */
+    ARSAL_PRINT_VERBOSE,  /**< The verbose level. The lowest usable level */
 
-    ARSAL_PRINT_MAX,      /**< The maximum of enum, do not use !*/
+    ARSAL_PRINT_MAX,      /**< The maximum of enum, do not use ! */
 } eARSAL_PRINT_LEVEL;
 
 #define     ARSAL_PRINT_DATE_STRING_LENGTH 9        // HH:MM:SS\0
@@ -73,51 +73,39 @@ typedef enum
  * @param format The format string to print
  * @param ... The format parameters
  */
-#if defined(DEBUG)
 #define ARSAL_PRINT(level, tag, format, ...)                            \
     do                                                                  \
     {                                                                   \
-        if (ARSAL_PRINT_MAX > level)                                    \
+        char __nowTimeStr [ARSAL_PRINT_DATE_STRING_LENGTH];             \
+        struct timespec __ts;                                           \
+        struct tm __tm;                                                 \
+        ARSAL_Time_GetLocalTime(&__ts, &__tm);                          \
+        strftime (__nowTimeStr, ARSAL_PRINT_DATE_STRING_LENGTH, "%H:%M:%S", &__tm); \
+        if (!strlen (format) || format[strlen (format)-1] != '\n')      \
         {                                                               \
-            char __nowTimeStr [ARSAL_PRINT_DATE_STRING_LENGTH];         \
-            struct timespec __ts;                                       \
-            struct tm __tm;                                             \
-            ARSAL_Time_GetLocalTime(&__ts, &__tm);                      \
-            strftime (__nowTimeStr, ARSAL_PRINT_DATE_STRING_LENGTH, "%H:%M:%S", &__tm); \
-            if (!strlen (format) || format[strlen (format)-1] != '\n')  \
-            {                                                           \
-                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
-            }                                                           \
-            else                                                        \
-            {                                                           \
-                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
-            }                                                           \
+            ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
         }                                                               \
-        /* NO ELSE : enum value can't be > level */                     \
-    } while (0)
-#else
-#define ARSAL_PRINT(level, tag, format, ...)                            \
-    do                                                                  \
-    {                                                                   \
-        if (ARSAL_PRINT_DEBUG > level)                                  \
+        else                                                            \
         {                                                               \
-            char __nowTimeStr [ARSAL_PRINT_DATE_STRING_LENGTH];         \
-            struct timespec __ts;                                       \
-            struct tm __tm;                                             \
-            ARSAL_Time_GetLocalTime(&__ts, &__tm);                      \
-            strftime (__nowTimeStr, ARSAL_PRINT_DATE_STRING_LENGTH, "%H:%M:%S", &__tm); \
-            if (!strlen (format) || format[strlen (format)-1] != '\n')  \
-            {                                                           \
-                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
-            }                                                           \
-            else                                                        \
-            {                                                           \
-                ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
-            }                                                           \
+            ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
         }                                                               \
-        /* NO ELSE : no print in debug mode */                          \
     } while (0)
-#endif
+
+/**
+ * @brief Sets the minimum level of verbosity for logs.
+ * Logs with a lower level won't appear.
+ * Default is "ARSAL_PRINT_INFO" for release builds, "ARSAL_PRINT_VERBOSE" for debug builds.
+ * @param level The minimum level for logs.
+ * @return 0 If the minimum level was set, 1 Otherwise
+ */
+int ARSAL_Print_SetMinimumLevel(eARSAL_PRINT_LEVEL level);
+
+/**
+ * @brief Gets the minimum level of verbosity for logs.
+ * Logs with a level inferior to that will be ignored
+ * @return The current minimum level.
+ */
+eARSAL_PRINT_LEVEL ARSAL_Print_GetMinimumLevel();
 
 /**
  * @brief Prints a formatted output

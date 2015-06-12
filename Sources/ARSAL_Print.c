@@ -43,7 +43,16 @@
 #include <stdarg.h>
 #include <libARSAL/ARSAL_Print.h>
 
-const char* cARSAL_Print_prefixTable[ARSAL_PRINT_MAX] =
+#if defined(DEBUG)
+static eARSAL_PRINT_LEVEL minLevel = ARSAL_PRINT_VERBOSE;
+#else
+static eARSAL_PRINT_LEVEL minLevel = ARSAL_PRINT_INFO;
+#endif
+
+static ARSAL_Print_Callback_t ARSAL_Print_Callback = NULL;
+
+
+static const char* cARSAL_Print_prefixTable[ARSAL_PRINT_MAX] =
 {
     [ARSAL_PRINT_FATAL]   = "[WTF]",
     [ARSAL_PRINT_ERROR]   = "[ERR]",
@@ -114,7 +123,25 @@ static int ARSAL_Print_PrintRaw_VA(eARSAL_PRINT_LEVEL level, const char *tag, co
 }
 #endif
 
-ARSAL_Print_Callback_t ARSAL_Print_Callback = NULL;
+int ARSAL_Print_SetMinimumLevel(eARSAL_PRINT_LEVEL level)
+{
+    int res = 1;
+
+    if (level <= ARSAL_PRINT_VERBOSE &&
+        level >= ARSAL_PRINT_FATAL)
+    {
+        minLevel = level;
+        res = 0;
+    }
+
+    return res;
+}
+
+eARSAL_PRINT_LEVEL ARSAL_Print_GetMinimumLevel()
+{
+    return minLevel;
+}
+
 void ARSAL_Print_SetCallback( ARSAL_Print_Callback_t callback)
 {
     ARSAL_Print_Callback = callback;
@@ -124,6 +151,11 @@ int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *
 {
     int result = -1;
     va_list va;
+
+    if (level > minLevel)
+    {
+        return result;
+    }
 
     va_start(va, format);
     {

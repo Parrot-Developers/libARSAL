@@ -42,45 +42,21 @@ import java.net.UnknownHostException;
 public class ARSALPrint
 {
 
-    private static boolean hasLog;
-    private static Method logwtf;
-    private static Method loge;
-    private static Method logw;
-    private static Method logi;
-    private static Method logd;
-    private static Method logv;
-
-    private static boolean displayDebugPrints = false;
-    private static boolean displayVerbosePrints = false;
-
-    static
-    {
-        try
-        {
-            Class<?> logClass = Class.forName ("android.util.Log");
-            logwtf = logClass.getDeclaredMethod ("wtf", String.class, String.class);
-            loge = logClass.getDeclaredMethod ("e", String.class, String.class);
-            logw = logClass.getDeclaredMethod ("w", String.class, String.class);
-            logi = logClass.getDeclaredMethod ("i", String.class, String.class);
-            logd = logClass.getDeclaredMethod ("d", String.class, String.class);
-            logv = logClass.getDeclaredMethod ("v", String.class, String.class);
-            hasLog = true;
-        }
-        catch (Exception e)
-        {
-            logwtf = null;
-            loge = null;
-            logw = null;
-            logi = null;
-            logd = null;
-            logv = null;
-            hasLog = false;
-        }
-    }
-
     private ARSALPrint ()
     {
         // Do nothing in this constructor
+    }
+
+    public static boolean setMinimumLogLevel(ARSAL_PRINT_LEVEL_ENUM level)
+    {
+        return nativeSetMinLevel(level.getValue());
+    }
+
+    public static ARSAL_PRINT_LEVEL_ENUM getMinimumLogLevel()
+    {
+        int i_val = nativeGetMinLevel();
+        ARSAL_PRINT_LEVEL_ENUM ret = ARSAL_PRINT_LEVEL_ENUM.getFromValue(i_val);
+        return ret;
     }
 
     private static String getStackTraceString(Throwable tr)
@@ -170,115 +146,10 @@ public class ARSALPrint
 
     public static void print (ARSAL_PRINT_LEVEL_ENUM level, String tag, String message)
     {
-        if (message.endsWith ("\n"))
-        {
-            internalPrint (level, tag, message);
-        }
-        else
-        {
-            internalPrint (level, tag, message + "\n");
-        }
+        nativePrint (level.getValue(), tag, message);
     }
 
-    private static void internalPrint (ARSAL_PRINT_LEVEL_ENUM level, String tag, String message)
-    {
-        if (hasLog)
-        {
-            try
-            {
-                switch (level)
-                {
-                case ARSAL_PRINT_FATAL:
-                    logwtf.invoke (null, tag, message);
-                    break;
-                case ARSAL_PRINT_ERROR:
-                    loge.invoke (null, tag, message);
-                    break;
-                case ARSAL_PRINT_WARNING:
-                    logw.invoke (null, tag, message);
-                    break;
-                case ARSAL_PRINT_INFO:
-                    logi.invoke (null, tag, message);
-                    break;
-                case ARSAL_PRINT_DEBUG:
-                    if (displayDebugPrints)
-                    {
-                        logd.invoke (null, tag, message);
-                    }
-                    break;
-                case ARSAL_PRINT_VERBOSE:
-                    if (displayVerbosePrints)
-                    {
-                        logv.invoke (null, tag, message);
-                    }
-                    break;
-                default:
-                    System.err.println ("Unknown print level tag : " + level);
-                    logwtf.invoke (null, tag, message);
-                    break;
-                }
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace ();
-            }
-        }
-        else
-        {
-            Date now = new Date ();
-            SimpleDateFormat sdf = new SimpleDateFormat ("HH:mm:ss:SSS");
-            String formattedDate = sdf.format (now);
-            switch (level)
-            {
-            case ARSAL_PRINT_FATAL:
-                System.err.print ("[WTF] " + tag + " | " + formattedDate + " | " + message);
-                break;
-            case ARSAL_PRINT_ERROR:
-                System.err.print ("[ERR] " + tag + " | " + formattedDate + " | " + message);
-                break;
-            case ARSAL_PRINT_WARNING:
-                System.out.print ("[WNG] " + tag + " | " + formattedDate + " | " + message);
-                break;
-            case ARSAL_PRINT_INFO:
-                System.out.print ("[INF] " + tag + " | " + formattedDate + " | " + message);
-                break;
-            case ARSAL_PRINT_DEBUG:
-                if (displayDebugPrints)
-                {
-                    System.out.print ("[DGB] " + tag + " | " + formattedDate + " | " + message);
-                }
-                break;
-            case ARSAL_PRINT_VERBOSE:
-                if (displayVerbosePrints)
-                {
-                    System.out.print ("[VRB] " + tag + " | " + formattedDate + " | " + message);
-                }
-                break;
-            default:
-                System.err.println ("Unknown print level tag : " + level);
-                System.err.print ("[WTF] " + tag + " | " + formattedDate + " | " + message);
-                break;
-            }
-        }
-    }
-
-    public static void enableDebugPrints ()
-    {
-        displayDebugPrints = true;
-    }
-
-    public static void disableDebugPrints ()
-    {
-        displayDebugPrints = false;
-    }
-
-    public static void enableVerbosePrints ()
-    {
-        displayVerbosePrints = true;
-    }
-
-    public static void disableVerbosePrints ()
-    {
-        displayVerbosePrints = false;
-    }
+    private static native void nativePrint (int level, String tag, String message);
+    private static native boolean nativeSetMinLevel(int level);
+    private static native int nativeGetMinLevel();
 }

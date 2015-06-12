@@ -192,7 +192,7 @@ int ARSAL_Socket_Close(int sockfd);
  * @param optlen the length of the option value
  * @retval On success, 0 is returned. Otherwise, -1 is returned, and errno is set appropriately. (See errno.h)
  */
-int ARSAL_Socket_Setsockopt(int sockfd, int level, int optname,const void *optval, socklen_t optlen);
+int ARSAL_Socket_Setsockopt(int sockfd, int level, int optname, const void *optval, socklen_t optlen);
 
 /**
  * @brief Get the socket options
@@ -204,6 +204,6 @@ int ARSAL_Socket_Setsockopt(int sockfd, int level, int optname,const void *optva
  * @param optlen the length of the option value
  * @retval On success, 0 is returned. Otherwise, -1 is returned, and errno is set appropriately. (See errno.h)
  */
-int ARSAL_Socket_Getsockopt(int sockfd, int level, int optname,const void *optval, socklen_t *optlen);
+int ARSAL_Socket_Getsockopt(int sockfd, int level, int optname, void *optval, socklen_t *optlen);
 
 #endif // _ARSAL_SOCKET_H_

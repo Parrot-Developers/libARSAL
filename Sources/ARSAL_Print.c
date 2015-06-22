@@ -147,6 +147,29 @@ void ARSAL_Print_SetCallback( ARSAL_Print_Callback_t callback)
     ARSAL_Print_Callback = callback;
 }
 
+const char* ARSAL_Print_GetLevelDescription(eARSAL_PRINT_LEVEL level)
+{
+    eARSAL_PRINT_LEVEL levelToDescribe;
+    
+    switch(level)
+    {
+        case ARSAL_PRINT_ERROR:
+        case ARSAL_PRINT_FATAL:
+        case ARSAL_PRINT_WARNING:
+        case ARSAL_PRINT_INFO:
+        case ARSAL_PRINT_DEBUG:
+        case ARSAL_PRINT_VERBOSE:
+            levelToDescribe = level;
+            break;
+            
+        default:
+            levelToDescribe = ARSAL_PRINT_FATAL;
+            break;
+    }
+    
+    return cARSAL_Print_prefixTable[levelToDescribe];
+}
+
 int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...)
 {
     int result = -1;

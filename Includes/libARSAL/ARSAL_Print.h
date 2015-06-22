@@ -119,6 +119,13 @@ eARSAL_PRINT_LEVEL ARSAL_Print_GetMinimumLevel();
  */
 int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...);
 
+/**
+ * @brief Transform a level into an intelligible string
+ * @param level The level of output
+ * @retval A const string describing the level. If level is not known, returns the description of the FATAL level
+ */
+const char* ARSAL_Print_GetLevelDescription(eARSAL_PRINT_LEVEL level);
+
 #include <stdarg.h>
 typedef int (*ARSAL_Print_Callback_t) (eARSAL_PRINT_LEVEL level, const char *tag, const char *format, va_list va);
 void ARSAL_Print_SetCallback( ARSAL_Print_Callback_t callback);

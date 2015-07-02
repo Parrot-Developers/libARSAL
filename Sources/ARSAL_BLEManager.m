@@ -197,6 +197,14 @@
     int ret = ARSAL_Sem_Post(&readCharacteristicsSem);
     return (ret == 0) ? YES : NO;
 }
+
+- (void)resetNotification
+{
+    while (ARSAL_Sem_Trywait(&readCharacteristicsSem) == 0)
+    {
+        /* Do nothing*/
+    }
+}
 @end
 
 #pragma mark ARSAL_BLEManager implementation
@@ -494,6 +502,24 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     if (notification != nil)
     {
         [notification signalNotification];
+        result = YES;
+    }
+    
+    return result;
+}
+
+- (BOOL)resetReadNotification:(NSString *)readCharacteristicsKey
+{
+    BOOL result = NO;
+#if ARSAL_BLEMANAGER_ENABLE_DEBUG
+    NSLog(@"%s:%d", __FUNCTION__, __LINE__);
+#endif
+    
+    ARSALBLEManagerNotification *notification = [_registeredNotificationCharacteristics objectForKey:readCharacteristicsKey];
+    
+    if (notification != nil)
+    {
+        [notification resetNotification];
         result = YES;
     }
     

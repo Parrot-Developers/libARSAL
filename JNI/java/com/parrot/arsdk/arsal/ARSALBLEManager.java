@@ -652,21 +652,29 @@ public class ARSALBLEManager
                 
                 boolean notifSet = localActiveGatt.setCharacteristicNotification (characteristic, true);
                 BluetoothGattDescriptor descriptor = characteristic.getDescriptor(ARSALBLEMANAGER_CHARACTERISTIC_UPDATE_NOTIFICATION_DESCRIPTOR_UUID);
-                boolean valueSet = descriptor.setValue (BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-                boolean descriptorWriten = localActiveGatt.writeDescriptor (descriptor);
-                /* wait the configuration semaphore*/
-                try
+                if (descriptor != null)
                 {
-                    configurationSem.acquire ();
-                    result = configurationCharacteristicError;
-                    
+                    boolean valueSet = descriptor.setValue (BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+                    boolean descriptorWriten = localActiveGatt.writeDescriptor (descriptor);
+
+                    /* wait the configuration semaphore*/
+                    try
+                    {
+                        configurationSem.acquire ();
+                        result = configurationCharacteristicError;
+
+                    }
+                    catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                        result = ARSAL_ERROR_ENUM.ARSAL_ERROR;
+                    }
                 }
-                catch (InterruptedException e)
+                else
                 {
-                    e.printStackTrace();
-                    result = ARSAL_ERROR_ENUM.ARSAL_ERROR;
+                    ARSALPrint.w(TAG, "setCharacteristicNotification " + characteristic.getUuid() + " - BluetoothGattDescriptor " + ARSALBLEMANAGER_CHARACTERISTIC_UPDATE_NOTIFICATION_DESCRIPTOR_UUID + " is null.");
+                    result = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_CHARACTERISTIC_CONFIGURING;
                 }
-                
                 isConfiguringCharacteristics = false;
             }
             else

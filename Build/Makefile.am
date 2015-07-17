@@ -22,14 +22,6 @@ HEADER_FILES                           +=  ../Includes/libARSAL/ARSAL_CentralMan
                                            ../Includes/libARSAL/ARSAL_BLEManager.h
 endif
 
-if HAVE_COMMONDIGEST
-
-endif
-
-if HAVE_OPENSSL
-
-endif
-
 # The sources to add to the library and to add to the source distribution
 SOURCE_FILES                            =   $(HEADER_FILES)             \
                                             ../Sources/ARSAL_Time.c     \
@@ -40,20 +32,13 @@ SOURCE_FILES                            =   $(HEADER_FILES)             \
                                             ../Sources/ARSAL_Print.c    \
                                             ../Sources/ARSAL_Ftw.c      \
                                             ../Sources/ARSAL_MD5_Manager.c      \
-                                            ../Sources/ARSAL_Error.c
+                                            ../Sources/ARSAL_Error.c    \
+                                            ../Sources/ARSAL_MD5.c      \
+                                            ../Sources/ARSAL_MD5.h
 
 if HAVE_COREBLUETOOTH
 SOURCE_FILES                           +=  ../Sources/ARSAL_CentralManager.m \
                                            ../Sources/ARSAL_BLEManager.m
-endif
-
-if HAVE_COMMONDIGEST
-SOURCE_FILES                           +=  ../Sources/ARSAL_MD5.m \
-                                           ../Sources/ARSAL_MD5.h
-endif
-
-if HAVE_OPENSSL
-SOURCE_FILES                           +=  ../Sources/ARSAL_MD5_OpenSSL.c
 endif
 
 # The library names to build (note we are building static and shared libs)

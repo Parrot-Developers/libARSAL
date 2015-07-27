@@ -110,7 +110,7 @@ eARSAL_ERROR ARSAL_MD5_Compute(void *md5Object, const char *filePath, uint8_t *m
     eARSAL_ERROR result = ARSAL_OK;
     uint8_t block[1024];
     MD5_CTX ctx;
-    FILE *file;
+    FILE *file = NULL;
     size_t count;
     
     ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "");

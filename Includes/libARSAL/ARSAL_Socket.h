@@ -40,7 +40,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <sys/uio.h>
+
+struct iovec;
 
 /**
  * @brief Creates an endpoint for communication and returns a descriptor.

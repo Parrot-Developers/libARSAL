@@ -80,3 +80,14 @@ int ARSAL_Thread_Destroy(ARSAL_Thread_t *thread)
 
     return result;
 }
+
+int ARSAL_Thread_GetThreadID(void)
+{
+    int ret = -1;
+
+#if defined(HAVE_PTHREAD_H)
+    ret = pthread_self();
+#endif
+
+    return ret;
+}

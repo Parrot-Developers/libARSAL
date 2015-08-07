@@ -32,7 +32,7 @@ SOURCE_FILES                            =   $(HEADER_FILES)             \
                                             ../Sources/ARSAL_Print.c    \
                                             ../Sources/ARSAL_Ftw.c      \
                                             ../Sources/ARSAL_MD5_Manager.c      \
-                                            ../Sources/ARSAL_Error.c    \
+                                            ../gen/Sources/ARSAL_Error.c    \
                                             ../Sources/ARSAL_MD5.c      \
                                             ../Sources/ARSAL_MD5.h      \
                                             ../Sources/md5.c            \

@@ -40,6 +40,126 @@
 #include <libARSAL/ARSAL_Socket.h>
 #include <errno.h>
 
+#ifdef HAVE_SYS_UIO_H
+#include <sys/uio.h>
+#else
+
+#ifdef HAVE_LIMITS_H
+#include <limits.h>
+#endif
+
+/* IOV_MAX should normally be defined in limits.h. in case it's not, just
+ * take a standard value of 1024. It should not cause issue since we emulate
+ * writev/readv */
+#ifndef IOV_MAX
+#define IOV_MAX 1024
+#endif
+
+/* SSIZE_MAX should normally be defined in limits.h. In case it's not, hope
+ * compiler define __SIZE_MAX__ and derived SSIZE_MAX from it. */
+#ifndef SSIZE_MAX
+#define SSIZE_MAX (__SIZE_MAX__ >> 1)
+#endif
+
+#ifndef HAVE_STRUCT_IOVEC
+struct iovec
+{
+	void *iov_base;
+	size_t iov_len;
+}
+#endif
+
+static ssize_t writev(int sockfd, const struct iovec *iov, int iovcnt)
+{
+    int i;
+    ssize_t wbytes = 0;
+    ssize_t ret = 0;
+    ssize_t sum = 0;
+
+    if (iovcnt <= 0 || iovcnt > IOV_MAX)
+    {
+        errno = EINVAL;
+        return -1;
+    }
+
+    /* check we don't overflow SSIZE_MAX */
+    for (i = 0; i < iovcnt; i++)
+    {
+        if (SSIZE_MAX - sum < iov[i].iov_len)
+        {
+            errno = EINVAL;
+            return -1;
+        }
+
+        sum += iov[i].iov_len;
+    }
+
+    for (i = 0; i < iovcnt; i++)
+    {
+        ret = write(sockfd, iov[i].iov_base, iov[i].iov_len);
+        if (ret < 0)
+        {
+            return -1;
+        }
+
+        wbytes += ret;
+
+        /* short write means we can't proceed to the next area so break */
+        if (ret < iov[i].iov_len)
+        {
+            break;
+        }
+    }
+
+    return wbytes;
+}
+
+static ssize_t readv(int sockfd, const struct iovec *iov, int iovcnt)
+{
+    int i;
+    ssize_t rbytes = 0;
+    ssize_t ret = 0;
+    ssize_t sum = 0;
+
+    if (iovcnt <= 0 || iovcnt > IOV_MAX)
+    {
+        errno = EINVAL;
+        return -1;
+    }
+
+    /* check we don't overflow SSIZE_MAX */
+    for (i = 0; i < iovcnt; i++)
+    {
+        if (SSIZE_MAX - sum < iov[i].iov_len)
+        {
+            errno = EINVAL;
+            return -1;
+        }
+
+        sum += iov[i].iov_len;
+    }
+
+    for (i = 0; i < iovcnt; i++)
+    {
+        ret = read(sockfd, iov[i].iov_base, iov[i].iov_len);
+        if (ret < 0)
+        {
+            return -1;
+        }
+
+        rbytes += ret;
+
+        /* short read means we can't proceed to the next area */
+        if (ret < iov[i].iov_len)
+        {
+            break;
+        }
+    }
+
+    return rbytes;
+}
+#endif
+
 int ARSAL_Socket_Create(int domain, int type, int protocol)
 {
     return socket(domain, type, protocol);

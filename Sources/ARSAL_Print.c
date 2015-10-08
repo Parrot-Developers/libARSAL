@@ -41,6 +41,8 @@
 #endif
 #include <stdio.h>
 #include <stdarg.h>
+#include <string.h>
+#include <errno.h>
 #include <libARSAL/ARSAL_Print.h>
 
 #if defined(DEBUG)
@@ -190,4 +192,82 @@ int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *
     va_end(va);
 
     return result;
+}
+
+void ARSAL_Print_DumpData(FILE *file, uint8_t tag, const void *data, size_t size, size_t sizeDump, const struct timespec *ts)
+{
+    uint64_t timestampUS = 0;
+    struct timespec ts2;
+    struct {
+        uint8_t magic;
+        uint8_t tag;
+        uint8_t size[4];
+        uint8_t sizeDump[4];
+        uint8_t ts[6];
+    } header;
+
+    if (file == NULL || data == NULL)
+        return;
+
+    if (sizeDump == 0)
+        sizeDump = size;
+
+    if (ts == NULL)
+        ARSAL_Time_GetTime(&ts2);
+    else
+        ts2 = *ts;
+    timestampUS = (uint64_t)ts2.tv_sec * 1000 * 1000 + ts2.tv_nsec / 1000;
+
+    /* Setup header */
+    header.magic = '!';
+    header.tag = tag;
+    header.size[0] = size & 0xff;
+    header.size[1] = (size >> 8) & 0xff;
+    header.size[2] = (size >> 16) & 0xff;
+    header.size[3] = (size >> 24) & 0xff;
+    header.sizeDump[0] = sizeDump & 0xff;
+    header.sizeDump[1] = (sizeDump >> 8) & 0xff;
+    header.sizeDump[2] = (sizeDump >> 16) & 0xff;
+    header.sizeDump[3] = (sizeDump >> 24) & 0xff;
+    header.ts[0] = timestampUS & 0xff;
+    header.ts[1] = (timestampUS >> 8) & 0xff;
+    header.ts[2] = (timestampUS >> 16) & 0xff;
+    header.ts[3] = (timestampUS >> 24) & 0xff;
+    header.ts[4] = (timestampUS >> 32) & 0xff;
+    header.ts[5] = (timestampUS >> 40) & 0xff;
+
+    /* Write header and data without thread mix */
+    flockfile(file);
+    fwrite(&header, 1, sizeof(header), file);
+    fwrite(data, 1, sizeDump, file);
+    funlockfile(file);
+}
+
+void ARSAL_Print_DumpRotateFiles(const char *basePath, int count)
+{
+    char file0[512] = "";
+    char file1[512] = "";
+
+    int i = 0;
+    if (basePath == NULL)
+        return;
+
+    for (i = count; i > 0; i--)
+    {
+        snprintf(file1, sizeof(file1), "%s.%d", basePath, i);
+        if (i == 1)
+        {
+            snprintf(file0, sizeof(file0), "%s", basePath);
+        }
+        else
+        {
+            snprintf(file0, sizeof(file0), "%s.%d", basePath, i - 1);
+        }
+
+        if (rename(file0, file1)  < 0 && errno != ENOENT)
+        {
+            ARSAL_PRINT (ARSAL_PRINT_ERROR, "Dump", "Failed to rename '%s' in '%s': err=%d(%s)",
+                    file0, file1, errno, strerror(errno));
+        }
+    }
 }

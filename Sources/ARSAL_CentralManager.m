@@ -142,36 +142,6 @@
     }
 }
 
-- (void)centralManager:(CBCentralManager *)central didRetrievePeripherals:(NSArray *)peripherals
-{
-    NSMutableArray *delegateArray = nil;
-    @synchronized (self)
-    {
-        delegateArray = [_delegateArray copy];
-    }
-    
-    for(id<CBCentralManagerDelegate>delegate in delegateArray)
-    {
-        if([delegate respondsToSelector:@selector(centralManager:didRetrievePeripherals:)])
-            [delegate centralManager:central didRetrievePeripherals:peripherals];
-    }
-}
-
-- (void)centralManager:(CBCentralManager *)central didRetrieveConnectedPeripherals:(NSArray *)peripherals
-{
-    NSMutableArray *delegateArray = nil;
-    @synchronized (self)
-    {
-        delegateArray = [_delegateArray copy];
-    }
-    
-    for(id<CBCentralManagerDelegate>delegate in delegateArray)
-    {
-        if([delegate respondsToSelector:@selector(centralManager:didRetrieveConnectedPeripherals:)])
-            [delegate centralManager:central didRetrieveConnectedPeripherals:peripherals];
-    }
-}
-
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
 {
     NSMutableArray *delegateArray = nil;

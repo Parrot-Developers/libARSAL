@@ -34,9 +34,10 @@
  * @date 02/06/2014
  * @author david.flattin.ext@parrot.com
  */
- 
-#import <Foundation/Foundation.h>
-#import <CommonCrypto/CommonDigest.h>
+
+#include <stdio.h>
+
+#include "md5.h"
 #include "libARSAL/ARSAL_Error.h"
 #include "libARSAL/ARSAL_Print.h"
 #include "libARSAL/ARSAL_MD5_Manager.h"
@@ -73,8 +74,8 @@ void ARSAL_MD5_Manager_Close(ARSAL_MD5_Manager_t *manager)
 eARSAL_ERROR ARSAL_MD5_Check(void *md5Object, const char *filePath, const char *md5Txt)
 {
     eARSAL_ERROR result = ARSAL_OK;
-    uint8_t md5[CC_MD5_DIGEST_LENGTH];
-    char md5Src[(CC_MD5_DIGEST_LENGTH * 2) + 1];
+    uint8_t md5[MD5_DIGEST_LENGTH];
+    char md5Src[(MD5_DIGEST_LENGTH * 2) + 1];
     
     ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "");
     
@@ -108,20 +109,20 @@ eARSAL_ERROR ARSAL_MD5_Compute(void *md5Object, const char *filePath, uint8_t *m
 {
     eARSAL_ERROR result = ARSAL_OK;
     uint8_t block[1024];
-    CC_MD5_CTX ctx;
-    FILE *file;
+    MD5_CTX ctx;
+    FILE *file = NULL;
     size_t count;
     
     ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "");
     
-    if ((filePath == NULL) || (md5 == NULL) || (md5Len < CC_MD5_DIGEST_LENGTH))
+    if ((filePath == NULL) || (md5 == NULL) || (md5Len < MD5_DIGEST_LENGTH))
     {
         result = ARSAL_ERROR_BAD_PARAMETER;
     }
     
     if (result == ARSAL_OK)
     {
-        CC_MD5_Init(&ctx);
+        MD5_Init(&ctx);
         file = fopen(filePath, "rb");
         if (file == NULL)
         {
@@ -133,10 +134,10 @@ eARSAL_ERROR ARSAL_MD5_Compute(void *md5Object, const char *filePath, uint8_t *m
     {
         while ((count = fread(block, sizeof(uint8_t), sizeof(block), file)) > 0)
         {
-            CC_MD5_Update(&ctx, block, count);
+            MD5_Update(&ctx, block, count);
         }
         
-        CC_MD5_Final(md5, &ctx);
+        MD5_Final(md5, &ctx);
     }
     
     if (file != NULL)
@@ -152,17 +153,17 @@ eARSAL_ERROR ARSAL_MD5_GetMd5AsTxt(const uint8_t *md5, int md5Len, char *md5Txt,
     eARSAL_ERROR result = ARSAL_OK;
     int i;
     
-    if ((md5 == NULL) || (md5Len < CC_MD5_DIGEST_LENGTH) || (md5Txt == NULL) || (md5TxtLen < ((CC_MD5_DIGEST_LENGTH *2) + 1)))
+    if ((md5 == NULL) || (md5Len < MD5_DIGEST_LENGTH) || (md5Txt == NULL) || (md5TxtLen < ((MD5_DIGEST_LENGTH *2) + 1)))
     {
         result = ARSAL_ERROR_BAD_PARAMETER;
     }
     
-    for (i= 0; i<CC_MD5_DIGEST_LENGTH; i++)
+    for (i= 0; i<MD5_DIGEST_LENGTH; i++)
     {
         sprintf(&md5Txt[i * 2], "%02x", md5[i]);
     }
         
-    md5Txt[CC_MD5_DIGEST_LENGTH * 2] = '\0';
+    md5Txt[MD5_DIGEST_LENGTH * 2] = '\0';
     
     return result;
 }

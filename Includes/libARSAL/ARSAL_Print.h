@@ -38,6 +38,7 @@
 #define _ARSAL_PRINT_H_
 #include <time.h>
 #include <string.h>
+#include <stdio.h>
 #include <libARSAL/ARSAL_Time.h>
 
 #ifdef HAVE_CONFIG_H
@@ -129,5 +130,23 @@ const char* ARSAL_Print_GetLevelDescription(eARSAL_PRINT_LEVEL level);
 #include <stdarg.h>
 typedef int (*ARSAL_Print_Callback_t) (eARSAL_PRINT_LEVEL level, const char *tag, const char *format, va_list va);
 void ARSAL_Print_SetCallback( ARSAL_Print_Callback_t callback);
+
+/**
+ * @brief Dump data in a file.
+ * @param file output file
+ * @param tag 1-byte identifier of data.
+ * @param data data buffer.
+ * @param size size of data.
+ * @param sizeDump size of data to actually dump. 0 to dump everything.
+ * @param ts: timestamp of data. NULL to use current time
+ */
+void ARSAL_Print_DumpData(FILE *file, uint8_t tag, const void *data, size_t size, size_t sizeDump, const struct timespec *ts);
+
+/**
+ * @brief Do a rotation on files used as data dump.
+ * @param basePath base path of the dump. <basePath> will be renamed in <basePath>.1, <basePath>.1 in <basePath>.2 and so on
+ * @param count number of files to keep.
+ */
+void ARSAL_Print_DumpRotateFiles(const char *basePath, int count);
 
 #endif // _ARSAL_PRINT_H_

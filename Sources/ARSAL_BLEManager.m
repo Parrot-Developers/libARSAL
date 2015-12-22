@@ -221,6 +221,7 @@
 @property (nonatomic, assign) BOOL isConfiguringCharacteristics;
 @property (nonatomic, assign) BOOL isWritingCharacteristic;
 @property (nonatomic, strong) NSMutableDictionary *registeredNotificationCharacteristics;
+@property (nonatomic, assign) ARSAL_Mutex_t regNotCharacteristicsMutex;
 
 - (void)ARSAL_BLEManager_Init;
 @end
@@ -256,6 +257,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     ARSAL_Sem_Init(&discoverCharacteristicsSem, 0, 0);
     ARSAL_Sem_Init(&configurationSem, 0, 0);
     ARSAL_Sem_Init(&writeCharacteristicSem, 0, 0);
+    ARSAL_Mutex_Init(&_regNotCharacteristicsMutex);
 }
 
 - (void)dealloc
@@ -266,6 +268,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     ARSAL_Sem_Destroy(&discoverCharacteristicsSem);
     ARSAL_Sem_Destroy(&configurationSem);
     ARSAL_Sem_Destroy(&writeCharacteristicSem);
+    ARSAL_Mutex_Destroy(&_regNotCharacteristicsMutex);
 }
 
 - (BOOL)isPeripheralConnected
@@ -471,7 +474,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     ARSALBLEManagerNotification *notification = [[ARSALBLEManagerNotification alloc] init];
     [notification setCharacteristics:characteristicsArray];
     
+    ARSAL_Mutex_Lock(&_regNotCharacteristicsMutex);
     [_registeredNotificationCharacteristics setObject:notification forKey:readCharacteristicsKey];
+    ARSAL_Mutex_Unlock(&_regNotCharacteristicsMutex);
 }
 
 - (BOOL)unregisterNotificationCharacteristics:(NSString*)readCharacteristicsKey
@@ -481,12 +486,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     NSLog(@"%s:%d", __FUNCTION__, __LINE__);
 #endif
     
+    ARSAL_Mutex_Lock(&_regNotCharacteristicsMutex);
     ARSALBLEManagerNotification *notification = [_registeredNotificationCharacteristics objectForKey:readCharacteristicsKey];
     if (notification != nil)
     {
         result = YES;
         [_registeredNotificationCharacteristics removeObjectForKey:readCharacteristicsKey];
     }
+    ARSAL_Mutex_Unlock(&_regNotCharacteristicsMutex);
+    
     return result;
 }
 
@@ -497,7 +505,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     NSLog(@"%s:%d", __FUNCTION__, __LINE__);
 #endif
     
+    ARSAL_Mutex_Lock(&_regNotCharacteristicsMutex);
     ARSALBLEManagerNotification *notification = [_registeredNotificationCharacteristics objectForKey:readCharacteristicsKey];
+    ARSAL_Mutex_Unlock(&_regNotCharacteristicsMutex);
     
     if (notification != nil)
     {
@@ -515,7 +525,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     NSLog(@"%s:%d", __FUNCTION__, __LINE__);
 #endif
     
+    ARSAL_Mutex_Lock(&_regNotCharacteristicsMutex);
     ARSALBLEManagerNotification *notification = [_registeredNotificationCharacteristics objectForKey:readCharacteristicsKey];
+    ARSAL_Mutex_Unlock(&_regNotCharacteristicsMutex);
     
     if (notification != nil)
     {
@@ -533,7 +545,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     NSLog(@"%s:%d", __FUNCTION__, __LINE__);
 #endif
     
+    ARSAL_Mutex_Lock(&_regNotCharacteristicsMutex);
     ARSALBLEManagerNotification *notification = [_registeredNotificationCharacteristics objectForKey:readCharacteristicsKey];
+    ARSAL_Mutex_Unlock(&_regNotCharacteristicsMutex);
+    
     if (notification != nil)
     {
         error = [notification waitNotification:timeout];
@@ -740,6 +755,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
 #endif
     
     ARSALBLEManagerNotification *foundNotification = nil;
+    
+    ARSAL_Mutex_Lock(&_regNotCharacteristicsMutex);
     for (NSString* key in [_registeredNotificationCharacteristics allKeys])
     {
         ARSALBLEManagerNotification *notification = [_registeredNotificationCharacteristics objectForKey:key];
@@ -758,6 +775,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
             break;
         }
     }
+    ARSAL_Mutex_Unlock(&_regNotCharacteristicsMutex);
     
     if (foundNotification != nil)
     {
@@ -802,10 +820,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
         ARSAL_Sem_Post(&configurationSem);
         ARSAL_Sem_Post(&writeCharacteristicSem);
         
+        ARSAL_Mutex_Lock(&_regNotCharacteristicsMutex);
         for (ARSALBLEManagerNotification *notification in [_registeredNotificationCharacteristics allValues])
         {
             [notification signalNotification];
         }
+        ARSAL_Mutex_Unlock(&_regNotCharacteristicsMutex);
         
         /* disconnectionSem is not post because:
          * if the connection is fail, disconnect is not call.
@@ -854,11 +874,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
             /* Do nothing*/
         }
         
+        ARSAL_Mutex_Lock(&_regNotCharacteristicsMutex);
         for (ARSALBLEManagerNotification *notification in [_registeredNotificationCharacteristics allValues])
         {
             [notification signalNotification];
         }
         [_registeredNotificationCharacteristics removeAllObjects];
+        ARSAL_Mutex_Unlock(&_regNotCharacteristicsMutex);
     }
 }
 

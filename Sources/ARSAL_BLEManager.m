@@ -370,6 +370,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
 
 - (eARSAL_ERROR)connectToPeripheral:(CBPeripheral *)peripheral withCentralManager:(ARSAL_CentralManager *)centralManager
 {
+#if ARSAL_BLEMANAGER_ENABLE_DEBUG
+    NSLog(@"%s:%d : %@", __FUNCTION__, __LINE__, peripheral);
+#endif
     eARSAL_ERROR result = ARSAL_OK;
     const struct timespec connectionTimeout = {
         .tv_sec = ARSAL_BLEMANAGER_CONNECTION_TIMEOUT_SEC,
@@ -413,6 +416,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
 
 - (void)disconnectPeripheral:(CBPeripheral *)peripheral withCentralManager:(ARSAL_CentralManager *)centralManager
 {
+#if ARSAL_BLEMANAGER_ENABLE_DEBUG
+    NSLog(@"%s:%d : %@", __FUNCTION__, __LINE__, peripheral);
+#endif
     @synchronized (self)
     {
         if (self.activePeripheral != nil)
@@ -563,6 +569,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
                 error = ARSAL_ERROR_BLE_NO_DATA;
             }
         }
+    }
+    else
+    {
+        error = ARSAL_ERROR_BLE_CONNECTION;
     }
 
     return error;
@@ -809,6 +819,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
 {
     @synchronized (self)
     {
+        NSDictionary *regCharacteristics = nil;
+        
         /* post all Semaphore to unlock the all the functions */
     #if ARSAL_BLEMANAGER_ENABLE_DEBUG
         NSLog(@"%s:%d", __FUNCTION__, __LINE__);
@@ -821,11 +833,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
         ARSAL_Sem_Post(&writeCharacteristicSem);
         
         ARSAL_Mutex_Lock(&_regNotCharacteristicsMutex);
-        for (ARSALBLEManagerNotification *notification in [_registeredNotificationCharacteristics allValues])
+        regCharacteristics = [_registeredNotificationCharacteristics copy];
+        ARSAL_Mutex_Unlock(&_regNotCharacteristicsMutex);
+        
+        for (ARSALBLEManagerNotification *notification in [regCharacteristics allValues])
         {
             [notification signalNotification];
         }
-        ARSAL_Mutex_Unlock(&_regNotCharacteristicsMutex);
         
         /* disconnectionSem is not post because:
          * if the connection is fail, disconnect is not call.
@@ -839,6 +853,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
 {
     @synchronized (self)
     {
+        NSDictionary *regCharacteristics = nil;
+        
         /* reset all Semaphores */
 #if ARSAL_BLEMANAGER_ENABLE_DEBUG
         NSLog(@"%s:%d", __FUNCTION__, __LINE__);
@@ -875,12 +891,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
         }
         
         ARSAL_Mutex_Lock(&_regNotCharacteristicsMutex);
-        for (ARSALBLEManagerNotification *notification in [_registeredNotificationCharacteristics allValues])
+        regCharacteristics = [_registeredNotificationCharacteristics copy];
+        [_registeredNotificationCharacteristics removeAllObjects];
+        ARSAL_Mutex_Unlock(&_regNotCharacteristicsMutex);
+        
+        for (ARSALBLEManagerNotification *notification in [regCharacteristics allValues])
         {
             [notification signalNotification];
         }
-        [_registeredNotificationCharacteristics removeAllObjects];
-        ARSAL_Mutex_Unlock(&_regNotCharacteristicsMutex);
     }
 }
 

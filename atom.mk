@@ -2,46 +2,76 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_CATEGORY_PATH := dragon/libs
 LOCAL_MODULE := libARSAL
 LOCAL_DESCRIPTION := ARSDK Software Abstraction Layer
+LOCAL_CATEGORY_PATH := dragon/libs
 
-LOCAL_LIBRARIES := ARSDKBuildUtils
-LOCAL_EXPORT_LDLIBS := -larsal
+LOCAL_MODULE_FILENAME := libarsal.so
 
-# Copy in build dir so bootstrap files are generated in build dir
-LOCAL_AUTOTOOLS_COPY_TO_BUILD_DIR := 1
+LOCAL_LIBRARIES :=
 
-# Configure script is not at the root
-LOCAL_AUTOTOOLS_CONFIGURE_SCRIPT := Build/configure
+LOCAL_C_INCLUDES := \
+	$(LOCAL_PATH)/Includes \
+	$(LOCAL_PATH)/Sources
 
-#Autotools variables
-LOCAL_AUTOTOOLS_CONFIGURE_ARGS := 
-
-ifeq ("$(TARGET_OS_FLAVOUR)","android")
-
-LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
-	--disable-static \
-	--enable-shared \
-	--disable-so-version
-
-# Temporary fix to Android build on Mac
-LOCAL_AUTOTOOLS_CONFIGURE_ENV := \
-	ac_cv_objc_compiler_gnu=no
-
-else ifneq ($(filter iphoneos iphonesimulator, $(TARGET_OS_FLAVOUR)),)
-
-LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
-	--enable-static \
-	--disable-shared \
-	OBJCFLAGS=" -x objective-c -fobjc-arc -std=gnu99 $(TARGET_GLOBAL_CFLAGS)" \
-	OBJC="$(TARGET_CC)" \
-	CFLAGS=" -std=gnu99 -x c $(TARGET_GLOBAL_CFLAGS)"
-
+# The config.h that was previousliy generated is now committed in Config dir
+# Select correct one to export for all other modules
+# TODO: either use an alchemy generated one or re-create a single configure
+# just for that.
+ifeq ("$(TARGET_OS)","linux")
+  ifeq ("$(TARGET_OS_FLAVOUR)","android")
+    LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/Config/android
+  else
+    LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/Config/linux
+  endif
+else ifeq ("$(TARGET_OS)","darwin")
+  ifeq ("$(TARGET_OS_FLAVOUR)","native")
+    LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/Config/darwin
+  else
+    LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/Config/ios
+  endif
 endif
 
-define LOCAL_AUTOTOOLS_CMD_POST_UNPACK
-	$(Q) cd $(PRIVATE_SRC_DIR)/Build && ./bootstrap
-endef
+LOCAL_SRC_FILES := \
+	Sources/ARSAL_Ftw.c \
+	Sources/ARSAL_MD5.c \
+	Sources/ARSAL_MD5_Manager.c \
+	Sources/ARSAL_Mutex.c \
+	Sources/ARSAL_Print.c \
+	Sources/ARSAL_Sem.c \
+	Sources/ARSAL_Socket.c \
+	Sources/ARSAL_Time.c \
+	Sources/ARSAL_Thread.c \
+	Sources/md5.c \
+	gen/Sources/ARSAL_Error.c
 
-include $(BUILD_AUTOTOOLS)
+LOCAL_INSTALL_HEADERS := \
+	Includes/libARSAL/ARSAL.h:usr/include/libARSAL/ \
+	Includes/libARSAL/ARSAL_Endianness.h:usr/include/libARSAL/ \
+	Includes/libARSAL/ARSAL_Error.h:usr/include/libARSAL/ \
+	Includes/libARSAL/ARSAL_Ftw.h:usr/include/libARSAL/ \
+	Includes/libARSAL/ARSAL_MD5_Manager.h:usr/include/libARSAL/ \
+	Includes/libARSAL/ARSAL_Mutex.h:usr/include/libARSAL/ \
+	Includes/libARSAL/ARSAL_Print.h:usr/include/libARSAL/ \
+	Includes/libARSAL/ARSAL_Sem.h:usr/include/libARSAL/ \
+	Includes/libARSAL/ARSAL_Singleton.h:usr/include/libARSAL/ \
+	Includes/libARSAL/ARSAL_Socket.h:usr/include/libARSAL/ \
+	Includes/libARSAL/ARSAL_Thread.h:usr/include/libARSAL/ \
+	Includes/libARSAL/ARSAL_Time.h:usr/include/libARSAL/
+
+ifeq ("$(TARGET_OS_FLAVOUR)","android")
+LOCAL_LDLIBS += -llog
+endif
+
+ifeq ("$(TARGET_OS)","darwin")
+ifneq ("$(TARGET_OS_FLAVOUR)","native")
+LOCAL_SRC_FILES += \
+	Sources/ARSAL_BLEManager.m \
+	Sources/ARSAL_CentralManager.m
+LOCAL_INSTALL_HEADERS += \
+	Includes/libARSAL/ARSAL_BLEManager.h:usr/include/libARSAL/ \
+	Includes/libARSAL/ARSAL_CentralManager.h:usr/include/libARSAL/
+endif
+endif
+
+include $(BUILD_LIBRARY)

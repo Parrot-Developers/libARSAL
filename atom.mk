@@ -64,14 +64,15 @@ LOCAL_LDLIBS += -llog
 endif
 
 ifeq ("$(TARGET_OS)","darwin")
-ifneq ("$(TARGET_OS_FLAVOUR)","native")
 LOCAL_SRC_FILES += \
 	Sources/ARSAL_BLEManager.m \
 	Sources/ARSAL_CentralManager.m
 LOCAL_INSTALL_HEADERS += \
 	Includes/libARSAL/ARSAL_BLEManager.h:usr/include/libARSAL/ \
 	Includes/libARSAL/ARSAL_CentralManager.h:usr/include/libARSAL/
-endif
+LOCAL_LDLIBS += \
+	-framework Foundation \
+	-framework CoreBluetooth
 endif
 
 include $(BUILD_LIBRARY)

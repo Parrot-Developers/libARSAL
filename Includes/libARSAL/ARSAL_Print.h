@@ -106,7 +106,7 @@ int ARSAL_Print_SetMinimumLevel(eARSAL_PRINT_LEVEL level);
  * Logs with a level inferior to that will be ignored
  * @return The current minimum level.
  */
-eARSAL_PRINT_LEVEL ARSAL_Print_GetMinimumLevel();
+eARSAL_PRINT_LEVEL ARSAL_Print_GetMinimumLevel(void);
 
 /**
  * @brief Prints a formatted output

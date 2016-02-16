@@ -65,7 +65,7 @@ typedef enum
  *
  * @note User should NEVER try to modify a returned string
  */
-char* ARSAL_Error_ToString (eARSAL_ERROR error);
+const char* ARSAL_Error_ToString (eARSAL_ERROR error);
 
 #endif /* _ARSAL_ERROR_H_ */
 

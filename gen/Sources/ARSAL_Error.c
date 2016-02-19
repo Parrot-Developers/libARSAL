@@ -93,7 +93,6 @@ const char* ARSAL_Error_ToString (eARSAL_ERROR error)
         return "BLE no data";
         break;
     default:
-        return "Unknown value";
         break;
     }
     return "Unknown value";

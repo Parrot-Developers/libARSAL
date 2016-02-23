@@ -51,9 +51,17 @@ int ARSAL_Thread_Create(ARSAL_Thread_t *thread, ARSAL_Thread_Routine_t routine, 
     int result = 0;
 
 #if defined(HAVE_PTHREAD_H)
-    pthread_t *pthread = (pthread_t *)malloc(sizeof(pthread_t));
-    *thread = (ARSAL_Thread_t)pthread;
-    result = pthread_create((pthread_t *)*thread, NULL, routine, arg);
+    pthread_t *pthread = (pthread_t *)calloc(1, sizeof(pthread_t));
+    if (!pthread) {
+        result = -1;
+    } else {
+        result = pthread_create(pthread, NULL, routine, arg);
+        if (result != 0) {
+            free(pthread);
+        } else {
+            *thread = (ARSAL_Thread_t)pthread;
+        }
+    }
 #endif
 
     return result;

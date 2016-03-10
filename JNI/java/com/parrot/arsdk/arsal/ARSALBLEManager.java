@@ -58,6 +58,7 @@ import android.os.Handler;
 import android.bluetooth.BluetoothAdapter;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Looper;
 
 import com.parrot.arsdk.arsal.ARSALPrint;
 
@@ -68,7 +69,7 @@ public class ARSALBLEManager
 
     private static final UUID ARSALBLEMANAGER_CHARACTERISTIC_UPDATE_NOTIFICATION_DESCRIPTOR_UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
 
-    private static final int ARSALBLEMANAGER_CONNECTION_TIMEOUT_SEC = 5;
+    private static final int ARSALBLEMANAGER_CONNECTION_TIMEOUT_SEC = 30;
     private static final int GATT_INTERNAL_ERROR = 133;
     private static final int GATT_INTERRUPT_ERROR = 8;
     private static final int GATT_CONN_FAIL_ESTABLISH = 62; // 0x03E from https://android.googlesource.com/platform/external/bluetooth/bluedroid/+/master/stack/include/gatt_api.h
@@ -255,6 +256,8 @@ public class ARSALBLEManager
         return result;
     }
 
+    private Handler mUIHandler;
+
     /**
      * Constructor
      */
@@ -263,7 +266,7 @@ public class ARSALBLEManager
         this.context = null;
         this.deviceBLEService = null;
         this.activeGatt = null;
-
+        mUIHandler = new Handler(Looper.getMainLooper());
         listener = null;
 
         connectionSem = new Semaphore(0);
@@ -313,6 +316,8 @@ public class ARSALBLEManager
         return ret;
     }
 
+    private BluetoothGatt connectionGatt;
+
     @TargetApi(18)
     public ARSAL_ERROR_ENUM connect(BluetoothDevice deviceBLEService)
     {
@@ -335,13 +340,18 @@ public class ARSALBLEManager
             /* connection to the new activeGatt */
             ARSALPrint.e(TAG, "connection to the new activeGatt");
             ARSALBLEManager.this.deviceBLEService = bluetoothAdapter.getRemoteDevice(deviceBLEService.getAddress());
+            mUIHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    connectionGatt = ARSALBLEManager.this.deviceBLEService.connectGatt(context, false, gattCallback);
+                    if (connectionGatt == null)
+                    {
+                        ARSALPrint.e(TAG, "connect (connectionGatt == null)");
+                        connectionError = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_NOT_CONNECTED;
+                    }
 
-            BluetoothGatt connectionGatt = ARSALBLEManager.this.deviceBLEService.connectGatt(context, false, gattCallback);
-            if (connectionGatt == null)
-            {
-                ARSALPrint.e(TAG, "connect (connectionGatt == null)");
-                connectionError = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_NOT_CONNECTED;
-            }
+                }
+            });
             
             /* wait the connect semaphore*/
             try
@@ -380,20 +390,27 @@ public class ARSALBLEManager
                 e.printStackTrace();
             }
             ARSALPrint.d(TAG, "activeGatt : " + activeGatt + ", result: " + result);
-            if (activeGatt != null)
-            {
-                // TODO see
-                connectionGatt = null;
-            }
-            else
-            {
-                /* Connection failed */
-                if (connectionGatt != null)
-                {
-                    connectionGatt.close();
-                    connectionGatt = null;
+            mUIHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (activeGatt != null)
+                    {
+                        // TODO see
+                        connectionGatt = null;
+                    }
+                    else
+                    {
+                         /* Connection failed */
+                        if (connectionGatt != null)
+                        {
+                            disconnectGatt();
+                            connectionGatt.close();
+                            connectionGatt = null;
+                        }
+                    }
                 }
-            }
+            });
+
         }
         ARSALPrint.d(TAG, "connect ends with result: " + result);
         return result;
@@ -401,18 +418,26 @@ public class ARSALBLEManager
 
     private void disconnectGatt()
     {
-        if (bluetoothManager != null)
-        {
-            BluetoothGatt gatt = activeGatt;
-            if (gatt != null && bluetoothManager.getConnectionState(gatt.getDevice(), BluetoothProfile.GATT) == BluetoothProfile.STATE_CONNECTED)
-            {
-                gatt.disconnect();
+        mUIHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                boolean manualDisconnectGatt = true;
+                if (bluetoothManager != null)
+                {
+                    BluetoothGatt gatt = activeGatt;
+                    if (gatt != null && bluetoothManager.getConnectionState(gatt.getDevice(), BluetoothProfile.GATT) == BluetoothProfile.STATE_CONNECTED)
+                    {
+                        manualDisconnectGatt = false;
+                        gatt.disconnect();
+                    }
+                }
+                if (manualDisconnectGatt) {
+                    ARSALPrint.d(TAG, "disconnect gatt manually " + bluetoothManager + " " + activeGatt);
+                    disconnectionSem.release();
+                }
             }
-            /*else
-            {
-                onDisconectGatt();
-            }*/
-        }
+        });
+
     }
 
     public void disconnect()
@@ -452,30 +477,36 @@ public class ARSALBLEManager
         synchronized (this)
         {
             /* If there is an active Gatt, disconnect it */
-            if (activeGatt != null)
+            if (activeGatt != null && isDeviceConnected)
             {
                 isDiscoveringServices = true;
                 discoverServicesError = ARSAL_ERROR_ENUM.ARSAL_OK;
-                
-                /* run the discovery of the activeGatt services */
-                boolean discoveryRes = activeGatt.discoverServices();
 
-                if (discoveryRes)
+                mUIHandler.post(new Runnable()
                 {
-                    /* wait the discoverServices semaphore*/
-                    try
+                    @Override
+                    public void run()
                     {
-                        discoverServicesSem.acquire();
-                        result = discoverServicesError;
+                        /* run the discovery of the activeGatt services */
+                        boolean discoveryRes = activeGatt.discoverServices();
+                        if (!discoveryRes)
+                        {
+                            discoverServicesError = ARSAL_ERROR_ENUM.ARSAL_ERROR;
+                            discoverServicesSem.release();
+                        }
                     }
-                    catch (InterruptedException e)
-                    {
-                        e.printStackTrace();
-                        result = ARSAL_ERROR_ENUM.ARSAL_ERROR;
-                    }
+                });
+
+
+                /* wait the discoverServices semaphore*/
+                try
+                {
+                    discoverServicesSem.acquire();
+                    result = discoverServicesError;
                 }
-                else
+                catch (InterruptedException e)
                 {
+                    e.printStackTrace();
                     result = ARSAL_ERROR_ENUM.ARSAL_ERROR;
                 }
 
@@ -503,7 +534,7 @@ public class ARSALBLEManager
     private final BluetoothGattCallback gattCallback = new BluetoothGattCallback()
     {
         @Override
-        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState)
+        public void onConnectionStateChange(final BluetoothGatt gatt, int status, int newState)
         {
             ARSALPrint.w(TAG, "onConnectionStateChange : status = " + status + " newState = " + newState);
 
@@ -526,12 +557,18 @@ public class ARSALBLEManager
                 case BluetoothGatt.GATT_SUCCESS:
                     if (newState == BluetoothProfile.STATE_CONNECTED)
                     {
-                        activeGatt = gatt;
-                        isDeviceConnected = true;
-                        connectionError = ARSAL_ERROR_ENUM.ARSAL_OK;
-                        
-                        /* post a connect Semaphore */
-                        connectionSem.release();
+                        mUIHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                activeGatt = gatt;
+                                isDeviceConnected = true;
+                                connectionError = ARSAL_ERROR_ENUM.ARSAL_OK;
+
+                                /* post a connect Semaphore */
+                                connectionSem.release();
+                            }
+                        });
+
                     }
                     break;
 
@@ -948,10 +985,15 @@ public class ARSALBLEManager
 
     private void closeGatt()
     {
-        if (activeGatt != null)
-        {
-            activeGatt.close();
-            activeGatt = null;
-        }
+        mUIHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (activeGatt != null)
+                {
+                    activeGatt.close();
+                    activeGatt = null;
+                }
+            }
+        });
     }
 }

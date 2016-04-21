@@ -139,7 +139,7 @@ int ARSAL_Print_SetMinimumLevel(eARSAL_PRINT_LEVEL level)
     return res;
 }
 
-eARSAL_PRINT_LEVEL ARSAL_Print_GetMinimumLevel()
+eARSAL_PRINT_LEVEL ARSAL_Print_GetMinimumLevel(void)
 {
     return minLevel;
 }

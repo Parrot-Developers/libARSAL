@@ -70,21 +70,35 @@ dnl on some platform iovec is declared in sys/socket.h
 AC_CHECK_TYPES([struct iovec],,,[[#include <sys/socket.h>]
     AC_INCLUDES_DEFAULT])
 
+HAVE_MUTEX="no"
+
 # Checks for pthread.h
 AC_CHECK_HEADERS([pthread.h], [
-    AC_CHECK_FUNC(pthread_create, , [
-        AC_CHECK_LIB(pthread, pthread_create,
-        LIBS="$LIBS -pthread", AC_MSG_ERROR(The pthread library is required in order to build the library!))
+    AC_CHECK_FUNC(pthread_create, [
+        HAVE_MUTEX="yes"
+    ], [
+        AC_CHECK_LIB(pthread, pthread_create, [
+            LIBS="$LIBS -pthread"
+            HAVE_MUTEX="yes"
+        ],)
     ])
-], AC_MSG_ERROR(The pthread header is required in order to build the library!))
+],)
 
 # Checks for semaphore.h
 AC_CHECK_HEADERS([semaphore.h], , AC_MSG_ERROR(The semaphore header is required in order to build the library!))
 
 #Check for semaphore functions
-AC_CHECK_FUNCS([sem_init sem_destroy sem_wait sem_trywait sem_timedwait sem_post sem_getvalue], ,
-	AC_MSG_WARN(Your semaphore implmentation does not support all needed functions --> Using custom one)
+AC_CHECK_FUNCS([sem_init sem_destroy sem_wait sem_trywait sem_timedwait sem_post sem_getvalue], HAVE_SEMAPHORE="yes", [
+    AC_MSG_WARN(Your semaphore implmentation does not support all needed functions --> Using custom one)
+    HAVE_SEMAPHORE="no"]
 )
+
+dnl we need at least a semaphore implementation or a mutex/varcond implementation
+if test "x$HAVE_MUTEX" = "xno"; then
+    if test "x$HAVE_SEMAPHORE" = "xno"; then
+        AC_MSG_ERROR(Building without at least a mutex or semaphore implementation is unsupported)
+    fi
+fi
 
 # Checks for time functions
 AC_CHECK_FUNCS([time], , AC_MSG_ERROR(Your platform does not support time))

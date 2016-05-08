@@ -74,4 +74,11 @@ int ARSAL_Thread_Join(ARSAL_Thread_t thread, void **retval);
  */
 int ARSAL_Thread_Destroy(ARSAL_Thread_t *thread);
 
+/**
+ * @brief Get thread id
+ *
+ * @retval the thread id or -1 on error.
+ */
+int ARSAL_Thread_GetThreadID(void);
+
 #endif // _ARSAL_THREAD_H_

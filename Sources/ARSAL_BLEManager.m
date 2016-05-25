@@ -143,7 +143,7 @@
     ARSAL_Mutex_Lock(&readCharacteristicMutex);
 
     NSMutableArray *removeNotifications = [NSMutableArray array];
-    for (int i=0; (i < maxCount) && (i < [_notificationsArray count]); i++)
+    for (int i=0; (i < maxCount) && (i < (int)[_notificationsArray count]); i++)
     {
         NSObject *obj = _notificationsArray[i];
         [notificationsArray addObject:obj];

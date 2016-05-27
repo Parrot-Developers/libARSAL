@@ -551,23 +551,30 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(ARSAL_BLEManager, ARSAL_BLEManager_Init);
     NSLog(@"%s:%d", __FUNCTION__, __LINE__);
 #endif
 
-    ARSAL_Mutex_Lock(&_regNotCharacteristicsMutex);
-    ARSALBLEManagerNotification *notification = [_registeredNotificationCharacteristics objectForKey:readCharacteristicsKey];
-    ARSAL_Mutex_Unlock(&_regNotCharacteristicsMutex);
-
-    if (notification != nil)
+    if([self isPeripheralConnected])
     {
-        error = [notification waitNotification:timeout];
-        if (error == ARSAL_OK)
+        ARSAL_Mutex_Lock(&_regNotCharacteristicsMutex);
+        ARSALBLEManagerNotification *notification = [_registeredNotificationCharacteristics objectForKey:readCharacteristicsKey];
+        ARSAL_Mutex_Unlock(&_regNotCharacteristicsMutex);
+
+        if (notification != nil)
         {
-            if ([notification.notificationsArray count] > 0)
+            error = [notification waitNotification:timeout];
+            if (error == ARSAL_OK)
             {
-                [notification getAllNotifications:notificationArray maxCount:maxCount];
+                if ([notification.notificationsArray count] > 0)
+                {
+                    [notification getAllNotifications:notificationArray maxCount:maxCount];
+                }
+                else
+                {
+                    error = ARSAL_ERROR_BLE_NO_DATA;
+                }
             }
-            else
-            {
-                error = ARSAL_ERROR_BLE_NO_DATA;
-            }
+        }
+        else
+        {
+            error = ARSAL_ERROR_BLE_CONNECTION;
         }
     }
     else

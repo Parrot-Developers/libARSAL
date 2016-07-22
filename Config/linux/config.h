@@ -40,7 +40,7 @@
 /* #undef HAVE_ANDROID_LOG_H */
 
 /* Define to 1 if you have the `clock_gettime' function. */
-/* #undef HAVE_CLOCK_GETTIME */
+#define HAVE_CLOCK_GETTIME 1
 
 /* Define to 1 if you have the <CoreBluetooth/CoreBluetooth.h> header file. */
 /* #undef HAVE_COREBLUETOOTH_COREBLUETOOTH_H */

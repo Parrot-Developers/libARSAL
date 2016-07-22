@@ -40,7 +40,7 @@
 
 #include <libARSAL/ARSAL_Error.h>
 
-char* ARSAL_Error_ToString (eARSAL_ERROR error)
+const char* ARSAL_Error_ToString (eARSAL_ERROR error)
 {
     switch (error)
     {
@@ -93,7 +93,6 @@ char* ARSAL_Error_ToString (eARSAL_ERROR error)
         return "BLE no data";
         break;
     default:
-        return "Unknown value";
         break;
     }
     return "Unknown value";

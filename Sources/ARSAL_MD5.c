@@ -152,18 +152,20 @@ eARSAL_ERROR ARSAL_MD5_GetMd5AsTxt(const uint8_t *md5, int md5Len, char *md5Txt,
 {
     eARSAL_ERROR result = ARSAL_OK;
     int i;
-    
+
     if ((md5 == NULL) || (md5Len < MD5_DIGEST_LENGTH) || (md5Txt == NULL) || (md5TxtLen < ((MD5_DIGEST_LENGTH *2) + 1)))
     {
         result = ARSAL_ERROR_BAD_PARAMETER;
     }
-    
-    for (i= 0; i<MD5_DIGEST_LENGTH; i++)
+    else
     {
-        sprintf(&md5Txt[i * 2], "%02x", md5[i]);
+        for (i= 0; i<MD5_DIGEST_LENGTH; i++)
+        {
+            sprintf(&md5Txt[i * 2], "%02x", md5[i]);
+        }
+
+        md5Txt[MD5_DIGEST_LENGTH * 2] = '\0';
     }
-        
-    md5Txt[MD5_DIGEST_LENGTH * 2] = '\0';
-    
+
     return result;
 }

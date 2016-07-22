@@ -32,6 +32,9 @@ else ifeq ("$(TARGET_OS)","darwin")
   endif
 endif
 
+LOCAL_CFLAGS := \
+	-DHAVE_CONFIG_H
+
 LOCAL_SRC_FILES := \
 	Sources/ARSAL_Ftw.c \
 	Sources/ARSAL_MD5.c \

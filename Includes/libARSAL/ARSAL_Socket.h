@@ -43,6 +43,21 @@
 #include <sys/uio.h>
 
 /**
+ * @brief Type of Service class selector
+ */
+typedef enum {
+    ARSAL_SOCKET_CLASS_SELECTOR_CS0 = 0,
+    ARSAL_SOCKET_CLASS_SELECTOR_UNSPECIFIED = ARSAL_SOCKET_CLASS_SELECTOR_CS0,
+    ARSAL_SOCKET_CLASS_SELECTOR_CS1 = 32, /* 0x20 */
+    ARSAL_SOCKET_CLASS_SELECTOR_CS2 = 64, /* 0x40 */
+    ARSAL_SOCKET_CLASS_SELECTOR_CS3 = 96, /* 0x60 */
+    ARSAL_SOCKET_CLASS_SELECTOR_CS4 = 128, /* 0x80 */
+    ARSAL_SOCKET_CLASS_SELECTOR_CS5 = 160, /* 0xA0 */
+    ARSAL_SOCKET_CLASS_SELECTOR_CS6 = 192, /* 0xC0 */
+    ARSAL_SOCKET_CLASS_SELECTOR_CS7 = 224, /* 0xE0 */
+} eARSAL_SOCKET_CLASS_SELECTOR;
+
+/**
  * @brief Creates an endpoint for communication and returns a descriptor.
  *
  * @param domain The communication domain

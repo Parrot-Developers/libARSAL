@@ -488,7 +488,10 @@ public class ARSALBLEManager
                     public void run()
                     {
                         /* run the discovery of the activeGatt services */
-                        boolean discoveryRes = activeGatt.discoverServices();
+                        boolean discoveryRes = false;
+                        if (activeGatt != null) {
+                            discoveryRes = activeGatt.discoverServices();
+                        }
                         if (!discoveryRes)
                         {
                             discoverServicesError = ARSAL_ERROR_ENUM.ARSAL_ERROR;

@@ -583,6 +583,7 @@ public class ARSALBLEManager
                 case GATT_INTERRUPT_ERROR:
                     ARSALPrint.e(TAG, "On connection state change: GATT_INTERRUPT_ERROR (8 status) newState:" + newState);
                     connectionError = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_CONNECTION;
+                    connectionSem.release();
                     break;
 
                 case BluetoothGatt.GATT_FAILURE:

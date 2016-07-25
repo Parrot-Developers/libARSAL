@@ -534,6 +534,51 @@ public class ARSALBLEManager
         this.listener = listener;
     }
 
+    private static class RequestLock {
+        boolean finished;
+    }
+
+    public List<BluetoothGattService> getServices()
+    {
+        final List<BluetoothGattService> serviceList = new ArrayList<>();
+        final RequestLock lock = new RequestLock();
+        mUIHandler.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                ARSALPrint.d(TAG, "running getServices request");
+                if (activeGatt != null)
+                {
+                    List<BluetoothGattService> list = activeGatt.getServices();
+                    serviceList.addAll(list);
+                }
+                synchronized (lock)
+                {
+                    lock.finished = true;
+                    lock.notifyAll();
+                }
+            }
+        });
+        synchronized (lock)
+        {
+            ARSALPrint.d(TAG, "wait the getServices request lock");
+            while (!lock.finished)
+            {
+                try
+                {
+                    lock.wait();
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            ARSALPrint.d(TAG, "getServices request finished");
+        }
+        return serviceList;
+    }
+
     private final BluetoothGattCallback gattCallback = new BluetoothGattCallback()
     {
         @Override

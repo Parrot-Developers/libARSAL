@@ -221,4 +221,15 @@ int ARSAL_Socket_Setsockopt(int sockfd, int level, int optname, const void *optv
  */
 int ARSAL_Socket_Getsockopt(int sockfd, int level, int optname, void *optval, socklen_t *optlen);
 
+/**
+ * @brief Get the socket name
+ *
+ *
+ * @param sockfd The socket to get options
+ * @param addr current address to which the socket sockfd is bound,
+ * @param addrlen size of addr buffer
+ * @retval On success, 0 is returned. Otherwise, -1 is returned, and errno is set appropriately. (See errno.h)
+ */
+int ARSAL_Socket_Getsockname(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
+
 #endif // _ARSAL_SOCKET_H_

@@ -8,7 +8,7 @@
       notice, this list of conditions and the following disclaimer.
     * Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in
-      the documentation and/or other materials provided with the 
+      the documentation and/or other materials provided with the
       distribution.
     * Neither the name of Parrot nor the names
       of its contributors may be used to endorse or promote products
@@ -22,7 +22,7 @@
     COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
     INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
     BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
-    OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED 
+    OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
     AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
     OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
     OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
@@ -31,7 +31,6 @@
 package com.parrot.arsdk.arsal;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -50,17 +49,11 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothGattDescriptor;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 
 import android.bluetooth.BluetoothAdapter;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.os.Looper;
-
-import com.parrot.arsdk.arsal.ARSALPrint;
 
 @TargetApi(18)
 public class ARSALBLEManager
@@ -91,6 +84,7 @@ public class ARSALBLEManager
     private Semaphore disconnectionSem;
     private Semaphore discoverServicesSem;
     private Semaphore configurationSem;
+    private Semaphore mWriteDataSemaphore;
 
     private ARSAL_ERROR_ENUM connectionError;
     private ARSAL_ERROR_ENUM discoverServicesError;
@@ -270,6 +264,7 @@ public class ARSALBLEManager
         disconnectionSem = new Semaphore(0);
         discoverServicesSem = new Semaphore(0);
         configurationSem = new Semaphore(0);
+        mWriteDataSemaphore = new Semaphore(0);
 
         askDisconnection = false;
         isDiscoveringServices = false;
@@ -324,13 +319,13 @@ public class ARSALBLEManager
             {
                 disconnect();
             }
-            
+
             /* reset */
             ARSALPrint.d(TAG, "resetting connection objects");
             reset();
 
             connectionError = ARSAL_ERROR_ENUM.ARSAL_OK;
-            
+
             /* connection to the new activeGatt */
             ARSALPrint.e(TAG, "connection to the new activeGatt");
             ARSALBLEManager.this.deviceBLEService = bluetoothAdapter.getRemoteDevice(deviceBLEService.getAddress());
@@ -346,7 +341,7 @@ public class ARSALBLEManager
 
                 }
             });
-            
+
             /* wait the connect semaphore*/
             try
             {
@@ -608,6 +603,8 @@ public class ARSALBLEManager
 
                                 /* post a connect Semaphore */
                                 connectionSem.release();
+                                //connected, we can write command to drone now
+                                mWriteDataSemaphore.release();
                             }
                         });
 
@@ -662,7 +659,7 @@ public class ARSALBLEManager
             if (status != BluetoothGatt.GATT_SUCCESS || !isGattConnected(gatt))
             {
                 ARSALPrint.w(TAG, "On services discovered state:" + status);
-                
+
                 /* the discovery is not successes */
                 discoverServicesError = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_SERVICES_DISCOVERING;
             }
@@ -690,7 +687,7 @@ public class ARSALBLEManager
             {
                 configurationCharacteristicError = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_CHARACTERISTIC_CONFIGURING;
             }
-            
+
             /* post a configuration Semaphore */
             ARSALPrint.d(TAG, "Releasing configurationSem");
             configurationSem.release();
@@ -703,8 +700,8 @@ public class ARSALBLEManager
             readCharacteristicMutex.lock();
             characteristicNotifications.add(characteristic);
             readCharacteristicMutex.unlock();
-            
-            // post a readCharacteristic Semaphore 
+
+            // post a readCharacteristic Semaphore
             readCharacteristicSem.release();
         }*/
 
@@ -751,12 +748,12 @@ public class ARSALBLEManager
             }
         }
 
-        //Characteristic.WRITE_TYPE_NO_RESPONSE dosen't have reply 
-        /*@Override
+        @Override
         public void onCharacteristicWrite (BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status)
         {
-             //ARSALPrint.d(TAG, "onCharacteristicWrite " + status);
-        }*/
+            //previous command has be written to drone, we could send next one
+            mWriteDataSemaphore.release();
+        }
     };
 
     public ARSAL_ERROR_ENUM setCharacteristicNotification(BluetoothGattService service, BluetoothGattCharacteristic characteristic)
@@ -766,7 +763,7 @@ public class ARSALBLEManager
         {
             BluetoothGatt localActiveGatt = activeGatt;
             boolean connected = isGattConnected(localActiveGatt);
-            
+
             /* If there is an active Gatt, disconnect it */
             if (connected)
             {
@@ -819,9 +816,26 @@ public class ARSALBLEManager
         BluetoothGatt localActiveGatt = activeGatt;
         if ((localActiveGatt != null) && (characteristic != null) && (data != null) && isGattConnected(localActiveGatt))
         {
-            characteristic.setValue(data);
-            characteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
-            result = localActiveGatt.writeCharacteristic(characteristic);
+            try
+            {
+                mWriteDataSemaphore.acquire(); //command should be send one by one
+
+                characteristic.setValue(data);
+                characteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
+                //writeCharacteristic() function will be failed if the bluetooth gatt is in busy state,
+                //And bluetooth gatt will be in idle state when the callback onCharacteristicWrite() is invoked
+                result = localActiveGatt.writeCharacteristic(characteristic);
+
+                if (!result)
+                {
+                    //write characteristic failed, release a permit to enable next write operation
+                    mWriteDataSemaphore.release();
+                }
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         return result;
@@ -899,21 +913,21 @@ public class ARSALBLEManager
     /*public boolean readData (List<BluetoothGattCharacteristic> characteristicArray)
     {
         boolean result = false;
-        
+
         // wait the readCharacteristic semaphore
         try
         {
             readCharacteristicSem.acquire ();
-            
+
             if  (characteristicNotifications.size() > 0)
             {
                 readCharacteristicMutex.lock();
-                
+
                 characteristicArray.addAll(characteristicNotifications);
                 characteristicNotifications.clear();
-                
+
                 readCharacteristicMutex.unlock();
-                
+
                 result = true;
             }
         }
@@ -921,7 +935,7 @@ public class ARSALBLEManager
         {
             e.printStackTrace();
         }
-        
+
         return result;
     }*/
 
@@ -932,6 +946,7 @@ public class ARSALBLEManager
         configurationSem.release();
 
         discoverServicesSem.release();
+        mWriteDataSemaphore.release();
 
         //readCharacteristicSem.release();
 
@@ -940,7 +955,7 @@ public class ARSALBLEManager
             ARSALManagerNotification notification = registeredNotificationCharacteristics.get(key);
             notification.signalNotification();
         }
-        
+
         /* disconnectionSem is not post because:
          * if the connection is fail, disconnect is not call.
          * if the connection is successful, the BLE callback is always called.
@@ -968,13 +983,18 @@ public class ARSALBLEManager
             {
                 /* Do nothing*/
             }
-            
+
             /*while (readCharacteristicSem.tryAcquire() == true)
             {*/
                 /* Do nothing*/
             /*}*/
 
             while (configurationSem.tryAcquire() == true)
+            {
+                /* Do nothing*/
+            }
+
+            while (mWriteDataSemaphore.tryAcquire())
             {
                 /* Do nothing*/
             }
@@ -994,20 +1014,20 @@ public class ARSALBLEManager
     private void onDisconectGatt()
     {
         ARSALPrint.d(TAG, "activeGatt disconnected");
-        
+
         /* Post disconnectionSem only if the disconnect is asked */
         if (askDisconnection)
         {
             disconnectionSem.release();
         }
-        
+
         /* if activePeripheral is discovering services */
         if (isDiscoveringServices)
         {
             discoverServicesError = ARSAL_ERROR_ENUM.ARSAL_ERROR_BLE_NOT_CONNECTED;
         }
         discoverServicesSem.release();
-        
+
         /* if activePeripheral is configuring Characteristics */
         if (isConfiguringCharacteristics)
         {

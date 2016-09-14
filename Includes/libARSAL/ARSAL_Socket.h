@@ -44,6 +44,21 @@
 struct iovec;
 
 /**
+ * @brief Type of Service class selector
+ */
+typedef enum {
+    ARSAL_SOCKET_CLASS_SELECTOR_CS0 = 0,
+    ARSAL_SOCKET_CLASS_SELECTOR_UNSPECIFIED = ARSAL_SOCKET_CLASS_SELECTOR_CS0,
+    ARSAL_SOCKET_CLASS_SELECTOR_CS1 = 32, /* 0x20 */
+    ARSAL_SOCKET_CLASS_SELECTOR_CS2 = 64, /* 0x40 */
+    ARSAL_SOCKET_CLASS_SELECTOR_CS3 = 96, /* 0x60 */
+    ARSAL_SOCKET_CLASS_SELECTOR_CS4 = 128, /* 0x80 */
+    ARSAL_SOCKET_CLASS_SELECTOR_CS5 = 160, /* 0xA0 */
+    ARSAL_SOCKET_CLASS_SELECTOR_CS6 = 192, /* 0xC0 */
+    ARSAL_SOCKET_CLASS_SELECTOR_CS7 = 224, /* 0xE0 */
+} eARSAL_SOCKET_CLASS_SELECTOR;
+
+/**
  * @brief Creates an endpoint for communication and returns a descriptor.
  *
  * @param domain The communication domain
@@ -206,5 +221,16 @@ int ARSAL_Socket_Setsockopt(int sockfd, int level, int optname, const void *optv
  * @retval On success, 0 is returned. Otherwise, -1 is returned, and errno is set appropriately. (See errno.h)
  */
 int ARSAL_Socket_Getsockopt(int sockfd, int level, int optname, void *optval, socklen_t *optlen);
+
+/**
+ * @brief Get the socket name
+ *
+ *
+ * @param sockfd The socket to get options
+ * @param addr current address to which the socket sockfd is bound,
+ * @param addrlen size of addr buffer
+ * @retval On success, 0 is returned. Otherwise, -1 is returned, and errno is set appropriately. (See errno.h)
+ */
+int ARSAL_Socket_Getsockname(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
 
 #endif // _ARSAL_SOCKET_H_

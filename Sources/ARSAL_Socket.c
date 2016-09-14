@@ -240,3 +240,9 @@ int ARSAL_Socket_Getsockopt(int sockfd, int level, int optname, void *optval, so
 {
     return getsockopt(sockfd, level, optname, optval, optlen);
 }
+
+int ARSAL_Socket_Getsockname(int sockfd, struct sockaddr *addr, socklen_t *addrlen)
+{
+    return getsockname(sockfd, addr, addrlen);
+}
+

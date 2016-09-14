@@ -125,9 +125,10 @@ static int ARSAL_Print_PrintRaw_VA(eARSAL_PRINT_LEVEL level, const char *tag, co
 }
 #endif
 
-int ARSAL_Print_SetMinimumLevel(eARSAL_PRINT_LEVEL level)
+int ARSAL_Print_SetMinimumLevel(eARSAL_PRINT_LEVEL ulevel)
 {
     int res = 1;
+    int level = ulevel;
 
     if (level <= ARSAL_PRINT_VERBOSE &&
         level >= ARSAL_PRINT_FATAL)

@@ -122,7 +122,7 @@ eARSAL_ERROR ARSAL_MD5_Compute(void *md5Object, const char *filePath, uint8_t *m
     
     if (result == ARSAL_OK)
     {
-        MD5_Init(&ctx);
+        AR_MD5_Init(&ctx);
         file = fopen(filePath, "rb");
         if (file == NULL)
         {
@@ -134,10 +134,10 @@ eARSAL_ERROR ARSAL_MD5_Compute(void *md5Object, const char *filePath, uint8_t *m
     {
         while ((count = fread(block, sizeof(uint8_t), sizeof(block), file)) > 0)
         {
-            MD5_Update(&ctx, block, count);
+            AR_MD5_Update(&ctx, block, count);
         }
         
-        MD5_Final(md5, &ctx);
+        AR_MD5_Final(md5, &ctx);
     }
     
     if (file != NULL)

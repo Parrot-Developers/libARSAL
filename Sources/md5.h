@@ -25,6 +25,9 @@
 
 #ifdef HAVE_OPENSSL
 #include <openssl/md5.h>
+#define AR_MD5_Init MD5_Init
+#define AR_MD5_Update MD5_Update
+#define AR_MD5_Final MD5_Final
 #elif !defined(_MD5_H)
 #define _MD5_H
 
@@ -40,8 +43,8 @@ typedef struct {
 	MD5_u32plus block[16];
 } MD5_CTX;
 
-extern void MD5_Init(MD5_CTX *ctx);
-extern void MD5_Update(MD5_CTX *ctx, const void *data, unsigned long size);
-extern void MD5_Final(unsigned char *result, MD5_CTX *ctx);
+extern void AR_MD5_Init(MD5_CTX *ctx);
+extern void AR_MD5_Update(MD5_CTX *ctx, const void *data, unsigned long size);
+extern void AR_MD5_Final(unsigned char *result, MD5_CTX *ctx);
 
 #endif

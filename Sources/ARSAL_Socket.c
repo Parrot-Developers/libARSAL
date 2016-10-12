@@ -47,12 +47,22 @@ int ARSAL_Socket_Create(int domain, int type, int protocol)
 
 int ARSAL_Socket_Connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen)
 {
-    return connect(sockfd, addr, addrlen);
+    int ret;
+
+    while (((ret = connect(sockfd, addr, addrlen)) == -1) &&
+           (errno == EINTR));
+
+    return ret;
 }
 
 ssize_t ARSAL_Socket_Sendto(int sockfd, const void *buf, size_t buflen, int flags, const struct sockaddr *dest_addr, socklen_t addrlen)
 {
-    return sendto(sockfd, buf, buflen, flags, dest_addr, addrlen);
+    ssize_t ret;
+
+    while (((ret = sendto(sockfd, buf, buflen, flags, dest_addr, addrlen)) == -1) &&
+           (errno == EINTR));
+
+    return ret;
 }
 
 ssize_t ARSAL_Socket_Send(int sockfd, const void *buf, size_t buflen, int flags)
@@ -62,7 +72,9 @@ ssize_t ARSAL_Socket_Send(int sockfd, const void *buf, size_t buflen, int flags)
     int i;
     for (i = 0; i < tries; i++)
     {
-        res = send(sockfd, buf, buflen, flags);
+        while (((res = send(sockfd, buf, buflen, flags)) == -1) &&
+               (errno == EINTR));
+
         if (res >= 0 || errno != ECONNREFUSED)
         {
             break;
@@ -73,22 +85,42 @@ ssize_t ARSAL_Socket_Send(int sockfd, const void *buf, size_t buflen, int flags)
 
 ssize_t ARSAL_Socket_Recvfrom(int sockfd, void *buf, size_t buflen, int flags, struct sockaddr *src_addr, socklen_t *addrlen)
 {
-    return recvfrom(sockfd, buf, buflen, flags, src_addr, addrlen);
+    ssize_t ret;
+
+    while (((ret = recvfrom(sockfd, buf, buflen, flags, src_addr, addrlen)) == -1) &&
+           (errno == EINTR));
+
+    return ret;
 }
 
 ssize_t ARSAL_Socket_Recv(int sockfd, void *buf, size_t buflen, int flags)
 {
-    return recv(sockfd, buf, buflen, flags);
+    ssize_t ret;
+
+    while (((ret = recv(sockfd, buf, buflen, flags)) == -1) &&
+           (errno == EINTR));
+
+    return ret;
 }
 
 ssize_t ARSAL_Socket_Writev (int sockfd, const struct iovec *iov, int iovcnt)
 {
-    return writev (sockfd, iov, iovcnt);
+    ssize_t ret;
+
+    while (((ret = writev (sockfd, iov, iovcnt)) == -1) &&
+           (errno == EINTR));
+
+    return ret;
 }
 
 ssize_t ARSAL_Socket_Readv (int sockfd, const struct iovec *iov, int iovcnt)
 {
-    return readv (sockfd, iov, iovcnt);
+    ssize_t ret;
+
+    while (((ret = readv (sockfd, iov, iovcnt)) == -1) &&
+           (errno == EINTR));
+
+    return ret;
 }
 
 int ARSAL_Socket_Bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen)
@@ -103,12 +135,22 @@ int ARSAL_Socket_Listen(int sockfd, int backlog)
 
 int ARSAL_Socket_Accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen)
 {
-    return accept(sockfd, addr, addrlen);
+    int ret;
+
+    while (((ret = accept(sockfd, addr, addrlen)) == -1) &&
+           (errno == EINTR));
+
+    return ret;
 }
 
 int ARSAL_Socket_Close(int sockfd)
 {
-    return close(sockfd);
+    int ret;
+
+    while (((ret = close(sockfd)) == -1) &&
+           (errno == EINTR));
+
+    return ret;
 }
 
 int ARSAL_Socket_Setsockopt(int sockfd, int level, int optname, const void *optval, socklen_t optlen)
@@ -125,4 +167,3 @@ int ARSAL_Socket_Getsockname(int sockfd, struct sockaddr *addr, socklen_t *addrl
 {
     return getsockname(sockfd, addr, addrlen);
 }
-

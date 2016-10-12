@@ -228,7 +228,8 @@ int ARSAL_Sem_Wait(ARSAL_Sem_t *sem)
 
 #if __SAL_USE_POSIX_SEM
 
-    result = sem_wait((sem_t *)*sem);
+    while (((result = sem_wait((sem_t *)*sem)) == -1) &&
+           (errno == EINTR));
 
 #else
 
@@ -365,7 +366,9 @@ int ARSAL_Sem_Timedwait(ARSAL_Sem_t *sem, const struct timespec *timeout)
     finalTime.tv_nsec += timeout->tv_nsec;
     finalTime.tv_sec += timeout->tv_sec + NSEC_TO_SEC(finalTime.tv_nsec);
     finalTime.tv_nsec %= SEC_TO_NSEC(1);
-    result = sem_timedwait((sem_t *)*sem, &finalTime);
+
+    while (((result = sem_timedwait((sem_t *)*sem, &finalTime)) == -1) &&
+           (errno == EINTR));
 
 #else
 

@@ -64,85 +64,6 @@ jmethodID methodId_ARSALMd5_check = NULL;
 jmethodID methodId_ARSALMd5_compute = NULL;
 
 
-JNIEXPORT jboolean JNICALL Java_com_parrot_arsdk_arsal_ARSALMd5Manager_nativeStaticInit(JNIEnv *env, jclass jClass)
-{
-    jboolean jret = JNI_FALSE;
-    int error = JNI_OK;
-
-    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARSAL_JNI_MD5_MANAGER_TAG, "%x", (int)env);
-
-    if (env == NULL)
-    {
-        error = JNI_FAILED;
-    }
-
-    if (error == JNI_OK)
-    {
-        error = ARSAL_JNI_Md5Manager_NewARSALMd5_JNI(env);
-    }
-
-    if (error == JNI_OK)
-    {
-        error = ARSAL_JNI_Manager_NewARSALExceptionJNI(env);
-    }
-
-    if (error == JNI_OK)
-    {
-        error = ARSAL_JNI_Manager_NewERROR_ENUM_JNI(env);
-    }
-
-    if (error == JNI_OK)
-    {
-        jret = JNI_TRUE;
-    }
-
-    return jret;
-}
-
-JNIEXPORT jlong JNICALL Java_com_parrot_arsdk_arsal_ARSALMd5Manager_nativeNew(JNIEnv *env, jobject jThis)
-{
-    ARSAL_MD5_Manager_t *nativeManager = NULL;
-    eARSAL_ERROR result = ARSAL_OK;
-    int error = JNI_OK;
-
-    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARSAL_JNI_MD5_MANAGER_TAG, "");
-
-    nativeManager = ARSAL_MD5_Manager_New(&result);
-
-    if (error == JNI_OK)
-    {
-        error = ARSAL_JNI_Manager_NewARSALExceptionJNI(env);
-    }
-
-    if (error == JNI_OK)
-    {
-        error = ARSAL_JNI_Manager_NewERROR_ENUM_JNI(env);
-    }
-
-    if (error != JNI_OK)
-    {
-        result = ARSAL_ERROR_SYSTEM;
-    }
-
-    if (result != ARSAL_OK)
-    {
-        ARSAL_PRINT (ARSAL_PRINT_ERROR, ARSAL_JNI_MD5_MANAGER_TAG, "error: %d occurred", result);
-
-        ARSAL_JNI_Manager_ThrowARSALException(env, result);
-    }
-
-    return (long)nativeManager;
-}
-
-JNIEXPORT void JNICALL Java_com_parrot_arsdk_arsal_ARSALMd5Manager_nativeDelete(JNIEnv *env, jobject jThis, jlong jManager)
-{
-    ARSAL_MD5_Manager_t *nativeManager = (ARSAL_MD5_Manager_t*) (intptr_t) jManager;
-
-    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARSAL_JNI_MD5_MANAGER_TAG, "");
-
-    ARSAL_MD5_Manager_Delete (&nativeManager);
-}
-
 int ARSAL_JNI_Md5Manager_NewARSALMd5_JNI(JNIEnv *env)
 {
     jclass localClassARSALMd5 = NULL;
@@ -327,7 +248,7 @@ eARSAL_ERROR ARSAL_JNI_MD5_Compute(void *md5Object, const char *filePath, uint8_
 
     if ((error == JNI_OK) && (jMd5 != NULL))
     {
-        (*env)->GetByteArrayRegion(env, jMd5, 0, md5ArrayLen, md5);
+        (*env)->GetByteArrayRegion(env, jMd5, 0, md5ArrayLen, (jbyte *)md5);
     }
 
     if (jFilePath != NULL)
@@ -346,6 +267,85 @@ eARSAL_ERROR ARSAL_JNI_MD5_Compute(void *md5Object, const char *filePath, uint8_
     }
 
     return result;
+}
+
+JNIEXPORT jboolean JNICALL Java_com_parrot_arsdk_arsal_ARSALMd5Manager_nativeStaticInit(JNIEnv *env, jclass jClass)
+{
+    jboolean jret = JNI_FALSE;
+    int error = JNI_OK;
+
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARSAL_JNI_MD5_MANAGER_TAG, "%x", (int)env);
+
+    if (env == NULL)
+    {
+        error = JNI_FAILED;
+    }
+
+    if (error == JNI_OK)
+    {
+        error = ARSAL_JNI_Md5Manager_NewARSALMd5_JNI(env);
+    }
+
+    if (error == JNI_OK)
+    {
+        error = ARSAL_JNI_Manager_NewARSALExceptionJNI(env);
+    }
+
+    if (error == JNI_OK)
+    {
+        error = ARSAL_JNI_Manager_NewERROR_ENUM_JNI(env);
+    }
+
+    if (error == JNI_OK)
+    {
+        jret = JNI_TRUE;
+    }
+
+    return jret;
+}
+
+JNIEXPORT jlong JNICALL Java_com_parrot_arsdk_arsal_ARSALMd5Manager_nativeNew(JNIEnv *env, jobject jThis)
+{
+    ARSAL_MD5_Manager_t *nativeManager = NULL;
+    eARSAL_ERROR result = ARSAL_OK;
+    int error = JNI_OK;
+
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARSAL_JNI_MD5_MANAGER_TAG, "");
+
+    nativeManager = ARSAL_MD5_Manager_New(&result);
+
+    if (error == JNI_OK)
+    {
+        error = ARSAL_JNI_Manager_NewARSALExceptionJNI(env);
+    }
+
+    if (error == JNI_OK)
+    {
+        error = ARSAL_JNI_Manager_NewERROR_ENUM_JNI(env);
+    }
+
+    if (error != JNI_OK)
+    {
+        result = ARSAL_ERROR_SYSTEM;
+    }
+
+    if (result != ARSAL_OK)
+    {
+        ARSAL_PRINT (ARSAL_PRINT_ERROR, ARSAL_JNI_MD5_MANAGER_TAG, "error: %d occurred", result);
+
+        ARSAL_JNI_Manager_ThrowARSALException(env, result);
+    }
+
+    return (long)nativeManager;
+}
+
+JNIEXPORT void JNICALL Java_com_parrot_arsdk_arsal_ARSALMd5Manager_nativeDelete(JNIEnv *env, jobject jThis, jlong jManager)
+{
+    ARSAL_MD5_Manager_t *nativeManager = (ARSAL_MD5_Manager_t*) (intptr_t) jManager;
+
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARSAL_JNI_MD5_MANAGER_TAG, "");
+
+    ARSAL_MD5_Manager_Delete (&nativeManager);
 }
 
 JNIEXPORT jint JNICALL Java_com_parrot_arsdk_arsal_ARSALMd5Manager_nativeInit(JNIEnv *env, jobject jThis, jlong jManager, jobject jARSALMd5)

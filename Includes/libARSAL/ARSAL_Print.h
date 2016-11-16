@@ -45,6 +45,16 @@
 #include <config.h>
 #endif
 
+/** Wrapper for gcc printf attribute */
+#ifndef ARSAL_ATTRIBUTE_FORMAT_PRINTF
+#  ifndef _MSC_VER
+#    define ARSAL_ATTRIBUTE_FORMAT_PRINTF(_x, _y) \
+        __attribute__((__format__(__printf__, _x, _y)))
+#  else /* _MSC_VER */
+#    define ARSAL_ATTRIBUTE_FORMAT_PRINTF(_x, _y)
+#  endif /* _MSC_VER */
+#endif /* !ARSAL_ATTRIBUTE_FORMAT_PRINTF */
+
 /**
  * @brief Output level
  */
@@ -84,11 +94,11 @@ typedef enum
         strftime (__nowTimeStr, ARSAL_PRINT_DATE_STRING_LENGTH, "%H:%M:%S", &__tm); \
         if (!strlen (format) || format[strlen (format)-1] != '\n')      \
         {                                                               \
-            ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+            ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, (int)NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
         }                                                               \
         else                                                            \
         {                                                               \
-            ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+            ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, (int)NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
         }                                                               \
     } while (0)
 
@@ -118,7 +128,7 @@ eARSAL_PRINT_LEVEL ARSAL_Print_GetMinimumLevel(void);
  * @param format output format
  * @retval On success, ARSAL_Print_PrintRaw() returns the number of characters printed. Otherwise, it returns a negative value.
  */
-int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...);
+int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...) ARSAL_ATTRIBUTE_FORMAT_PRINTF(3, 4);
 
 /**
  * @brief Transform a level into an intelligible string

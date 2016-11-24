@@ -90,9 +90,11 @@ typedef enum
         char __nowTimeStr [ARSAL_PRINT_DATE_STRING_LENGTH];             \
         struct timespec __ts;                                           \
         struct tm __tm;                                                 \
+        size_t __slen;                                                  \
         ARSAL_Time_GetLocalTime(&__ts, &__tm);                          \
         strftime (__nowTimeStr, ARSAL_PRINT_DATE_STRING_LENGTH, "%H:%M:%S", &__tm); \
-        if (!strlen (format) || format[strlen (format)-1] != '\n')      \
+        __slen = strlen(format);                                        \
+        if (!__slen || format[__slen-1] != '\n')                        \
         {                                                               \
             ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, (int)NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
         }                                                               \

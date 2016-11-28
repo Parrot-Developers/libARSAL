@@ -50,7 +50,7 @@ eARSAL_ERROR ARSAL_MD5_Manager_Init(ARSAL_MD5_Manager_t *manager)
 {
     eARSAL_ERROR result = ARSAL_OK;
     
-    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "");
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "%s", "");
     
     if (manager == NULL)
     {
@@ -68,7 +68,7 @@ eARSAL_ERROR ARSAL_MD5_Manager_Init(ARSAL_MD5_Manager_t *manager)
 
 void ARSAL_MD5_Manager_Close(ARSAL_MD5_Manager_t *manager)
 {
-    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "");
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "%s", "");
 }
 
 eARSAL_ERROR ARSAL_MD5_Check(void *md5Object, const char *filePath, const char *md5Txt)
@@ -77,7 +77,7 @@ eARSAL_ERROR ARSAL_MD5_Check(void *md5Object, const char *filePath, const char *
     uint8_t md5[MD5_DIGEST_LENGTH];
     char md5Src[(MD5_DIGEST_LENGTH * 2) + 1];
     
-    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "");
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "%s", "");
     
     if ((filePath == NULL) || (md5Txt == NULL))
     {
@@ -113,7 +113,7 @@ eARSAL_ERROR ARSAL_MD5_Compute(void *md5Object, const char *filePath, uint8_t *m
     FILE *file = NULL;
     size_t count;
     
-    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "");
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "%s", "");
     
     if ((filePath == NULL) || (md5 == NULL) || (md5Len < MD5_DIGEST_LENGTH))
     {

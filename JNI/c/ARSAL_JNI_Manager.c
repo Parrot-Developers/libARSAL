@@ -93,7 +93,7 @@ int ARSAL_JNI_Manager_NewARSALExceptionJNI(JNIEnv *env)
 
     if (classDTException == NULL)
     {
-        ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARSAL_JNI_MANAGER_TAG, "");
+        ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARSAL_JNI_MANAGER_TAG, "%s", "");
 
         if (env == NULL)
         {
@@ -139,7 +139,7 @@ int ARSAL_JNI_Manager_NewARSALExceptionJNI(JNIEnv *env)
 
 void ARSAL_JNI_Manager_FreeARSALExceptionJNI(JNIEnv *env)
 {
-    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARSAL_JNI_MANAGER_TAG, "");
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARSAL_JNI_MANAGER_TAG, "%s", "");
 
     if (env != NULL)
     {
@@ -216,7 +216,7 @@ int ARSAL_JNI_Manager_NewERROR_ENUM_JNI(JNIEnv *env)
 
     if (classDTERROR_ENUM == NULL)
     {
-        ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARSAL_JNI_MANAGER_TAG, "");
+        ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARSAL_JNI_MANAGER_TAG, "%s", "");
 
         if (env == NULL)
         {
@@ -262,7 +262,7 @@ int ARSAL_JNI_Manager_NewERROR_ENUM_JNI(JNIEnv *env)
 
 void ARSAL_JNI_Manager_FreeERROR_ENUM_JNI(JNIEnv *env)
 {
-    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARSAL_JNI_MANAGER_TAG, "");
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARSAL_JNI_MANAGER_TAG, "%s", "");
 
     if (env != NULL)
     {

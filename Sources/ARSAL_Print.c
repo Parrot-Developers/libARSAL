@@ -213,7 +213,7 @@ int ARSAL_Print_PrintRawEx(eARSAL_PRINT_LEVEL level, const char *func, int line,
 
     return ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - %s%s",
             nowTimeStr, (int)NSEC_TO_MSEC(ts.tv_nsec), func, line, msg,
-            len <= 0 || msg[len - 1] != '\n' ? "\n" : "");
+            len <= 0 || ((size_t)len) > (sizeof(msg) - 1) || msg[len - 1] != '\n' ? "\n" : "");
 }
 
 void ARSAL_Print_DumpData(FILE *file, uint8_t tag, const void *data, size_t size, size_t sizeDump, const struct timespec *ts)

@@ -125,9 +125,10 @@ static int ARSAL_Print_PrintRaw_VA(eARSAL_PRINT_LEVEL level, const char *tag, co
 }
 #endif
 
-int ARSAL_Print_SetMinimumLevel(eARSAL_PRINT_LEVEL level)
+int ARSAL_Print_SetMinimumLevel(eARSAL_PRINT_LEVEL ulevel)
 {
     int res = 1;
+    int level = ulevel;
 
     if (level <= ARSAL_PRINT_VERBOSE &&
         level >= ARSAL_PRINT_FATAL)
@@ -192,6 +193,27 @@ int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *
     va_end(va);
 
     return result;
+}
+
+int ARSAL_Print_PrintRawEx(eARSAL_PRINT_LEVEL level, const char *func, int line, const char *tag, const char *format, ...)
+{
+    char nowTimeStr[ARSAL_PRINT_DATE_STRING_LENGTH];
+    char msg[512];
+    struct timespec ts;
+    struct tm tm;
+    va_list va;
+    int len = 0;
+
+    ARSAL_Time_GetLocalTime(&ts, &tm);
+    strftime(nowTimeStr, ARSAL_PRINT_DATE_STRING_LENGTH, "%H:%M:%S", &tm);
+
+    va_start(va, format);
+    len = vsnprintf(msg, sizeof(msg), format, va);
+    va_end(va);
+
+    return ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - %s%s",
+            nowTimeStr, (int)NSEC_TO_MSEC(ts.tv_nsec), func, line, msg,
+            len <= 0 || ((size_t)len) > (sizeof(msg) - 1) || msg[len - 1] != '\n' ? "\n" : "");
 }
 
 void ARSAL_Print_DumpData(FILE *file, uint8_t tag, const void *data, size_t size, size_t sizeDump, const struct timespec *ts)

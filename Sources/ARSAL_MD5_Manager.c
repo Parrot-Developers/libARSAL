@@ -52,7 +52,7 @@ ARSAL_MD5_Manager_t* ARSAL_MD5_Manager_New(eARSAL_ERROR *error)
     ARSAL_MD5_Manager_t* newManager = NULL;
     eARSAL_ERROR result = ARSAL_OK;
     
-    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "");
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "%s", "");
     
     newManager = calloc(1, sizeof(ARSAL_MD5_Manager_t));
     
@@ -67,7 +67,7 @@ ARSAL_MD5_Manager_t* ARSAL_MD5_Manager_New(eARSAL_ERROR *error)
 
 void ARSAL_MD5_Manager_Delete(ARSAL_MD5_Manager_t **managerAddr)
 {
-    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "");
+    ARSAL_PRINT(ARSAL_PRINT_DEBUG, ARUTILS_MD5_TAG, "%s", "");
     
     if (managerAddr != NULL)
     {

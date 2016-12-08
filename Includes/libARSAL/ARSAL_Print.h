@@ -45,6 +45,16 @@
 #include <config.h>
 #endif
 
+/** Wrapper for gcc printf attribute */
+#ifndef ARSAL_ATTRIBUTE_FORMAT_PRINTF
+#  ifndef _MSC_VER
+#    define ARSAL_ATTRIBUTE_FORMAT_PRINTF(_x, _y) \
+        __attribute__((__format__(__printf__, _x, _y)))
+#  else /* _MSC_VER */
+#    define ARSAL_ATTRIBUTE_FORMAT_PRINTF(_x, _y)
+#  endif /* _MSC_VER */
+#endif /* !ARSAL_ATTRIBUTE_FORMAT_PRINTF */
+
 /**
  * @brief Output level
  */
@@ -74,23 +84,8 @@ typedef enum
  * @param format The format string to print
  * @param ... The format parameters
  */
-#define ARSAL_PRINT(level, tag, format, ...)                            \
-    do                                                                  \
-    {                                                                   \
-        char __nowTimeStr [ARSAL_PRINT_DATE_STRING_LENGTH];             \
-        struct timespec __ts;                                           \
-        struct tm __tm;                                                 \
-        ARSAL_Time_GetLocalTime(&__ts, &__tm);                          \
-        strftime (__nowTimeStr, ARSAL_PRINT_DATE_STRING_LENGTH, "%H:%M:%S", &__tm); \
-        if (!strlen (format) || format[strlen (format)-1] != '\n')      \
-        {                                                               \
-            ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format "\n", __nowTimeStr, NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
-        }                                                               \
-        else                                                            \
-        {                                                               \
-            ARSAL_Print_PrintRaw(level, tag, "%s:%03d | %s:%d - " format, __nowTimeStr, NSEC_TO_MSEC(__ts.tv_nsec), __FUNCTION__, __LINE__, ##__VA_ARGS__); \
-        }                                                               \
-    } while (0)
+#define ARSAL_PRINT(level, tag, format, ...) \
+    ARSAL_Print_PrintRawEx(level, __FUNCTION__, __LINE__, tag, format, ##__VA_ARGS__)
 
 /**
  * @brief Sets the minimum level of verbosity for logs.
@@ -118,7 +113,21 @@ eARSAL_PRINT_LEVEL ARSAL_Print_GetMinimumLevel(void);
  * @param format output format
  * @retval On success, ARSAL_Print_PrintRaw() returns the number of characters printed. Otherwise, it returns a negative value.
  */
-int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...);
+int ARSAL_Print_PrintRaw(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, ...) ARSAL_ATTRIBUTE_FORMAT_PRINTF(3, 4);
+
+/**
+ * @brief Prints a formatted output. It prepend time, file and line and adds '\n' if needed
+ * @warning This function should not be used directly
+ * @see ARSAL_PRINT()
+ *
+ * @param level The level of output
+ * @param tag The tag of the output
+ * @param func The func of the output
+ * @param line The line of the output
+ * @param format output format
+ * @retval On success, ARSAL_Print_PrintRawEx() returns the number of characters printed. Otherwise, it returns a negative value.
+ */
+int ARSAL_Print_PrintRawEx(eARSAL_PRINT_LEVEL level, const char *func, int line, const char *tag, const char *format, ...) ARSAL_ATTRIBUTE_FORMAT_PRINTF(5, 6);
 
 /**
  * @brief Transform a level into an intelligible string

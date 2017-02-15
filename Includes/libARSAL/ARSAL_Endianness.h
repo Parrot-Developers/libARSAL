@@ -346,7 +346,9 @@ ARSAL_Endianness_SwapBigToHostDouble (double orig)
 
 #else // ! defined (__APPLE__)
 
+#ifdef HAVE_ENDIAN_H
 #include <endian.h>
+#endif
 
 /**
  * @brief Device endianness

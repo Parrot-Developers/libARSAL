@@ -39,11 +39,12 @@
 #include <time.h>
 #include <string.h>
 #include <stdio.h>
-#include <libARSAL/ARSAL_Time.h>
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+
+#include <libARSAL/ARSAL_Time.h>
 
 /** Wrapper for gcc printf attribute */
 #ifndef ARSAL_ATTRIBUTE_FORMAT_PRINTF

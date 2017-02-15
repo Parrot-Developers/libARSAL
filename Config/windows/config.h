@@ -36,12 +36,6 @@
    */
 #define HAVE_DECL_PRIU8 1
 
-/* Define to 1 if you have the <android/log.h> header file. */
-/* #undef HAVE_ANDROID_LOG_H */
-
-/* Define to 1 if you have the `clock_gettime' function. */
-#define HAVE_CLOCK_GETTIME 1
-
 /* Define to 1 if you have the <CoreBluetooth/CoreBluetooth.h> header file. */
 /* #undef HAVE_COREBLUETOOTH_COREBLUETOOTH_H */
 
@@ -55,7 +49,7 @@
 
 /* Define to 1 if you have the declaration of `SO_NOSIGPIPE', and to 0 if you
    don't. */
-#ifdef __linux__
+#if defined(__linux__) || defined(_WIN32)
 #  define HAVE_DECL_SO_NOSIGPIPE 0
 #else
 #  define HAVE_DECL_SO_NOSIGPIPE 1
@@ -87,11 +81,11 @@
  */
 #define HAVE_DECL_LOG2 1
 
-/* Define to 1 if you have the `gettimeofday' function. */
-#define HAVE_GETTIMEOFDAY 1
-
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
+
+/* Define to 1 if you have the <io.h> header file. */
+#define HAVE_IO_H 1
 
 /* Whether the libm on the host has the log2 function */
 #define HAVE_LOG2 1

@@ -65,6 +65,18 @@ int ARSAL_Nftw(const char *dirpath, ARSAL_NftwCallback cb, int nopenfd, eARSAL_F
     return nftw(dirpath, (int (*) (const char *, const struct stat *, int, struct FTW *))cb, nopenfd, flags);
 }
 
+#elif _WIN32
+
+int ARSAL_Ftw(const char *dirpath, ARSAL_FtwCallback cb, int nopenfd)
+{
+  return -1;
+}
+
+int ARSAL_Nftw(const char *dirpath, ARSAL_NftwCallback cb, int nopenfd, eARSAL_FTW_FLAG flags)
+{
+  return -1;
+}
+
 #else
 
 int ARSAL_Ftw(const char *dirpath, ARSAL_FtwCallback cb, int nopenfd)

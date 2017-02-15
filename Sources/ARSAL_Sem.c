@@ -53,6 +53,13 @@
 #define __SAL_USE_POSIX_SEM (0)
 #endif
 
+#ifdef HAVE_WINDOWS_H
+#include <windows.h>
+#define __SAL_USE_WIN32_SEM (1)
+#else
+#define __SAL_USE_WIN32_SEM (0)
+#endif
+
 #if __SAL_USE_POSIX_SEM
 #include <semaphore.h>
 #else
@@ -112,6 +119,15 @@ int ARSAL_Sem_Init(ARSAL_Sem_t *sem, int shared, int value)
         }
     }
     /* No else: if calloc failed, return default value -1. */
+
+#elif __SAL_USE_WIN32_SEM
+
+    /* Create an unbounded semaphore. */
+    HANDLE hsem = CreateSemaphore(NULL, value, LONG_MAX, NULL);
+    if (hsem != NULL) {
+        result = 0;
+        *sem = (ARSAL_Sem_t)hsem;
+    }
 
 #else
 
@@ -180,6 +196,11 @@ int ARSAL_Sem_Destroy(ARSAL_Sem_t *sem)
     free(*sem);
     *sem = NULL;
 
+#elif __SAL_USE_WIN32_SEM
+
+    result = CloseHandle((HANDLE)*sem) ? 0 : -1;
+    *sem = NULL;
+
 #else
 
     /*
@@ -230,6 +251,10 @@ int ARSAL_Sem_Wait(ARSAL_Sem_t *sem)
 
     while (((result = sem_wait((sem_t *)*sem)) == -1) &&
            (errno == EINTR));
+
+#elif __SAL_USE_WIN32_SEM
+
+    result = WaitForSingleObject((HANDLE)*sem, INFINITE) == WAIT_OBJECT_0 ? 0 : -1;
 
 #else
 
@@ -294,6 +319,18 @@ int ARSAL_Sem_Trywait(ARSAL_Sem_t *sem)
 #if __SAL_USE_POSIX_SEM
 
     result = sem_trywait((sem_t *)*sem);
+
+#elif __SAL_USE_WIN32_SEM
+
+    DWORD dwres = WaitForSingleObject((HANDLE)*sem, 0);
+    if (dwres == WAIT_OBJECT_0) {
+        result = 0;
+    } else if (dwres == WAIT_TIMEOUT) {
+        result = EAGAIN;
+        ARSAL_SEM_ERRNO_TRANSFORM(result);
+    } else {
+        result = -1;
+    }
 
 #else
 
@@ -370,6 +407,19 @@ int ARSAL_Sem_Timedwait(ARSAL_Sem_t *sem, const struct timespec *timeout)
     while (((result = sem_timedwait((sem_t *)*sem, &finalTime)) == -1) &&
            (errno == EINTR));
 
+#elif __SAL_USE_WIN32_SEM
+
+    DWORD dwres =
+        WaitForSingleObject((HANDLE)*sem, (timeout->tv_sec * 1000) + (timeout->tv_nsec / 1000000));
+    if (dwres == WAIT_OBJECT_0) {
+        result = 0;
+    } else if (dwres == WAIT_TIMEOUT) {
+        result = ETIMEDOUT;
+        ARSAL_SEM_ERRNO_TRANSFORM(result);
+    } else {
+        result = -1;
+    }
+
 #else
 
     /*
@@ -436,6 +486,10 @@ int ARSAL_Sem_Post(ARSAL_Sem_t *sem)
 
     result = sem_post ((sem_t *)*sem);
 
+#elif __SAL_USE_WIN32_SEM
+
+    result = ReleaseSemaphore((HANDLE)*sem, 1, NULL) ? 0 : -1;
+
 #else
 
     /*
@@ -499,6 +553,11 @@ int ARSAL_Sem_Getvalue(ARSAL_Sem_t *sem, int *value)
 #if __SAL_USE_POSIX_SEM
 
     result = sem_getvalue((sem_t *)*sem, value);
+
+#elif __SAL_USE_WIN32_SEM
+
+    /* TODO */
+    result = -1;
 
 #else
 

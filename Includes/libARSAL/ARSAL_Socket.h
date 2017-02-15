@@ -37,11 +37,73 @@
 #ifndef _ARSAL_SOCKET_H_
 #define _ARSAL_SOCKET_H_
 #include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 
+/* forward declarations */
 struct iovec;
+struct msghdr;
+struct sockaddr;
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#if !defined(_WIN32) || defined(HAVE_SYS_SOCKET_H)
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#endif
+
+#ifdef HAVE_NETINET_IN_H
+#include <netinet/in.h>
+#endif
+
+#if defined(_WIN32) && defined(ARSAL_INCLUDE_WSA)
+#include <winsock2.h>
+#include <ws2tcpip.h>
+
+#ifdef __MINGW32__
+/* HACK: For mingw :) */
+extern int inet_pton(int af, const char *src, u_long *dst);
+#endif
+#endif
+
+#ifdef _WIN32
+#include <stdint.h>
+typedef int socklen_t;
+
+#ifdef _MSC_VER
+/* MSVC doesn't define ssize_t */
+#include <basetsd.h>
+typedef SSIZE_T ssize_t;
+#endif
+
+#ifndef HAVE_STRUCT_IOVEC
+struct iovec {
+    void * iov_base;
+    size_t iov_len;
+};
+#endif
+
+/* compatible with WSAMSG */
+struct msghdr {
+    struct sockaddr *msg_name;
+    ssize_t          msg_namelen;
+    struct iovec *   msg_iov;
+    ssize_t          msg_iovlen;
+    void *           msg_control;
+    socklen_t        msg_controllen;
+    int              msg_flags;
+};
+
+/* Byte conversion functions
+ * TODO: These belong in ARSAL_Endian.h or another header. 
+ */
+#if !defined(ARSAL_INCLUDE_WSA)
+extern unsigned long htonl(unsigned long);
+extern unsigned short htons(unsigned short);
+extern unsigned long ntohl(unsigned long);
+extern unsigned short ntohs(unsigned short);
+#endif
+#endif
 
 /**
  * @brief Type of Service class selector
@@ -69,6 +131,17 @@ typedef enum {
 int ARSAL_Socket_Create(int domain, int type, int protocol);
 
 /**
+ * @brief Creates a pair of connected sockets, like a pipe.
+ *
+ * As it stands, these are currently used to interrupt calls to select.
+ *
+ * @param pfds Array of 2 file descriptors. On success, pfds[0] is the read descriptor, pfds[1] is
+ * the write descriptor.
+ * @retval On success, 0 is returned. On failure, -1 is returned.
+ */
+int ARSAL_Socket_CreatePair(int *pfds);
+
+/**
  * @brief Initiate a connection on a socket,
  * If the socket sock is of type SOCK_DGRAM then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received.
  * If the socket is of type SOCK_STREAM, this call attempts to make a connection to the socket that is bound to the address specified by addr.
@@ -79,6 +152,17 @@ int ARSAL_Socket_Create(int domain, int type, int protocol);
  * @retval On success, 0 is returned. Otherwise, -1 is returned and errno is set appropriately. (See errno.h)
  */
 int ARSAL_Socket_Connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+
+/**
+* @brief Transmit a message on a socket
+*
+* @param sockfd The socket descriptor used to send
+* @param msg The message to send
+* @param flags The bitwise OR of zero or more of the socket flags.
+*
+* @retval On success, 0 is returned. Otherwise, -1 is returned and errno is set appropriately. (See errno.h)
+*/
+ssize_t ARSAL_Socket_SendMsg(int sockfd, const struct msghdr *msg, int flags);
 
 /**
  * @brief Transmit a message on a socket
@@ -107,6 +191,17 @@ ssize_t ARSAL_Socket_Sendto(int sockfd, const void *buf, size_t buflen, int flag
  * @retval On success, 0 is returned. Otherwise, -1 is returned and errno is set appropriately. (See errno.h)
  */
 ssize_t ARSAL_Socket_Send(int sockfd, const void *buf, size_t buflen, int flags);
+
+/**
+* @brief Receive a message on a socket
+*
+* @param sockfd The socket descriptor used to receive
+* @param msg The message to recv
+* @param flags The bitwise OR of zero or more of the socket flags.
+*
+* @retval On success, 0 is returned. Otherwise, -1 is returned and errno is set appropriately. (See errno.h)
+*/
+ssize_t ARSAL_Socket_RecvMsg(int sockfd, struct msghdr *msg, int flags);
 
 /**
  * @brief Receive a message on a socket
@@ -232,5 +327,13 @@ int ARSAL_Socket_Getsockopt(int sockfd, int level, int optname, void *optval, so
  * @retval On success, 0 is returned. Otherwise, -1 is returned, and errno is set appropriately. (See errno.h)
  */
 int ARSAL_Socket_Getsockname(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
+
+/**
+ * @brief Sets socket as blocking (default) or nonblocking
+ *
+ * @param sockfd The socket
+ * @param blocking Should this socket block or not?
+ */
+int ARSAL_Socket_SetBlocking(int sockfd, int blocking);
 
 #endif // _ARSAL_SOCKET_H_

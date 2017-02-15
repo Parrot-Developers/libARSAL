@@ -30,6 +30,8 @@ else ifeq ("$(TARGET_OS)","darwin")
   else
     LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/Config/ios
   endif
+else ifeq ("$(TARGET_OS)","windows")
+  LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/Config/windows
 endif
 
 LOCAL_CFLAGS := \
@@ -63,7 +65,9 @@ LOCAL_INSTALL_HEADERS := \
 	Includes/libARSAL/ARSAL_Time.h:usr/include/libARSAL/
 
 ifeq ("$(TARGET_OS_FLAVOUR)","android")
-LOCAL_LDLIBS += -llog
+	LOCAL_LDLIBS += -llog
+else ifeq ("$(TARGET_OS)","windows")
+	LOCAL_EXPORT_LDLIBS += -lws2_32
 endif
 
 ifeq ("$(TARGET_OS)","darwin")

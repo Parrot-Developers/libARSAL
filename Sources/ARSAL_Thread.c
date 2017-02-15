@@ -55,11 +55,20 @@ int ARSAL_Thread_Create(ARSAL_Thread_t *thread, ARSAL_Thread_Routine_t routine, 
     if (!pthread) {
         result = -1;
     } else {
-        result = pthread_create(pthread, NULL, routine, arg);
-        if (result != 0) {
-            free(pthread);
-        } else {
-            *thread = (ARSAL_Thread_t)pthread;
+        pthread_attr_t attr;
+        pthread_attr_init(&attr);
+
+        if (!thread) {
+            result = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+        }
+
+        if (result == 0) {
+            result = pthread_create(pthread, &attr, routine, arg);
+            if (thread && result == 0) {
+                *thread = (ARSAL_Thread_t)pthread;
+            } else {
+                free(pthread);
+            }
         }
     }
 #endif

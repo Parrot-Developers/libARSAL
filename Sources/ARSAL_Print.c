@@ -64,6 +64,8 @@ static const char* cARSAL_Print_prefixTable[ARSAL_PRINT_MAX] =
     [ARSAL_PRINT_VERBOSE] = "[VRB]",
 };
 
+static int ARSAL_Print_PrintRaw_VA(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, va_list va) ARSAL_ATTRIBUTE_FORMAT_PRINTF(3, 0);
+
 #ifdef HAVE_ANDROID_LOG_H
 static int ARSAL_Print_PrintRaw_VA(eARSAL_PRINT_LEVEL level, const char *tag, const char *format, va_list va)
 {

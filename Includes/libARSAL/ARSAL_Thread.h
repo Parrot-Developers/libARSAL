@@ -40,7 +40,7 @@
 /**
  * @brief Define a thread type.
  */
-typedef void* ARSAL_Thread_t;
+typedef void *ARSAL_Thread_t;
 
 /**
  * @brief Define a callback function type.
@@ -50,7 +50,7 @@ typedef void* (*ARSAL_Thread_Routine_t) (void *);
 /**
  * @brief Create a new thread
  *
- * @param thread The thread to create
+ * @param thread The thread to create. Pass NULL to start a detached thread.
  * @param routine The routine to invoke by thread
  * @param arg The argument passed to routine()
  * @retval On success, ARSAL_Thread_create() returns 0. Otherwise, it returns an error number (See errno.h)

@@ -38,8 +38,18 @@
 #define _ARSAL_TIME_H_
 #include <inttypes.h>
 #include <time.h>
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
+#endif
+
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 /**
  * @brief Convert second to millisecond
@@ -197,5 +207,12 @@ int32_t ARSAL_Time_ComputeTimevalMsTimeDiff (struct timeval *start, struct timev
  * @warning Make sure that "end" is after "start"
  */
 int32_t ARSAL_Time_ComputeTimespecMsTimeDiff (struct timespec *start, struct timespec *end);
+
+/**
+ * @brief Sleeps for the specified amount of ms
+ *
+ * @param ms Sleep period
+ */
+void ARSAL_Time_Sleep(uint64_t ms);
 
 #endif // _ARSAL_TIME_H_

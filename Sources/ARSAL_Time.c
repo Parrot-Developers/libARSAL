@@ -36,6 +36,23 @@
  */
 #include <config.h>
 #include <libARSAL/ARSAL_Time.h>
+#include <libARSAL/ARSAL_Print.h>
+
+#ifdef HAVE_SYS_TIME_H
+#include <sys/time.h>
+#endif
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#ifdef HAVE_WINSOCK2_H
+#include <winsock2.h>
+#endif
+
+#ifdef HAVE_WINDOWS_H
+#include <windows.h>
+#endif
 
 int ARSAL_Time_GetTime (struct timespec *res)
 {
@@ -46,7 +63,29 @@ int ARSAL_Time_GetTime (struct timespec *res)
     }
     /* No else --> Args check (return -1) */
 
-#if defined(HAVE_CLOCK_GETTIME) && defined (HAVE_DECL_CLOCK_MONOTONIC)
+#if defined(HAVE_WINDOWS_H)
+
+    static LARGE_INTEGER perf_freq = {.QuadPart = 0};
+
+    result = 0;
+    if (perf_freq.QuadPart == 0) {
+        result = QueryPerformanceFrequency(&perf_freq) ? 0 : -1;
+    }
+
+    if (result == 0) {
+        LARGE_INTEGER t;
+        result = QueryPerformanceCounter(&t) ? 0 : -1;
+
+        if (perf_freq.QuadPart != 0) {
+            /* scale to nanoseconds */
+            t.QuadPart = (t.QuadPart) * 1000000000 / perf_freq.QuadPart;
+        }
+
+        res->tv_sec = t.QuadPart / 1000000000ull;
+        res->tv_nsec = t.QuadPart % 1000000000ull;
+    }
+
+#elif defined(HAVE_CLOCK_GETTIME) && defined (HAVE_DECL_CLOCK_MONOTONIC)
 
     result = clock_gettime(CLOCK_MONOTONIC, res);
 
@@ -122,7 +161,12 @@ int ARSAL_Time_GetLocalTime (struct timespec *res, struct tm *localTime)
         /* No else --> Do nothing if res is NULL */
         if (localTime != NULL)
         {
+#ifdef _WIN32
+            struct tm *tmpLocalTime = localtime(&(ts.tv_sec));
+            memcpy(localTime, tmpLocalTime, sizeof(struct tm));
+#else
             localtime_r (&(ts.tv_sec), localTime);
+#endif
         }
         /* No else --> Do nothing if localTime is NULL */
     }
@@ -223,4 +267,12 @@ int32_t ARSAL_Time_ComputeTimespecMsTimeDiff (struct timespec *start, struct tim
     result = SEC_TO_MSEC(diff.tv_sec) + NSEC_TO_MSEC(diff.tv_nsec);
 
     return result;
+}
+
+void ARSAL_Time_Sleep(uint64_t ms) {
+#ifdef _WIN32
+    Sleep((DWORD)ms);
+#else
+    usleep(ms * 1000);
+#endif
 }

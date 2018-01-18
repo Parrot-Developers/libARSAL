@@ -46,7 +46,7 @@ int ARSAL_Time_GetTime (struct timespec *res)
     }
     /* No else --> Args check (return -1) */
 
-#if defined(HAVE_CLOCK_GETTIME) && defined (HAVE_DECL_CLOCK_MONOTONIC)
+#if defined(HAVE_CLOCK_GETTIME) && HAVE_DECL_CLOCK_MONOTONIC
 
     result = clock_gettime(CLOCK_MONOTONIC, res);
 
@@ -86,7 +86,7 @@ int ARSAL_Time_GetLocalTime (struct timespec *res, struct tm *localTime)
 
     struct timespec ts;
 
-#if defined(HAVE_CLOCK_GETTIME) && defined (HAVE_DECL_CLOCK_REALTIME)
+#if defined(HAVE_CLOCK_GETTIME) && HAVE_DECL_CLOCK_REALTIME
 
     result = clock_gettime(CLOCK_REALTIME, &ts);
 
